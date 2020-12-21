@@ -1,0 +1,10 @@
+DELETE FROM crewproj.users;
+ALTER TABLE crewproj.users auto_increment = 1;
+ALTER TABLE crewproj.userallergens auto_increment = 1;
+ALTER TABLE crewproj.userintolerances auto_increment = 1;
+ALTER TABLE crewproj.usersmarkets auto_increment = 1;
+ALTER TABLE crewproj.userfoodpref auto_increment = 1;
+ALTER TABLE crewproj.personalusers auto_increment = 1;
+ALTER TABLE crewproj.usersfacebook auto_increment = 1;
+ALTER TABLE crewproj.usersgoogle auto_increment = 1;
+SELECT * FROM crewproj.users;

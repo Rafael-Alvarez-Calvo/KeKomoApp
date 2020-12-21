@@ -16,7 +16,9 @@ const Google = require("./lib/OauthGoogle");
 
 const validateCredentials = require("./lib/validator.js");
 const validateEmail = require("./lib/validator.js");
-const { getJWTInfo } = require("./lib/JWT.js");
+const encryptPassword = require("./lib/JWT.js");
+const verifyPassword = require("./lib/JWT.js");
+// const { getJWTInfo } = require("./lib/JWT.js");
 
 const server = express();
 const listeningPort = 8888;
@@ -45,6 +47,24 @@ function connectionDB() {
     });
 }
 
+function PromiseConnectionDB(){
+
+    const DBconnection = connectionDB();
+
+    if (DBconnection){
+        const prom = new Promise((resolve, reject) => {
+            DBconnection.connect(err => {
+                if (err) {
+                    reject("DBError");
+                }
+                resolve();
+            });
+        });
+        return prom;
+    }
+        
+}
+
 // Funciones middleware
 // function VerifySession(req, res, next){
 //     let endpoints = ["/signup", "/login", "facebook-redirect", "/facebook-login", "/google-redirect", "/google-login", "/logout", /info-user-form"];
@@ -61,21 +81,12 @@ function connectionDB() {
 
 // }
 
-function encryptPassword(string, salt = crypto.randomBytes(128).toString("hex")) {
-    let saltedPassword = hash(salt + string + salt, SECRET);
-    return { password: saltedPassword, salt };
-}
-
-function verifyPassword(string, realPassword) {
-    return encryptPassword(string, realPassword.salt).password === realPassword.password;
-
-}
 
 //------------ENDPOINTS--------------------//
 
 server.post("/signup", (req,res) =>{
 
-    if(req.body.email !== null && req.body.pass !== null){
+    if(req.body.email !== null && req.body.psw !== null){
 
         let validated = validateCredentials(req.body.email, req.body.psw);
 
@@ -177,7 +188,7 @@ server.post("/login", (req, res) =>{
                     });
                     DBconnection.end();
                 })
-                .catch((e) => {
+                prom.catch((e) => {
                     
                     res.send({"res" : "0", "msg" : "Unable to connect to database", e});
                 });
@@ -195,6 +206,67 @@ server.get("/logout", (req, res) =>{
     res.clearCookie(JWT);
     res.redirect("http://localhost:3000");
 });
+
+server.get("/get-preferenceslist-for-form/:allergens/:intolerances/:supermarkets/:preferences", (req, res) => {
+    //No funciona
+    const {allergens, intolerances, supermarkets, preferences} = req.params;
+    const prom = PromiseConnectionDB()
+
+    if(allergens){
+        prom.then(() => {
+            const sql = "SELECT * FROM Allergens";
+            DBconnection.query(sql, (err, result) => {
+                if(err)
+                    throw err
+                else {
+                    res.send({"res" : "1" , result})
+                }
+            })
+
+        })
+    }
+
+    if(intolerances){
+        prom.then(() => {
+            const sql = "SELECT * FROM Intolerances";
+            DBconnection.query(sql, (err, result) => {
+                if(err)
+                    throw err
+                else {
+                    res.send({"res" : "1" , result})
+                }
+            })
+
+        })
+    }
+    if(supermarkets){
+        prom.then(() => {
+            const sql = "SELECT * FROM SuperMarkets";
+            DBconnection.query(sql, (err, result) => {
+                if(err)
+                    throw err
+                else {
+                    res.send({"res" : "1" , result})
+                }
+            })
+
+        })
+    }
+    if(preferences){
+        prom.then(() => {
+            const sql = "SELECT * FROM FoodPreferences";
+            DBconnection.query(sql, (err, result) => {
+                if(err)
+                    throw err
+                else {
+                    res.send({"res" : "1" , result})
+                }
+            })
+
+        })
+    }
+
+})
 
 server.post("/info-user-form", (req, res) => {
     console.log(req.body);
@@ -276,8 +348,10 @@ server.post("/info-user-form", (req, res) => {
 
                             if(psw){
 
-                                const sql = "INSERT INTO PersonalUsers (ext_usrid, psw) VALUES (?, ?)";
-                                DBconnection.query(sql, [idResultInsert, psw], err => {
+                                const {password, salt} = encryptPassword()
+
+                                const sql = "INSERT INTO PersonalUsers (ext_usrid, psw, salt) VALUES (?, ?, ?)";
+                                DBconnection.query(sql, [idResultInsert, password, salt], err => {
                                     if(err){
                                         res.send({"res" : "0", "msg" : err})
                                     } else {
@@ -344,7 +418,7 @@ server.post("/info-user-form", (req, res) => {
                                             res.send({"res" : "0", "msg" : "JWT not verified"})
                                         }
                                     }
-                                    DBconnection.end();
+                                    
                                 });
 
                             } else {
@@ -352,8 +426,8 @@ server.post("/info-user-form", (req, res) => {
                             }
                                
 
-                            
                         }
+                        DBconnection.end(); 
                     })
                 })
             } else {
@@ -528,64 +602,38 @@ server.get("/google-login", async (req, res) => {
     }
 });
 
-server.post("/personal-shopping-list/:listname/:supermarketId", (req,res) =>{
+server.post("/create-personal-shopping-list/:listname/:supermarketid/:supermarketname", (req,res) =>{
 
-    const {listname, supermarketId} = req.params;
+    const {listname, supermarketid, supermarketname} = req.params;
+    const prom = PromiseConnectionDB()
 
-    if(listname && supermarketId){
+    if(listname && supermarketid && supermarketname){
 
-        const userInfo = JWT.getJWTInfo(req.cookies.JWT);
-        //Que devuelve getJWTInfo
-    
-        if(userInfo.includes("userid")){
+        const {usrid} = JWT.getJWTInfo(req.cookies.JWT)
 
-            const { usrid } = userInfo;
-            // ArrUsrid = Object.values(userid) // Question Tengo que convertirlo a array para pasarlo en la query?
+        prom.then(() => {
+            //Select siempre devuelve un array, y cuidado con el like, si hay un correo que lo contiene te entran
+            const sql = "INSERT INTO PersonalShoppingList (listName,APISMarketId,APISMarketName) VALUES (?, ?, ?)";
+            DBconnection.query(sql, [listname, supermarketid, supermarketname], (err, result) => {
+                if(err)
+                    throw err
+                else {
 
-            const DBconnection = connectionDB();
-                if (DBconnection){
-                    const prom = new Promise((resolve, reject) => {
-                        DBconnection.connect(err => {
-                            if (err) {
-                                reject(err);
-                            }
-                            resolve();
-                        });
-                    });
-                    prom.then(() => {
-                        //Select siempre devuelve un array, y cuidado con el like, si hay un correo que lo contiene te entran
-                        const sql = "INSERT INTO PersonalShoppingList (listName,APISMarketId,APISMarketName) VALUES (?, ?, ?)";
-                        DBconnection.query(sql, [listname, supermarketId, req.body.supermarketName], err => {
-                            if(err)
-                             throw err
-                            else {
-                                const sql = "SELECT usrid FROM users WHERE usrid = ?";
-                                DBconnection.query(sql, [ArrUsrid], (err, result) => {
-                                    if(err)
-                                      throw err
-                                    else {
-                                        const sql = "INSERT INTO PShopSmarketsUsers (listName,APISMarketId,APISMarketName) VALUES (?, ?, ?)";
-                                        DBconnection.query(sql, [ArrUsrid], (err, result) => {
-
-                                        })
-
-                                    }
-                                    
-
-                                })
-                            }
-
-                        })
+                    const idResultInsert = result.insertId;
+                    const sql = "INSERT INTO PShopListUsers (ext_usrid, ref_listId, ref_SMarketId) VALUES (?, ?, ?)";
+                    DBconnection.query(sql, [usrid,idResultInsert,supermarketid], err => {
+                        if(err)
+                            throw err
+                        else {
+                            res.send({"res" : "1", "msg" : `Shopping list #${idResultInsert} ${listname} created in database`})
+                        }
                     })
+                    // const sql = "SELECT U.usrid FROM users AS U LEFT JOIN PShopListUsers AS PSLU ON PSLU.ext_usrid = U.usrid RIGHT JOIN PersonalShoppingList AS PSL ON PSL.listId = PSLU.ref_listId RIGHT JOIN PSL ON PSL.APISMarketId = PSLU.ref_SMarketId  WHERE usrid = ?";
                 }
-
-        } else if(userInfo.includes("userIdF")){
-
-        } else if(userInfo.includes("userIdG")){
-
-        } else {
-
-        }
+                DBconnection.end()
+            })
+        })
+        prom.catch(err => err)
 
     } else {
         res.send({"res" : "0", "msg" : "No params"})

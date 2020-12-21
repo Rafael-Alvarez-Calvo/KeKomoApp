@@ -69,4 +69,16 @@ function getJWTInfo(jwt) {
     return null;
 }
 
+function encryptPassword(string, salt = crypto.randomBytes(128).toString("hex")) {
+    let saltedPassword = hash(salt + string + salt, SECRET);
+    return { password: saltedPassword, salt };
+}
+
+function verifyPassword(string, realPassword) {
+    return encryptPassword(string, realPassword.salt).password === realPassword.password;
+
+}
+
 module.exports = {"generateJWT" : generateJWT, "verifyJWT" : verifyJWT, "getJWTInfo" : getJWTInfo};
+// module.exports = encryptPassword;
+// module.exports = verifyPassword;

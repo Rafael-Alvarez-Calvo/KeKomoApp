@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS PersonalUsers (
 	`id` INT NOT NULL AUTO_INCREMENT,
     `ext_usrid` INT NOT NULL,
     `psw` varchar(100) NOT NULL,
+    `salt` varchar(500) NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY (ext_usrid)
         REFERENCES users (usrid)
@@ -56,7 +57,18 @@ CREATE TABLE IF NOT EXISTS Allergens(
 	`idAllergen` INT NOT NULL AUTO_INCREMENT,
     `nameAllergen` varchar(100) NOT NULL,
     PRIMARY KEY(idAllergen)
+    
 );
+INSERT INTO Allergens (idAllergen, nameAllergen) 
+VALUES 
+	(1, 'Cacahuetes'),
+    (2, 'Anacardos'),
+    (3, 'Almendras'),
+    (4, 'Pistacho'),
+    (5, 'Nueces'),
+    (6, 'Avellanas'),
+    (7, 'Castañas'),
+    (8, 'Pipas de girasol');
 
 CREATE TABLE IF NOT EXISTS UserAllergens(
 	`idUsrAllergen` INT NOT NULL AUTO_INCREMENT,
@@ -79,6 +91,13 @@ CREATE TABLE IF NOT EXISTS Intolerances(
     PRIMARY KEY(idIntolerance)
 );
 
+INSERT INTO Intolerances (idIntolerance, nameIntolerance) 
+VALUES 
+	(1, 'Lactosa'),
+    (2, 'Gluten'),
+    (3, 'Sacarosa'),
+    (4, 'Fructosa');
+
 CREATE TABLE IF NOT EXISTS UserIntolerances(
 	`idUsrIntolerance` INT NOT NULL AUTO_INCREMENT,
     `ext_usrid` INT NOT NULL,
@@ -99,6 +118,14 @@ CREATE TABLE IF NOT EXISTS SuperMarkets(
     `nameSuperMarket` varchar(100) NOT NULL,
     PRIMARY KEY(idSMarket)
 );
+
+INSERT INTO SuperMarkets (idSMarket, nameSuperMarket) 
+VALUES 
+	(1, 'Mercadona'),
+    (2, 'Carrefour'),
+    (3, 'Día'),
+    (4, 'Lidl'),
+    (5, 'Otros');
 
 CREATE TABLE IF NOT EXISTS UserSMarkets(
 	`idUsrSMarkets` INT NOT NULL AUTO_INCREMENT,
@@ -121,6 +148,13 @@ CREATE TABLE IF NOT EXISTS FoodPreferences(
     PRIMARY KEY(idFoodPref)
 );
 
+INSERT INTO FoodPreferences (idFoodPref, nameFoodPref) 
+VALUES 
+	(1, 'Bio'),
+    (2, 'Veganos'),
+    (3, 'Vegetarianos'),
+    (4, 'Origen España');
+
 CREATE TABLE IF NOT EXISTS UserFoodPref(
 	`idUsrFoodPref` INT NOT NULL AUTO_INCREMENT,
     `ext_usrid` INT NOT NULL,
@@ -141,7 +175,7 @@ CREATE TABLE IF NOT EXISTS UserFoodPref(
 
 
 CREATE TABLE IF NOT EXISTS PersonalShoppingList (
-	`listId` smallint NOT NULL AUTO_INCREMENT,
+	`listId` INT NOT NULL AUTO_INCREMENT,
     `listName` varchar(100) NOT NULL,
     `APISMarketId` varchar(100) NOT NULL,
     `APISMarketName` varchar(100) NOT NULL,
@@ -149,16 +183,16 @@ CREATE TABLE IF NOT EXISTS PersonalShoppingList (
 );
 
 -- CREATE TABLE IF NOT EXISTS SuperMarkets  (
--- 	`SMarketId` smallint NOT NULL AUTO_INCREMENT,
+-- 	`SMarketId` INT NOT NULL AUTO_INCREMENT,
 -- 	`APISMarketId` varchar(100) NOT NULL,
 --     `SMarketName` varchar(100) NOT NULL,
 --     PRIMARY KEY(listId)
 -- );
 
-CREATE TABLE IF NOT EXISTS PShopSmarketsUsers  (
-	`ext_usrId` smallint NOT NULL,
-	`ref_listId` smallint NOT NULL,
-	`ref_SMarketId` smallint NOT NULL,
+CREATE TABLE IF NOT EXISTS PShopListUsers  (
+	`ext_usrid` INT NOT NULL,
+	`ref_listId` INT NOT NULL,
+	`ref_SMarketId` INT NOT NULL,
     PRIMARY KEY(ext_usrId, ref_listId, ref_SMarketId),
     FOREIGN KEY (ext_usrId),
         REFERENCES users(usrid),
@@ -167,9 +201,9 @@ CREATE TABLE IF NOT EXISTS PShopSmarketsUsers  (
         -- ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS PShopSmarketsUsersFacebook  (
-	`ext_usrIdF` smallint NOT NULL,
-	`ref_listId` smallint NOT NULL,
-	`ref_SMarketId` smallint NOT NULL,
+	`ext_usrIdF` INT NOT NULL,
+	`ref_listId` INT NOT NULL,
+	`ref_SMarketId` INT NOT NULL,
     PRIMARY KEY(ext_usrIdF, ref_listId, ref_SMarketId),
     FOREIGN KEY (ext_usrIdF),
         REFERENCES users(usrIdF),
@@ -178,9 +212,9 @@ CREATE TABLE IF NOT EXISTS PShopSmarketsUsersFacebook  (
         -- ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS PShopSmarketsUsers  (
-	`ext_usrIdG` smallint NOT NULL,
-	`ref_listId` smallint NOT NULL,
-	`ref_SMarketId` smallint NOT NULL,
+	`ext_usrIdG` INT NOT NULL,
+	`ref_listId` INT NOT NULL,
+	`ref_SMarketId` INT NOT NULL,
     PRIMARY KEY(ext_usrIdG, ref_listId, ref_SMarketId),
     FOREIGN KEY (ext_usrIdG)
         REFERENCES usersGoogle(usrIdG),
