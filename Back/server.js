@@ -11,13 +11,14 @@ const Facebook = require("./lib/OauthFacebook");
 const facebook = new Facebook();
 const JWT = require("./lib/JWT.js");
 const Google = require("./lib/OauthGoogle");
+const getPreferences = require("./lib/getAnyPreference.js")
 
 
 
 const validateCredentials = require("./lib/validator.js");
 const validateEmail = require("./lib/validator.js");
-const encryptPassword = require("./lib/JWT.js");
-const verifyPassword = require("./lib/JWT.js");
+// const encryptPassword = require("./lib/JWT.js");
+// const verifyPassword = require("./lib/JWT.js");
 // const { getJWTInfo } = require("./lib/JWT.js");
 
 const server = express();
@@ -48,20 +49,19 @@ function connectionDB() {
 }
 
 function PromiseConnectionDB(){
-
-    const DBconnection = connectionDB();
-
-    if (DBconnection){
-        const prom = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        const DBconnection = connectionDB();
+        if (DBconnection){
             DBconnection.connect(err => {
                 if (err) {
                     reject("DBError");
                 }
-                resolve();
+                resolve(DBconnection);
             });
-        });
-        return prom;
-    }
+        }
+        else
+            reject("DBError");
+    });
         
 }
 
@@ -81,6 +81,10 @@ function PromiseConnectionDB(){
 
 // }
 
+
+// function getSMarkets(arraySMarktesIds) {
+//     return [];
+// }
 
 //------------ENDPOINTS--------------------//
 
@@ -175,7 +179,7 @@ server.post("/login", (req, res) =>{
 
                                 //Access as administrator
                             res.cookie("JWT", jwt, {"httpOnly" : true})
-                                .send({"res" : "1", "msg" : `${result[0].name} has logged in`});
+                                .send({"res" : "1", "msg" : `${result[0].name} has logged in`, "result" : result});
 
                             } else {
                                 res.send({"res" : "0", "msg" : "JWT not verified"})
@@ -207,13 +211,79 @@ server.get("/logout", (req, res) =>{
     res.redirect("http://localhost:3000");
 });
 
-server.get("/get-preferenceslist-for-form/:allergens/:intolerances/:supermarkets/:preferences", (req, res) => {
-    //No funciona
-    const {allergens, intolerances, supermarkets, preferences} = req.params;
-    const prom = PromiseConnectionDB()
+server.get("/get-allergies-user", (req, res) => {
+    if (req.cookies.JWT){
 
-    if(allergens){
-        prom.then(() => {
+        const {usrid} = JWT.getJWTInfo(req.cookies.JWT);
+        if(usrid){
+            getPreferences.getAllergensUser(usrid)
+            .then(result => res.send({"res" : "1", "result" : result}))
+            .catch(e => res.send({"res": "0", "msg": e}));
+        } else {
+            res.send({"res" : "0", "msg" : "No usrid in JWT"})
+        }
+
+    } else {
+        res.send({"res" : "0", "msg" : "No JWT"})
+    }
+})
+server.get("/get-intolerances-user", (req, res) => {
+    if (req.cookies.JWT){
+
+        const {usrid} = JWT.getJWTInfo(req.cookies.JWT);
+        if(usrid){
+            getPreferences.getIntolerancesUser(usrid)
+            .then(result => res.send({"res" : "1", "result" : result}))
+            .catch(e => res.send({"res": "0", "msg": e}));
+        } else {
+            res.send({"res" : "0", "msg" : "No usrid in JWT"})
+        }
+
+    } else {
+        res.send({"res" : "0", "msg" : "No JWT"})
+    }
+})
+server.get("/get-supermarkets-user", (req, res) => {
+    if (req.cookies.JWT){
+
+        const {usrid} = JWT.getJWTInfo(req.cookies.JWT);
+        if(usrid){
+            getPreferences.getSuperMarketUser(usrid)
+            .then(result => res.send({"res" : "1", "result" : result}))
+            .catch(e => {res.send({"res": "0", "msg": e})});
+        } else {
+            res.send({"res" : "0", "msg" : "No usrid in JWT"})
+        }
+
+    } else {
+        res.send({"res" : "0", "msg" : "No JWT"})
+    }
+})
+server.get("/get-foodpreferences-user", (req, res) => {
+    if (req.cookies.JWT){
+
+        const {usrid} = JWT.getJWTInfo(req.cookies.JWT);
+        if(usrid){
+            getPreferences.getFoodPrefUser(usrid)
+            .then(result => res.send({"res" : "1", "result" : result}))
+            .catch(e => res.send({"res": "0", "msg": e}));
+        } else {
+            res.send({"res" : "0", "msg" : "No usrid in JWT"})
+        }
+
+    } else {
+        res.send({"res" : "0", "msg" : "No JWT"})
+    }
+})
+
+server.get("/get-preferences-list/:option", (req, res) => {
+    //No funciona
+    //REST PARAMS -> req.params;
+    //QUERRY PARAMS -> req.query;
+    const {option} = req.params;
+    if(option === "allergens"){
+        PromiseConnectionDB()
+        .then((DBconnection) => {
             const sql = "SELECT * FROM Allergens";
             DBconnection.query(sql, (err, result) => {
                 if(err)
@@ -226,8 +296,9 @@ server.get("/get-preferenceslist-for-form/:allergens/:intolerances/:supermarkets
         })
     }
 
-    if(intolerances){
-        prom.then(() => {
+    else if(option === "intolerances"){
+        PromiseConnectionDB()
+        .then((DBconnection) => {
             const sql = "SELECT * FROM Intolerances";
             DBconnection.query(sql, (err, result) => {
                 if(err)
@@ -239,8 +310,9 @@ server.get("/get-preferenceslist-for-form/:allergens/:intolerances/:supermarkets
 
         })
     }
-    if(supermarkets){
-        prom.then(() => {
+    else if(option === "supermarkets"){
+        PromiseConnectionDB()
+        .then((DBconnection) => {
             const sql = "SELECT * FROM SuperMarkets";
             DBconnection.query(sql, (err, result) => {
                 if(err)
@@ -252,8 +324,9 @@ server.get("/get-preferenceslist-for-form/:allergens/:intolerances/:supermarkets
 
         })
     }
-    if(preferences){
-        prom.then(() => {
+    else if(option === "preferences"){
+        PromiseConnectionDB()
+        .then((DBconnection) => {
             const sql = "SELECT * FROM FoodPreferences";
             DBconnection.query(sql, (err, result) => {
                 if(err)
@@ -265,11 +338,13 @@ server.get("/get-preferenceslist-for-form/:allergens/:intolerances/:supermarkets
 
         })
     }
+    else {
+        res.send({"res": "0"})
+    }
 
 })
 
 server.post("/info-user-form", (req, res) => {
-    console.log(req.body);
     if(req.body){
 
         const {psw, idFacebook, idGoogle, email, name, allergies, intolerances, favSMarkets, foodPreferences} = req.body;
@@ -332,6 +407,7 @@ server.post("/info-user-form", (req, res) => {
                                 DBconnection.query(sql, [ArrFoodPreferences], err => {
                                     if (err)
                                         throw err
+                                    
                                 })
                             }
                             
@@ -339,16 +415,16 @@ server.post("/info-user-form", (req, res) => {
                                 "usrid" : idResultInsert,
                                 "email" : email,
                                 "name" : name,
-                                "allergens" : allergies || [],
-                                "intolerances" : intolerances || [],
-                                "favSMarkets" : favSMarkets || [],
-                                "foodPreferences" : foodPreferences || [],
+                                // "allergens" : allergies || [],
+                                // "intolerances" : intolerances || [],
+                                // "favSMarkets" : favSMarkets || [],
+                                // "foodPreferences" : foodPreferences || [],
                                 "iat" : new Date()
                             };
 
                             if(psw){
 
-                                const {password, salt} = encryptPassword()
+                                const {password, salt} = JWT.encryptPassword(psw)
 
                                 const sql = "INSERT INTO PersonalUsers (ext_usrid, psw, salt) VALUES (?, ?, ?)";
                                 DBconnection.query(sql, [idResultInsert, password, salt], err => {
@@ -370,7 +446,7 @@ server.post("/info-user-form", (req, res) => {
                                         }
 
                                     }
-                                    DBconnection.end();
+                                    
                                 });
 
                             } else if(idFacebook){
@@ -470,8 +546,8 @@ server.get("/facebook-login", async (req, res) => {
                     });
                 });
                 prom.then(() => {
-                    const sql = "SELECT * FROM users U INNER JOIN UsersFacebook UF ON UF.ext_usrid = U.usrid WHERE email = ?"; //Select siempre devuelve un array, y cuidado con el like, si hay un correo que lo contiene te entran
-                    DBconnection.query(sql, [email], (err, result) => {
+                    const sql = "SELECT * FROM users U INNER JOIN UsersFacebook UF ON UF.ext_usrid = U.usrid WHERE email = ? OR idFacebook = ?"; //Select siempre devuelve un array, y cuidado con el like, si hay un correo que lo contiene te entran
+                    DBconnection.query(sql, [email, id], (err, result) => {
 
                         if (err){
                             res.send({"res" : "0", "msg" : err})
@@ -609,7 +685,7 @@ server.post("/create-personal-shopping-list/:listname/:supermarketid/:supermarke
 
     if(listname && supermarketid && supermarketname){
 
-        const {usrid} = JWT.getJWTInfo(req.cookies.JWT)
+        const { usrid } = JWT.getJWTInfo(req.cookies.JWT)
 
         prom.then(() => {
             //Select siempre devuelve un array, y cuidado con el like, si hay un correo que lo contiene te entran

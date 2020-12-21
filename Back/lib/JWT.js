@@ -79,6 +79,4 @@ function verifyPassword(string, realPassword) {
 
 }
 
-module.exports = {"generateJWT" : generateJWT, "verifyJWT" : verifyJWT, "getJWTInfo" : getJWTInfo};
-// module.exports = encryptPassword;
-// module.exports = verifyPassword;
+module.exports = {"generateJWT" : generateJWT, "verifyJWT" : verifyJWT, "getJWTInfo" : getJWTInfo, "encryptPassword" : encryptPassword, "verifyPassword" : verifyPassword};
