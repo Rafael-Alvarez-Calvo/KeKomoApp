@@ -172,57 +172,48 @@ CREATE TABLE IF NOT EXISTS UserFoodPref(
 
 
 
-
+DROP TABLE PersonalShoppingList;
+ALTER TABLE crewproj.PersonalShoppingList auto_increment = 1;
 
 CREATE TABLE IF NOT EXISTS PersonalShoppingList (
 	`listId` INT NOT NULL AUTO_INCREMENT,
     `listName` varchar(100) NOT NULL,
-    `APISMarketId` varchar(100) NOT NULL,
+    `APISMarketId` INT NOT NULL,
     `APISMarketName` varchar(100) NOT NULL,
     PRIMARY KEY(listId)
 );
 
--- CREATE TABLE IF NOT EXISTS SuperMarkets  (
--- 	`SMarketId` INT NOT NULL AUTO_INCREMENT,
--- 	`APISMarketId` varchar(100) NOT NULL,
---     `SMarketName` varchar(100) NOT NULL,
---     PRIMARY KEY(listId)
--- );
+DROP TABLE PShopListUsers;
+ALTER TABLE crewproj.PersonalShoppingList auto_increment = 1;
 
 CREATE TABLE IF NOT EXISTS PShopListUsers  (
-	`ext_usrid` INT NOT NULL,
+	`PShoplistUserId` INT NOT NULL AUTO_INCREMENT,
+    `ext_usrid` INT NOT NULL,
 	`ref_listId` INT NOT NULL,
-	`ref_SMarketId` INT NOT NULL,
-    PRIMARY KEY(ext_usrId, ref_listId, ref_SMarketId),
-    FOREIGN KEY (ext_usrId),
-        REFERENCES users(usrid),
-    FOREIGN KEY (ref_listId, ref_SMarketId),
-        REFERENCES PersonalShoppingList(listId, APISMarketId)
-        -- ON DELETE CASCADE
-);
-CREATE TABLE IF NOT EXISTS PShopSmarketsUsersFacebook  (
-	`ext_usrIdF` INT NOT NULL,
-	`ref_listId` INT NOT NULL,
-	`ref_SMarketId` INT NOT NULL,
-    PRIMARY KEY(ext_usrIdF, ref_listId, ref_SMarketId),
-    FOREIGN KEY (ext_usrIdF),
-        REFERENCES users(usrIdF),
-    FOREIGN KEY (ref_listId, ref_SMarketId)
-        REFERENCES PersonalShoppingList(listId, APISMarketId)
-        -- ON DELETE CASCADE
-);
-CREATE TABLE IF NOT EXISTS PShopSmarketsUsers  (
-	`ext_usrIdG` INT NOT NULL,
-	`ref_listId` INT NOT NULL,
-	`ref_SMarketId` INT NOT NULL,
-    PRIMARY KEY(ext_usrIdG, ref_listId, ref_SMarketId),
-    FOREIGN KEY (ext_usrIdG)
-        REFERENCES usersGoogle(usrIdG),
-    FOREIGN KEY (ref_listId, ref_SMarketId)
-        REFERENCES PersonalShoppingList(listId, APISMarketId)
+    PRIMARY KEY(PShoplistUserId),
+    FOREIGN KEY (ext_usrId)
+        REFERENCES users(usrid)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (ref_listId)
+        REFERENCES PersonalShoppingList(listId)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
         -- ON DELETE CASCADE
 );
 
+
+CREATE TABLE IF NOT EXISTS PShopListProduct  (
+	`PShoplistProductId` INT NOT NULL AUTO_INCREMENT,
+    `ext_listId` INT NOT NULL,
+	`ref_productId` INT NOT NULL,
+    PRIMARY KEY(PShoplistProductId),
+    FOREIGN KEY (ext_listId)
+        REFERENCES PersonalShoppingList(listId)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        -- ON DELETE CASCADE
+);
 
 
 

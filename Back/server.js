@@ -17,9 +17,6 @@ const getPreferences = require("./lib/getAnyPreference.js")
 
 const validateCredentials = require("./lib/validator.js");
 const validateEmail = require("./lib/validator.js");
-// const encryptPassword = require("./lib/JWT.js");
-// const verifyPassword = require("./lib/JWT.js");
-// const { getJWTInfo } = require("./lib/JWT.js");
 
 const server = express();
 const listeningPort = 8888;
@@ -79,11 +76,6 @@ function PromiseConnectionDB(){
 //         res.status(403).send({"res" : "0" , "msg" : "No active session"});
 //     }
 
-// }
-
-
-// function getSMarkets(arraySMarktesIds) {
-//     return [];
 // }
 
 //------------ENDPOINTS--------------------//
@@ -678,43 +670,110 @@ server.get("/google-login", async (req, res) => {
     }
 });
 
-server.post("/create-personal-shopping-list/:listname/:supermarketid/:supermarketname", (req,res) =>{
+server.post("/create-personal-shopping-list", (req,res) =>{
 
-    const {listname, supermarketid, supermarketname} = req.params;
-    const prom = PromiseConnectionDB()
+    const { usrid } = JWT.getJWTInfo(req.cookies.JWT)
 
-    if(listname && supermarketid && supermarketname){
-
-        const { usrid } = JWT.getJWTInfo(req.cookies.JWT)
-
-        prom.then(() => {
+    const {listname, supermarketid, supermarketname} = req.query;
+    
+    if(usrid && listname && supermarketid && supermarketname){
+        console.log("entra")
+        PromiseConnectionDB()
+        .then((DBconnection) => {
             //Select siempre devuelve un array, y cuidado con el like, si hay un correo que lo contiene te entran
             const sql = "INSERT INTO PersonalShoppingList (listName,APISMarketId,APISMarketName) VALUES (?, ?, ?)";
             DBconnection.query(sql, [listname, supermarketid, supermarketname], (err, result) => {
                 if(err)
                     throw err
                 else {
-
                     const idResultInsert = result.insertId;
-                    const sql = "INSERT INTO PShopListUsers (ext_usrid, ref_listId, ref_SMarketId) VALUES (?, ?, ?)";
-                    DBconnection.query(sql, [usrid,idResultInsert,supermarketid], err => {
+                    const sql = "INSERT INTO PShopListUsers (ext_usrid, ref_listId) VALUES (?, ?)";
+                    DBconnection.query(sql, [usrid,idResultInsert], err => {
                         if(err)
                             throw err
                         else {
                             res.send({"res" : "1", "msg" : `Shopping list #${idResultInsert} ${listname} created in database`})
                         }
                     })
-                    // const sql = "SELECT U.usrid FROM users AS U LEFT JOIN PShopListUsers AS PSLU ON PSLU.ext_usrid = U.usrid RIGHT JOIN PersonalShoppingList AS PSL ON PSL.listId = PSLU.ref_listId RIGHT JOIN PSL ON PSL.APISMarketId = PSLU.ref_SMarketId  WHERE usrid = ?";
                 }
                 DBconnection.end()
             })
         })
-        prom.catch(err => err)
+        .catch(err => console.error(err))
 
     } else {
         res.send({"res" : "0", "msg" : "No params"})
     }
 });
+
+server.get("/get-personal-shopping-list", (req, res) => {
+
+    const { usrid } = JWT.getJWTInfo(req.cookies.JWT)
+
+    if(usrid){
+        PromiseConnectionDB()
+        .then((DBconnection) => {
+
+            const sql = `SELECT PSL.*, COUNT(PSLP.ref_productId) AS totalProducts
+                            FROM PersonalShoppingList AS PSL
+                                JOIN PShopListUsers AS PSLU
+                                    ON PSLU.ref_listId = PSL.listId
+                                LEFT JOIN PShopListProduct AS PSLP
+                                    ON PSLP.ext_listId = PSL.listId 
+                            WHERE PSLU.ext_usrid = ?
+                            GROUP BY PSL.listId;`;
+            DBconnection.query(sql, [usrid], (err, result) => {
+                if(err)
+                    throw err
+                else {
+                    res.send({"res" : "1", "result" : result})
+                }
+                DBconnection.end()
+            })
+
+        })
+        .catch(err => console.error(err))
+
+    } else {
+        res.send({"res" : "0", "msg" : "No usrid"})
+    }
+})
+
+server.put("/edit-personal-shopping-list", (req, res) => {
+    
+})
+
+server.post("/add-product-to-personal-shopping-list", (req, res) =>{
+
+    const {listId, productId} = req.query;
+
+    if(listId && productId){
+        PromiseConnectionDB()
+        .then((DBconnection) => {
+            const sql = "SELECT ref_productId FROM PShopListProduct WHERE ref_productId = ?"
+            DBconnection.query(sql, [productId], (err, result) => {
+                if(err)
+                    throw err
+                else if(result.length) {
+                    res.send({"res" : "1", "msg" : "Product already added to personal shopping list"})
+                } else {
+                    const sql = "INSERT INTO PShopListProduct (ext_listId,ref_productId) VALUES (?, ?)";
+                    DBconnection.query(sql, [listId,productId], err => {
+                        if(err)
+                            throw err
+                        else {
+                            res.send({"res" : "2", "msg" : "Product added to personal shopping list"})
+                        }
+                    })
+                }
+                DBconnection.end()
+            })
+
+        })
+        .catch(err => console.error(err))
+    }
+
+})
 
 server.listen(listeningPort);
 
