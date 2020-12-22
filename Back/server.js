@@ -680,7 +680,8 @@ server.post("/create-personal-shopping-list", (req,res) =>{
         console.log("entra")
         PromiseConnectionDB()
         .then((DBconnection) => {
-            //Select siempre devuelve un array, y cuidado con el like, si hay un correo que lo contiene te entran
+            //Select siempre devuelve un array, y cuidado con el like, si hay un correo que lo contiene te entraN
+
             const sql = "INSERT INTO PersonalShoppingList (listName,APISMarketId,APISMarketName) VALUES (?, ?, ?)";
             DBconnection.query(sql, [listname, supermarketid, supermarketname], (err, result) => {
                 if(err)
@@ -740,7 +741,30 @@ server.get("/get-personal-shopping-list", (req, res) => {
 })
 
 server.put("/edit-personal-shopping-list", (req, res) => {
-    
+
+    const { listId, listName, APISMarketId, APISMarketName} = req.query;
+    const {newListName, newMarketId, newMarketName} = req.body;
+
+    if(listId && listName && APISMarketId && APISMarketName){
+        PromiseConnectionDB()
+        .then((DBconnection) => {
+
+            const sql = `UPDATE PersonalShoppingList 
+                                SET listName = ?, APISMarketId = ?,APISMarketName = ? WHERE listId = ? AND
+                                      listName = ? AND 
+                                      APISMarketId = ? AND 
+                                      APISMarketName = ?;`;
+            DBconnection.query(sql, [newListName, newMarketId, newMarketName,listId,listName, APISMarketId, APISMarketName], err => {
+                if(err)
+                    res.send({"res" : "0", "msg" : err})
+                else {
+                    res.send({"res" : "1", "msg" : "Updated shopping list"})
+                }
+            })
+
+        })
+        .catch(err => console.error(err))
+    }
 })
 
 server.post("/add-product-to-personal-shopping-list", (req, res) =>{
