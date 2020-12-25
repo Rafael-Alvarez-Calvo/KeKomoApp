@@ -15,5 +15,5 @@ function validateCredentials(strEmail, strPsw){
     return (validatePsw(strPsw) && validateEmail(strEmail));
 }
 
-module.exports = validateCredentials;
-module.exports = validateEmail;
+
+module.exports = {"validateCredentials" : validateCredentials, "validateEmail" : validateEmail, "validatePsw" : validatePsw}

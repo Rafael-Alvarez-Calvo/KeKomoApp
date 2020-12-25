@@ -215,6 +215,20 @@ CREATE TABLE IF NOT EXISTS PShopListProduct  (
         -- ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS UserProductFav  (
+	`UserProductFavId` INT NOT NULL AUTO_INCREMENT,
+    `ext_usrid` INT NOT NULL,
+	`ref_productId` INT NOT NULL,
+    PRIMARY KEY(UserProductFavId),
+    FOREIGN KEY (ext_usrid)
+        REFERENCES users(usrid)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        -- ON DELETE CASCADE
+);
+
+
+
 
 
 INSERT INTO users VALUES(1,'admin', 'admin','admin');
