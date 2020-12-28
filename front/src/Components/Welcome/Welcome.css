@@ -1,0 +1,139 @@
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.BG{
+    position: absolute;
+    width: 800px;
+    height: 600px;
+    transform: translate(0px, 240px);
+    z-index: -2;
+}
+
+.gradientBG{
+    position: absolute;
+    width: 1000px;
+    height: 818px;
+    left: 0px;
+    top: 0px;
+    background: linear-gradient(179.58deg, rgba(255, 255, 255, 0) 21.14%, #FFFFFF 75.62%), linear-gradient(180deg, rgba(227, 249, 166, 0) 36.22%, #E3F9A6 66.93%);
+    z-index: -1;
+}
+
+.registerBtn{
+    padding: 10px 110px 10px 110px;
+    margin: 390px 50px 0 50px;
+    text-align: center;
+    background: #188161;
+    border-radius: 22px;
+    border: none;
+    outline: none;
+    color: white;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.comingInSeparator{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.Separator{
+    background: #188161;
+    border: .5px solid #188161;
+    transform: rotate(90deg);
+    height: 110px;
+    margin: -29px 75px 0 75px;
+}
+
+.comingIn{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 140%;
+    color: #188161;
+}
+
+.loginSocialBtnContainer{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    /* margin: 0px 1000px 0 1000px; */
+}
+
+.loginSocialBtn{
+    background: none;
+    border: none;
+    border-radius: 150px;
+    margin-top: -30px ;
+    outline: none;
+}
+.loginSocialBtn.google{
+    margin-right: 10px;
+}
+.loginSocialBtn.facebook{
+    margin-left: 10px;
+}
+
+.loginSocialGImg{
+    width: 45px;
+    height: 45px;
+}
+.loginSocialFImg{
+    width: 50px;
+    height: 50px;
+}
+
+.downSeparator{
+    background: #188161;
+    border: 1px solid #188161;
+    margin-top: 17px;
+    width: 333px;
+}
+
+.loginContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.loginBtn{
+    color: #188161;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    /* width: 281px;
+    height: 46px; */
+    background: #FFB758;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 26px;
+    border: none;
+    outline: none;
+    padding: 15px 32px;
+}
+
+.comeInAsGuest{
+    color: #F87E0D;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    letter-spacing: 0.01em;
+    line-height: 140%;
+    margin-top: 20px;
+    text-decoration: none;
+    text-align: center;
+}
+
+
