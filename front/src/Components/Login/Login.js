@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from '../../Hooks/useForm'
 import { useEndPoints } from '../../Hooks/useEndPoints'
 import { useFetch } from '../../Hooks/useFetch'
-import './Login.css'
+import LoginCss from './Login.css'
 
 export const Login = () => {
 
@@ -77,7 +77,7 @@ export const Login = () => {
                 <i className="fas fa-key"></i>
                 <i className="fas fa-eye" onClick={handlePswVisibility}></i>
 
-                <button type="submit" className="loginBtn">Entrar</button>
+                <button type="submit" className="LoginCss.loginBtn">Entrar</button>
             </form>
         </>
     )

@@ -927,30 +927,6 @@ server.delete("/delete-product-from-favourites", (req, res) => {
     }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 server.listen(listeningPort);
 
 

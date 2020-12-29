@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Login } from '../Login/Login'
-import './Welcome.css'
+import WelcomeCss from './Welcome.css'
 
 export const Welcome = () => {
 
@@ -19,7 +19,7 @@ export const Welcome = () => {
                 <div className="gradientBG"></div>
             </div>
 
-            <button type="button" className="registerBtn" >Registrarme</button>
+            <div className="btnRegisterContainer"><button type="button" className="registerBtn" >Registrarme</button></div>
 
             <div className="comingInSeparator">
                 <hr className="Separator" />
@@ -35,7 +35,7 @@ export const Welcome = () => {
             <hr className="downSeparator" />
             
             <div className="loginContainer">
-                <button type="button" id="login" className="loginBtn" onClick={handleClick}>Iniciar sesion con email</button>
+                <button type="button" id="login" className={WelcomeCss.loginBtn} onClick={handleClick}>Iniciar sesion con email</button>
                 <a className="comeInAsGuest" href="#">Entrar sin iniciar sesión</a>
             </div>
 
