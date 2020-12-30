@@ -272,7 +272,8 @@ server.get("/facebook-login", async (req, res) => {
                             
                         
                     } else {
-                        res.send({"res" : "2", "msg" : "User facebook to fill form", data});
+                        // res.send({"res" : "2", "msg" : "User facebook to fill form", data});
+                        res.redirect(`${process.env.FRONT_URL}/external-login-succesfull`)
                     }
                     DBconnection.end();
                 });
@@ -314,7 +315,6 @@ server.get("/google-login", async (req, res) => {
                             res.send({"res" : "-2", "msg" : err})
                         } else if (result.length){
 
-
                             //Generate JWT
                             const Payload = {
                                 "usrid" : result[0].usrid,
@@ -338,13 +338,25 @@ server.get("/google-login", async (req, res) => {
                                 
                         } else {
 
-                            res.send({"res" : "2", "msg" : "User Google to fill form", userData})
+                            // res.send({"res" : "2", "msg" : "User Google to fill form", userData})
+
+                            const Payload = {
+                                "usrid" : id,
+                                "name" : name,
+                                "email" : email,
+                                "provider" : "google"
+                            };
+
+                            const jwt = JWT.generateJWT(Payload);
+
+                            res.cookie("Oauth", jwt, {"httpOnly" : true})
+                            res.redirect(`${process.env.FRONT_URL}/external-login-succesfull`)
+
                         }
                         DBconnection.end();
                     });
                 })
                 .catch(err => res.send({"res" : "-3", "msg" : err}))
-                
             }
 
         } else {

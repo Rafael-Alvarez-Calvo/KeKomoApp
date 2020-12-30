@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { Welcome } from './Components/Welcome/Welcome.js';
+import { App } from './App.js';
 // import { Login } from './Components/Login/Login';
 
 
 
 ReactDOM.render(
     <>
-      <Welcome />
+      <App />
       {/* <Login /> */}
     </>,
   

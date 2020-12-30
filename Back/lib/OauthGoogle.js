@@ -35,27 +35,32 @@ function getGoogleAuthURL() {
 }
 
 async function getGoogleUser(code) {
-	if (code) {
-		const { tokens } = await oauth2Client.getToken(code);
-		oauth2Client.setCredentials(tokens);
-		if (tokens.id_token && tokens.access_token) {
-			// Fetch the user's profile with the access token and bearer
-			try {
-				const res = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`, {
-					"headers": {
-						"Authorization": `Bearer ${tokens.id_token}`
-					}
-				});
-				const googleUser = await res.json();
-				return googleUser;
-			} catch (error) {
-				// eslint-disable-next-line no-console
-				console.log(error);
-				// throw new Error(error.message);
+	try{
+		
+		if (code) {
+			const { tokens } = await oauth2Client.getToken(code);
+			oauth2Client.setCredentials(tokens);
+			if (tokens.id_token && tokens.access_token) {
+				// Fetch the user's profile with the access token and bearer
+				try {
+					const res = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`, {
+						"headers": {
+							"Authorization": `Bearer ${tokens.id_token}`
+						}
+					});
+					const googleUser = await res.json();
+					return googleUser;
+				} catch (error) {
+					// eslint-disable-next-line no-console
+					console.log(error);
+					// throw new Error(error.message);
+				}
 			}
 		}
+		return null;
+	} catch(error){
+		return null;
 	}
-	return null;
 	//JWT
 }
 

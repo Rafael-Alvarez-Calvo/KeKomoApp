@@ -3,9 +3,12 @@ import { useForm } from '../../Hooks/useForm'
 import { useEndPoints } from '../../Hooks/useEndPoints'
 import { useFetch } from '../../Hooks/useFetch'
 import LoginCss from './Login.css'
+import { useRedirect } from '../../Hooks/useRedirect'
 
 export const Login = () => {
 
+    const redirect = useRedirect();
+    
     const [formValues, handleInputChange] = useForm({
         email : "",
         password : "",
@@ -78,6 +81,7 @@ export const Login = () => {
                 <i className="fas fa-eye" onClick={handlePswVisibility}></i>
 
                 <button type="submit" className="LoginCss.loginBtn">Entrar</button>
+                <button onClick={() => {redirect("/")}}>Algo</button>
             </form>
         </>
     )
