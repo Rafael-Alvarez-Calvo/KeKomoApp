@@ -8,8 +8,7 @@ export const useForm = (initialState = {}) => {
         
         setValues({
             ...values,
-            [target.name] : target.value,
-            [target.password] : target.value
+            [target.name] : target.value
 
         })
     }

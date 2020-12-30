@@ -26,7 +26,7 @@ server.use(publicFiles);
 //Setup body parser for json use
 server.use(bodyParser.urlencoded({"extended" : false}));
 server.use(bodyParser.json());
-server.use(corsEnable());
+server.use(corsEnable({origin : `${process.env.FRONT_URL}`, credentials : true}));
 server.use(cookieParser());
 // server.use(VerifySession);
 
@@ -244,7 +244,7 @@ server.get("/facebook-login", async (req, res) => {
                 DBconnection.query(sql, [email, id], (err, result) => {
 
                     if (err){
-                        res.send({"res" : "-2", "msg" : err})
+                        res.redirect(`${process.env.FRONT_URL}/error/-2`)
                     } else if (result.length){
 
                             //Generate JWT
@@ -264,27 +264,37 @@ server.get("/facebook-login", async (req, res) => {
 
                                 //Access as administrator
                             res.cookie("JWT", jwt, {"httpOnly" : true})
-                                .send({"res" : "1", "msg" : `${result[0].name} has been found in usersFacebook and logged in with facebook`});
+                            res.redirect(`${process.env.FRONT_URL}/login-successful`)
 
                             } else {
-                                res.send({"res" : "-1", "msg" : "JWT not verified"})
+                                res.redirect(`${process.env.FRONT_URL}/error/-1`)
                             }
                             
-                        
                     } else {
+
+                        const Payload = {
+                            "usrid" : id,
+                            "name" : name,
+                            "email" : email,
+                            "provider" : "facebook"
+                        };
+
+                        const jwt = JWT.generateJWT(Payload);
+
+                        res.cookie("JWT", jwt, {"httpOnly" : true});
                         // res.send({"res" : "2", "msg" : "User facebook to fill form", data});
-                        res.redirect(`${process.env.FRONT_URL}/external-login-succesfull`)
+                        res.redirect(`${process.env.FRONT_URL}/external-register-successful`);
                     }
                     DBconnection.end();
                 });
             })
-            .catch(err => res.send({"res" : "-3", "msg" : err}))
+            .catch(() => res.redirect(`${process.env.FRONT_URL}/error/-3`))
             
         } else {
-            res.send({"res" : "-4", "msg" : "Error in credentials"})
+            res.redirect(`${process.env.FRONT_URL}/error/-4`)
         }
     } else {
-        res.send({"res" : "-5", "msg" : "Left credentials"})
+        res.redirect(`${process.env.FRONT_URL}/error/-5`)
     }
 });
 
@@ -312,7 +322,9 @@ server.get("/google-login", async (req, res) => {
                     DBconnection.query(sql, [email,id], (err, result) => {
 
                         if (err){
-                            res.send({"res" : "-2", "msg" : err})
+                            // res.send({"res" : "-2", "msg" : err})
+                            res.redirect(`${process.env.FRONT_URL}/error/-2`)
+                            //poner en todos los que se haga la peticion desde el navegador y no desde un fetch
                         } else if (result.length){
 
                             //Generate JWT
@@ -330,10 +342,12 @@ server.get("/google-login", async (req, res) => {
 
                                 //Access as administrator
                                 res.cookie("JWT", jwt, {"httpOnly" : true})
-                                    .send({"res" : "1", "msg" : `${result[0].name} has been found in DB and logged in with google`});
+                                // res.send({"res" : "1", "msg" : `${result[0].name} has been found in DB and logged in with google`});
+                                res.redirect(`${process.env.FRONT_URL}/login-successful`)
 
                             } else {
-                                res.send({"res" : "-1", "msg" : "JWT not verified"})
+                                // res.send({"res" : "-1", "msg" : "JWT not verified"})
+                                res.redirect(`${process.env.FRONT_URL}/error/-1`)
                             }
                                 
                         } else {
@@ -350,22 +364,40 @@ server.get("/google-login", async (req, res) => {
                             const jwt = JWT.generateJWT(Payload);
 
                             res.cookie("Oauth", jwt, {"httpOnly" : true})
-                            res.redirect(`${process.env.FRONT_URL}/external-login-succesfull`)
+                            res.redirect(`${process.env.FRONT_URL}/external-register-successful`)
 
                         }
                         DBconnection.end();
                     });
                 })
-                .catch(err => res.send({"res" : "-3", "msg" : err}))
+                // .catch(err => res.send({"res" : "-3", "msg" : err}))
+                .catch(() => res.redirect(`${process.env.FRONT_URL}/error/-3`))
             }
 
         } else {
-            res.send({"res" : "-4", "msg" : "No userData"});
+            // res.send({"res" : "-4", "msg" : "No userData"});
+            res.redirect(`${process.env.FRONT_URL}/error/-4`)
         }
 
 	} else {
-        res.send({"res" : "-5", "msg" : "No code"})
+        // res.send({"res" : "-5", "msg" : "No code"})
+        res.redirect(`${process.env.FRONT_URL}/error/-5`)
     }
+});
+
+server.get("/get-oauth-user-data", (req, res) => {
+
+    res.clearCookie("Oauth")
+
+    if(JWT.verifyJWT(req.cookies.Oauth)){
+
+        res.send(JWT.getJWTInfo(req.cookies.Oauth));
+        //a front llega o datos de usuario o null
+    } else {
+        res.send({"error" : true});
+    }
+
+
 });
 
 server.get("/get-personal-shopping-list", (req, res) => {
@@ -520,7 +552,7 @@ server.post("/login", (req, res) =>{
         const {email, psw} = req.body;
 
         let Validated = validateCredentials(email, psw);
-
+        console.log(Validated);
         if(Validated || (email === "admin" && psw === "admin")){
 
             PromiseConnectionDB()
@@ -771,7 +803,7 @@ server.post("/create-personal-shopping-list", (req,res) =>{
 
 server.post("/add-product-to-personal-shopping-list", (req, res) =>{
 
-    const {listId, productId} = req.query;
+    const {listId, productId} = req.body;
 
     if(listId && productId){
         PromiseConnectionDB()
@@ -806,7 +838,7 @@ server.post("/add-product-to-personal-shopping-list", (req, res) =>{
 server.post("/add-product-to-favourites", (req, res) => {
 
     const { usrid } = JWT.getJWTInfo(req.cookies.JWT)
-    const { barcode } = req.query;
+    const { barcode } = req.body;
 
     if(usrid && barcode){
         PromiseConnectionDB()
@@ -840,8 +872,8 @@ server.post("/add-product-to-favourites", (req, res) => {
 //------------------------PUT--------------------------------//
 server.put("/edit-personal-shopping-list", (req, res) => {
 
-    const { listId, listName, APISMarketId, APISMarketName} = req.query;
-    const {newListName, newMarketId, newMarketName} = req.body;
+    // const { listId, listName, APISMarketId, APISMarketName} = req.query;
+    const {newListName, newMarketId, newMarketName, listId, listName, APISMarketId, APISMarketName} = req.body;
 
     if(listId && listName && APISMarketId && APISMarketName){
         PromiseConnectionDB()
@@ -870,7 +902,7 @@ server.put("/edit-personal-shopping-list", (req, res) => {
 //------------------------DELETE---------------------------//
 server.delete("/delete-personal-shopping-list", (req, res) => {
 
-    const {listId} = req.query;
+    const {listId} = req.body;
     if(listId){
         PromiseConnectionDB()
         .then((DBconnection) => {
@@ -918,7 +950,7 @@ server.delete("/delete-product-from-personal-shopping-list", (req, res) => {
 server.delete("/delete-product-from-favourites", (req, res) => {
 
     const { usrid } = JWT.getJWTInfo(req.cookies.JWT);
-    const {UserProductFavId} = req.query;
+    const {UserProductFavId} = req.body;
 
     if(usrid && UserProductFavId){
         PromiseConnectionDB()

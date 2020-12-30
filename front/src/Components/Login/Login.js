@@ -1,40 +1,40 @@
 import React, { useState } from 'react'
 import { useForm } from '../../Hooks/useForm'
-import { useEndPoints } from '../../Hooks/useEndPoints'
-import { useFetch } from '../../Hooks/useFetch'
+import { Fetch, useFetch } from '../../Hooks/useFetch'
 import LoginCss from './Login.css'
 import { useRedirect } from '../../Hooks/useRedirect'
 
 export const Login = () => {
 
     const redirect = useRedirect();
-    
+
     const [formValues, handleInputChange] = useForm({
         email : "",
-        password : "",
+        psw : "",
     })
 
     // const [statePsw, setStatePsw] = useState({
-    //     type : 'password',
+    //     type : 'psw',
     //     className : 'fas fa-eye'
     // })
 
-    const {email, password} = formValues;
+    const {email, psw} = formValues;
 
     const handlePswVisibility = (e) => {
 
         e.preventDefault();
 
-        const password = document.querySelector('#psw');
-        const type = password.type === 'password' ? 'text' : 'password';        
-        const placeholder = password.placeholder === '**********' ? 'password' : '**********';     
+        const psw = document.querySelector('#psw');
+        const type = psw.type === 'psw' ? 'text' : 'psw';        
+        const placeholder = psw.placeholder === '**********' ? 'psw' : '**********';     
 
         e.target.className = e.target.className === 'fas fa-eye' ? 'fas fa-eye-slash' : 'fas fa-eye';
-        password.type = type;
-        password.placeholder = placeholder;
-        // const password = document.querySelector('#psw');
-        // const type = password.type === 'password' ? setStatePsw({type : 'text'}) : statePsw;
-        // password.setAttribute('type', type);
+        psw.type = type;
+        psw.placeholder = placeholder;
+
+        // const psw = document.querySelector('#psw');
+        // const type = psw.type === 'psw' ? setStatePsw({type : 'text'}) : statePsw;
+        // psw.setAttribute('type', type);
         // const className = e.target.className === statePsw.className ? setStatePsw({className : 'fas fa-eye-slash'}) : statePsw.className
         // e.target.className = className
 
@@ -42,11 +42,12 @@ export const Login = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        fetchLogin();
+        Fetch(`${process.env.REACT_APP_backUrl}/login`, {method : "post", data : {...formValues}})
+        .then(data => {
+            console.log(data);
+        })
+        
     }
-
-    const {url,fetchLogin} = useEndPoints()
-    const {data} = useFetch(`${url}`)
 
     return (
         <>
@@ -71,11 +72,11 @@ export const Login = () => {
                 <input 
                     id="psw"
                     type="password"
-                    name="password"
+                    name="psw"
                     className="psw-control"
                     placeholder="**********"
                     autoComplete="off"
-                    value={password}
+                    value={psw}
                     onChange={handleInputChange} />
                 <i className="fas fa-key"></i>
                 <i className="fas fa-eye" onClick={handlePswVisibility}></i>

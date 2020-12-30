@@ -45,6 +45,10 @@ function generateJWT(Payload) {
 }
 
 function verifyJWT(jwt) {
+    
+    if(!jwt)
+        return false
+        
     const [header, payload, signature] = jwt.split(".");
     if (header && payload && signature) {
         const expectedSignature = parseBase64(hash(`${header}.${payload}`));
