@@ -105,8 +105,8 @@ export const useFetch = (url, opt) => {
         .then(data => setResponse({response: data, error : null, isLoading : false}))
         .catch(error => setResponse({response: null, error, isLoading : false}))
 
-    }, [url]);
+    }, [url,opt]);
 
     return response;
-    // const [error, setError] = useState(null)
+    
 }

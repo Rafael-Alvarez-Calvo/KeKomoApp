@@ -1,88 +1,164 @@
-import React, { useState } from 'react'
-import { useForm } from '../../Hooks/useForm'
-import { Fetch, useFetch } from '../../Hooks/useFetch'
-import LoginCss from './Login.css'
-import { useRedirect } from '../../Hooks/useRedirect'
+import React, { useState, useEffect, useContext } from 'react';
+import { useForm } from '../../Hooks/useForm';
+import { Fetch } from '../../Hooks/useFetch';
+import { useRedirect } from '../../Hooks/useRedirect';
+import { useValidator } from '../../Hooks/useValidator';
+import { LoginContext } from '../../Contexts/LoginContext';
+import { Error } from '../Advices/Error';
+import LoginCss from './Login.module.css';
 
 export const Login = () => {
 
-    const redirect = useRedirect();
+    const Redirect = useRedirect();
+    const Login = useContext(LoginContext);
+    const {validateCredentials, validateEmail, validatePsw} = useValidator();
 
     const [formValues, handleInputChange] = useForm({
         email : "",
         psw : "",
     })
 
-    // const [statePsw, setStatePsw] = useState({
-    //     type : 'psw',
-    //     className : 'fas fa-eye'
-    // })
+    const [statePsw, setStatePsw] = useState({
+        type : "password",   
+        placeholder : "**********"
+    })
 
-    const {email, psw} = formValues;
+    let {email, psw} = formValues;
+    const {type, placeholder} = statePsw;
 
-    const handlePswVisibility = (e) => {
+    const HandlePswVisibility = (e) => {
 
         e.preventDefault();
 
         const psw = document.querySelector('#psw');
-        const type = psw.type === 'psw' ? 'text' : 'psw';        
-        const placeholder = psw.placeholder === '**********' ? 'psw' : '**********';     
+        
+        setStatePsw({
+            ...statePsw,
+            type : "password" ? "text" : "password",
+            placeholder : "**********" ? "123ytube" : "**********"
+        });
+
+        psw.type = statePsw.type
+        psw.placeholder = statePsw.placeholder
 
         e.target.className = e.target.className === 'fas fa-eye' ? 'fas fa-eye-slash' : 'fas fa-eye';
-        psw.type = type;
-        psw.placeholder = placeholder;
-
-        // const psw = document.querySelector('#psw');
-        // const type = psw.type === 'psw' ? setStatePsw({type : 'text'}) : statePsw;
-        // psw.setAttribute('type', type);
-        // const className = e.target.className === statePsw.className ? setStatePsw({className : 'fas fa-eye-slash'}) : statePsw.className
-        // e.target.className = className
-
     }
 
+    useEffect(() => {
+        
+    }, [statePsw])
+
     const handleSubmit = (e) =>{
+
         e.preventDefault();
-        Fetch(`${process.env.REACT_APP_backUrl}/login`, {method : "post", data : {...formValues}})
-        .then(data => {
-            console.log(data);
-        })
+
+        if(!validateEmail(email)){
+            email = "";
+            document.querySelector("#email").className = `${LoginCss.ErrorInput}`;
+            setTimeout(() => {
+                document.querySelector("#email").className = ""
+            },1500)
+
+        }
+
+        if(!validatePsw(psw)){
+            psw = "";
+            document.querySelector("#psw").className = `${LoginCss.ErrorInput}`;
+            setTimeout(() => {
+                document.querySelector("#psw").className = "";
+            },1500)
+        }
+
+        if(validateCredentials(email, psw)){
+
+            Fetch(`${process.env.REACT_APP_backUrl}/login`, {method : "post", data : {...formValues}})
+            .then(data => {
+                // console.log(data);
+                if(data){
+                    const {res, msg, result} = data;
+                    console.log(res);
+
+                    switch(res){
+
+                        case "1" :
+                            Login.setLoginUserInfo(result)
+                            Redirect("/login-successful");
+                            break;
+                        case "-1" :
+                            
+                            break;
+                        case "-2" :
+                            console.log(Error)
+                            return <Error res={res} msg={msg} />;
+                        case "-3" :
+                            
+                            break;
+                        case "-4" :
+                            return <Error res={res} msg={msg}/>;
+                    
+                    }
+                }
+            })
+
+        } else {
+
+            email = "";
+            psw = "";
+            document.querySelector("#email").className = `${LoginCss.ErrorInput}`;
+            document.querySelector("#psw").className = `${LoginCss.ErrorInput}`;
+            setTimeout(() => {
+                document.querySelector("#email").className = "";
+                document.querySelector("#psw").className = "";
+            },1500)
+            return (
+                <div className={LoginCss.ErrorInCredentials}>
+                    <p>El email o contraseña que has introducido no son correctas, recuerda que la contraseña debe ser:</p>
+                    <ul>
+                        <li>Al menos una letra y un número</li>
+                        <li>No puede contener carácteres alfanuméricos</li>
+                        <li>Contener al menos seis carácteres</li>
+                    </ul>
+
+                </div>
+            );
+        }
         
     }
 
     return (
         <>
-            <div className="mainContainer">
-                <img src="../../background.jpg" alt="Background" className="BG" />
-                <div className="gradientBG"></div>
+            <div className={LoginCss.mainContainer}>
+                <img src="../../background.jpg" alt="Background" className={LoginCss.BG} />
+                <div className={LoginCss.gradientBG}></div>
             </div>
-            <form onSubmit={handleSubmit} className="loginForm">
-                <h1 className="titleLogin">Iniciar sesión</h1>
+            <form onSubmit={handleSubmit} className={LoginCss.loginForm}>
+                <h1 className={LoginCss.titleLogin}>Iniciar sesión</h1>
                 <label>Tu email</label>
                 <input 
+                    id="email"
                     type="text"
                     name="email"
-                    className="email-control"
                     placeholder="example@gmail.com"
                     autoComplete="off"
                     value={email}
                     onChange={handleInputChange}/>
-                <i className="far fa-envelope"></i>   
+                <i id={LoginCss.envelope} className="far fa-envelope"></i>   
 
-                <label className="label">Tu contraseña</label>
+                <label>Tu contraseña</label>
                 <input 
                     id="psw"
-                    type="password"
+                    type={type}
                     name="psw"
-                    className="psw-control"
-                    placeholder="**********"
+                    placeholder={placeholder}
                     autoComplete="off"
                     value={psw}
                     onChange={handleInputChange} />
-                <i className="fas fa-key"></i>
-                <i className="fas fa-eye" onClick={handlePswVisibility}></i>
+                <i id={LoginCss.key} className="fas fa-key"></i>
+                <i id={LoginCss.eye} className="fas fa-eye" onClick={HandlePswVisibility}></i>
 
-                <button type="submit" className="LoginCss.loginBtn">Entrar</button>
-                <button onClick={() => {redirect("/")}}>Algo</button>
+                <button type="submit" className={LoginCss.loginBtn}>Iniciar sesión</button>
+                <button type="button" className={LoginCss.forgotPsw} onClick={(e) => Redirect("/change-password", e)}>¿Has olvidado tu contraseña?</button>
+                {/* <button className={LoginCss.backBtn} onClick={() => {redirect("/")}}>&lt;</button> */}
             </form>
         </>
     )

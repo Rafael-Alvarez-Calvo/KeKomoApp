@@ -138,6 +138,9 @@
     margin-top: 20px;
     text-decoration: none;
     text-align: center;
+    background: none;
+    border: none;
+    outline: none;
 }
 
 

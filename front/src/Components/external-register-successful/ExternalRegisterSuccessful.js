@@ -22,7 +22,7 @@ export const ExternalRegisterSuccessful = () => {
             }
         })
         .catch(() => Redirect("/"));
-    }, [])
+    })
 
     return (
         <>

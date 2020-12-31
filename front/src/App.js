@@ -3,13 +3,18 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import { Welcome } from './Components/Welcome/Welcome'
 import {Login} from './Components/Login/Login'
 import { RegisterProvider } from './Contexts/RegisterContext'
+import { LoginProvider } from './Contexts/LoginContext'
 import { ExternalRegisterSuccessful } from './Components/external-register-successful/ExternalRegisterSuccessful'
 import { InfoUserForm } from './Components/info-user-form/InfoUserForm'
+import { SignUp } from './Components/SignUp/SignUp'
+import { Error } from './Components/Advices/Error'
+import { Dashboard } from './Components/Dashboard/Dashboard'
 
 
 export const App = () => {
 
-    const [registerUserInfo, setRegisterUserInfo] = useState({})
+    const [registerUserInfo, setRegisterUserInfo] = useState({});
+    const [loginUserInfo, setLoginUserInfo] = useState({});
 
     return (
         <>
@@ -22,8 +27,8 @@ export const App = () => {
                         <Login />
                     </Route>
                     <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
-                        <Route path="/signup">
-                            {/* <SignUp /> */}
+                        <Route path="/Register">
+                            <SignUp />
                         </Route>
                         <Route path="/external-register-successful">
                             <ExternalRegisterSuccessful />
@@ -32,8 +37,13 @@ export const App = () => {
                             <InfoUserForm />
                         </Route>
                     </RegisterProvider>
-                    <Route path="/login-successful"></Route>
+                    <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+                        <Route path="/login-successful">
+                            <Dashboard />
+                        </Route>
+                    </LoginProvider>
                     <Route path="/error/:id"></Route>
+                    
                 </Switch>
             </Router>
         </>

@@ -1,0 +1,4 @@
+cambiar state ojito psw
+responsive tablet pc
+css active and hover buttons animaciones boton
+gestion de avisos con switch case
