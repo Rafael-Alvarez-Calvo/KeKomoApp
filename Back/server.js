@@ -552,7 +552,7 @@ server.post("/login", (req, res) =>{
         const {email, psw} = req.body;
 
         let Validated = validateCredentials(email, psw);
-        console.log(Validated);
+        
         if(Validated || (email === "admin" && psw === "admin")){
 
             PromiseConnectionDB()
@@ -563,7 +563,7 @@ server.post("/login", (req, res) =>{
                 const sql = `SELECT U.* FROM users AS U JOIN PersonalUsers AS PU ON U.usrid = PU.ext_usrid WHERE PU.psw = ? AND U.email = ?`; 
                 DBconnection.query(sql, [psw, email], (err, result) => {
                     if (err){
-                        throw err;
+                        res.send({"res" : "-1", "msg" : err})
                     } else if (result.length){
 
                         //Generate JWT
@@ -578,32 +578,33 @@ server.post("/login", (req, res) =>{
                         //COMPLETE Payload
 
                         const jwt = JWT.generateJWT(Payload);
-                        const jwtVerified = JWT.verifyJWT(jwt);
-
-                        if(jwtVerified){
-
-                            //Access as administrator
+                        // const jwtVerified = JWT.verifyJWT(jwt);
                         res.cookie("JWT", jwt, {"httpOnly" : true})
-                            .send({"res" : "1", "msg" : `${result[0].name} has logged in`, "result" : result});
+                            .send({"res" : "1", "msg" : `${result[0].name} has logged in`, result});
 
-                        } else {
-                            res.send({"res" : "0", "msg" : "JWT not verified"})
-                        }
+                        // if(jwtVerified){
+
+                        //     //Access as administrator
+                        
+
+                        // } else {
+                        //     res.send({"res" : "-1", "msg" : "JWT not verified"})
+                        // }
                             
                         
                     } else {
-                        res.send({"res" : "0", "msg" : "User not registered"});
+                        res.send({"res" : "-2", "msg" : "User not registered"});
                     }
                     DBconnection.end();
                 });
 
             })      
-            .catch(e => res.send({"res" : "0", "msg" : "Unable to connect to database", "e" : console.error(e) }));
+            .catch(e => res.send({"res" : "-3", "msg" : "Unable to connect to database", "e" : console.error(e) }));
             
 
         } else {
 
-            res.send({"res" : "0", "msg" : "Error in credentials"})
+            res.send({"res" : "-4", "msg" : "Error in credentials"})
         }
 
     }
