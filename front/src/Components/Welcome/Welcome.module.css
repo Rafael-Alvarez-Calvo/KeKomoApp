@@ -6,8 +6,10 @@
 
 .BG{
     position: absolute;
-    width: 100%;
+    width: 1000px;
     height: 100%;
+    top: 0px;
+    left: 0px;
     z-index: -2;
 }
 
@@ -88,8 +90,8 @@
 }
 
 .loginSocialGImg{
-    width: 44px;
-    height: 44px;
+    width: 43px;
+    height: 43px;
 }
 .loginSocialFImg{
     width: 50px;

@@ -10,7 +10,7 @@ export const Welcome = () => {
 
     return (
         <>
-            <button className={WelcomeCss.backBtn} onClick={() => {history.go(-1)}}>Atras</button>
+            {/* <button className={WelcomeCss.backBtn} onClick={() => {history.go(-1)}}>Atras</button> */}
             <div className={WelcomeCss.mainContainer}>
                 <img src="../../background.jpg" alt="Background" className={WelcomeCss.BG} />
                 <div className={WelcomeCss.gradientBG}></div>
@@ -34,7 +34,7 @@ export const Welcome = () => {
             
             <div className={WelcomeCss.loginContainer}>
                 <button type="button" id="login" className={WelcomeCss.loginBtn} onClick={(e) => Redirect("/Login", e)}>Iniciar sesion con email</button>
-                <button className={WelcomeCss.comeInAsGuest} onClick={(e) => Redirect("/Dashboard", e)}>Entrar sin iniciar sesión</button>
+                <button className={WelcomeCss.comeInAsGuest} onClick={(e) => Redirect("/guest", e)}>Entrar sin iniciar sesión</button>
             </div>
         </>
     )

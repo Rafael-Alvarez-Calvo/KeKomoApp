@@ -1,0 +1,105 @@
+.archContainer{
+    /* display: flex;
+    flex-direction: row;
+    justify-content: center; */
+    background: #FFB758;
+    border-bottom-left-radius : 3000px;
+    border-bottom-right-radius : 3000px;
+    height: 250px;
+    width: 500px;
+    margin-top: -140px;
+    margin-left: -37px;
+    
+}
+
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.WelcomeTitle{
+    color: #188161;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 23px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.userName{
+    color: #188161;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 23px;
+    margin-top: 0px;
+    text-align: center;
+}
+
+.mainText{
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 32px;
+    text-align: center;
+    letter-spacing: 0.18px;
+    padding : 0px 25px 0px 25px;
+    margin-top: 0px;
+}
+
+b{
+    color: #188161;
+    font-size: 18px;
+}
+
+.subtitle{
+    color: #188161;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    letter-spacing: 0.18px;
+    margin-top: 10px;
+}
+
+.nextBtn{
+    color: #188161;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 18px;
+    background: #FFB758;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 26px;
+    padding: 8px 32px;
+    margin: 10px 50px 0 50px;
+    border: none;
+    outline: none;
+    text-align: center;
+}
+
+.laterBtn{
+    color: #188161;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 18px;
+    background: none;
+    border: none;
+    outline: none;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.bottomImage{
+    align-self: center;
+    width: 350px;
+    height: 350px;
+    margin-bottom: 0px;
+}
+

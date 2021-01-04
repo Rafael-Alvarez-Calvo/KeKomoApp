@@ -281,7 +281,7 @@ server.get("/facebook-login", async (req, res) => {
 
                         const jwt = JWT.generateJWT(Payload);
 
-                        res.cookie("JWT", jwt, {"httpOnly" : true});
+                        res.cookie("Oauth", jwt, {"httpOnly" : true});
                         // res.send({"res" : "2", "msg" : "User facebook to fill form", data});
                         res.redirect(`${process.env.FRONT_URL}/external-register-successful`);
                     }
@@ -522,26 +522,25 @@ server.post("/signup", (req,res) =>{
                 const sql = "SELECT U.* FROM users U INNER JOIN PersonalUsers PU ON PU.ext_usrid = U.usrid WHERE email = ?";
                 DBconnection.query(sql, [email], (err, result) => {
                     if (err){
-                        res.send({"res" : "0", "msg" : err});
+                        res.redirect(`${process.env.FRONT_URL}/error/-1`)
 
                     } else if (result.length){
-                        res.send({"res" : "1", "msg" : "Usuario ya registrado!"});
+                        res.redirect(`${process.env.FRONT_URL}/login`)
 
                     } else {
-                        res.send({"res" : "2", "msg" : "User to fill the form"});   
+                        res.send({"res" : "1", "msg" : "User to fill the form"});   
                     }
                     DBconnection.end();
                 });
             })
-            .catch((e) => {
-                if (e === "DBError")
-                    res.send({"res" : "0", "msg" : "Error connection to database"});
+            .catch(() => {
+                res.redirect(`${process.env.FRONT_URL}/error/-2`)
             });    
         } else {
-            res.send({"res" : "0", "msg" : "Error in credentials"})
+            res.redirect(`${process.env.FRONT_URL}/error/-3`)
         }
     } else {
-        res.send({"res" : "0", "msg" : "No data in req.body"})
+        res.redirect(`${process.env.FRONT_URL}/error/-4`)
     }
 })
 

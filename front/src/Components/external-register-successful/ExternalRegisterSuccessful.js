@@ -10,19 +10,20 @@ export const ExternalRegisterSuccessful = () => {
 
     useEffect(() => {
 
-        console.log(Register);
         Fetch(`${process.env.REACT_APP_backUrl}/get-oauth-user-data`)
         .then((userData) => {
+            
             if(!userData.error){
-
+                console.log(userData);
                 Register.setRegisterUserInfo(userData)
-                Redirect("/info-user-form");
-            } else {
-                Redirect("/");
+                Redirect("/welcome-user-form")
+                
+            // } else {
+            //     // Redirect("/");
             }
         })
         .catch(() => Redirect("/"));
-    })
+    }, [Register, Redirect])
 
     return (
         <>

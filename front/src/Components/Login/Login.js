@@ -11,6 +11,7 @@ export const Login = () => {
 
     const Redirect = useRedirect();
     const Login = useContext(LoginContext);
+    // console.log(Login);
     const {validateCredentials, validateEmail, validatePsw} = useValidator();
 
     const [formValues, handleInputChange] = useForm({
@@ -81,7 +82,7 @@ export const Login = () => {
                     switch(res){
 
                         case "1" :
-                            Login.setLoginUserInfo(result)
+                            Login.setLoginUserInfo(result);
                             Redirect("/login-successful");
                             break;
                         case "-1" :
@@ -95,33 +96,37 @@ export const Login = () => {
                             break;
                         case "-4" :
                             return <Error res={res} msg={msg}/>;
+
+                        default :
+                            break;
                     
                     }
                 }
             })
 
-        } else {
+        } 
+        // else {
 
-            email = "";
-            psw = "";
-            document.querySelector("#email").className = `${LoginCss.ErrorInput}`;
-            document.querySelector("#psw").className = `${LoginCss.ErrorInput}`;
-            setTimeout(() => {
-                document.querySelector("#email").className = "";
-                document.querySelector("#psw").className = "";
-            },1500)
-            return (
-                <div className={LoginCss.ErrorInCredentials}>
-                    <p>El email o contraseña que has introducido no son correctas, recuerda que la contraseña debe ser:</p>
-                    <ul>
-                        <li>Al menos una letra y un número</li>
-                        <li>No puede contener carácteres alfanuméricos</li>
-                        <li>Contener al menos seis carácteres</li>
-                    </ul>
+            // email = "";
+            // psw = "";
+            // document.querySelector("#email").className = `${LoginCss.ErrorInput}`;
+            // document.querySelector("#psw").className = `${LoginCss.ErrorInput}`;
+            // setTimeout(() => {
+            //     document.querySelector("#email").className = "";
+            //     document.querySelector("#psw").className = "";
+            // },1500)
+            // return (
+            //     <div className={LoginCss.ErrorInCredentials}>
+            //         <p>El email o contraseña que has introducido no son correctas, recuerda que la contraseña debe ser:</p>
+            //         <ul>
+            //             <li>Al menos una letra y un número</li>
+            //             <li>No puede contener carácteres alfanuméricos</li>
+            //             <li>Contener al menos seis carácteres</li>
+            //         </ul>
 
-                </div>
-            );
-        }
+            //     </div>
+            // );
+        // }
         
     }
 

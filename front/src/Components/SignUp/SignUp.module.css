@@ -22,14 +22,14 @@
     z-index: -1;
 }
 
-.loginForm{
+.SignUpForm{
     display: flex;
     flex-direction: column;
     padding: 40px;
-    margin-top: 350px;
+    margin-top: 300px;
 }
 
-.titleLogin{
+.titleSignUp{
     font-family: Lato;
     font-style: normal;
     font-weight: bold;
@@ -45,14 +45,14 @@ label{
     font-size: 14px;
     line-height: 140%;
     color: #188161;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 input{
     background: #FDFFFA;
     border: 1px solid #188161;
     padding: 15px 15px 15px 47px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     border-radius: 30px;
     outline: none;
     font-size: 17px;
@@ -65,29 +65,23 @@ input{
     color:#f89e29;
 }
 
-/* Question como accedo al placeholder solo del email o del psw */
-
-.ErrorInput{
-    background: #e2080859;
-    border: 1px solid #8d1818;
-    
+#userIcon{
+    position: absolute;
+    margin-top: 106px;
+    margin-left: 16px;
+    font-size: 20px;
+    color: #188161;
 }
-
-.ErrorInCredentials{
-    background: #e2080859;
-    border: 1px solid #8d1818;
-}
- 
 #envelope{
     position: absolute;
-    margin-top: 105px;
+    margin-top: 200px;
     margin-left: 15px;
     font-size: 20px;
     color: #188161;
 }
 #key{
     position: absolute;
-    margin-top: 198px;
+    margin-top: 292px;
     margin-left: 15px;
     font-size: 20px;
     color: #188161;
@@ -95,14 +89,13 @@ input{
 
 #eye{
     position: absolute;
-    margin-top: 200px;
+    margin-top: 293px;
     margin-left: 300px;
     font-size: 20px;
     color: #188161;
 }
 
-
-.loginBtn{
+.SignUpBtn{
     align-self: center;
     background: #FFB758;
     box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
@@ -118,20 +111,3 @@ input{
     color: #188161;
     margin-top: 15px;  
 }
-
-.forgotPsw{
-    color: #F87E0D;
-    font-family: Lato;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    letter-spacing: 0.01em;
-    line-height: 140%;
-    margin-top: 25px;
-    text-decoration: none;
-    text-align: center;
-    background: none;
-    border: none;
-    outline: none;
-}
-

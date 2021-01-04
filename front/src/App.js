@@ -5,9 +5,10 @@ import {Login} from './Components/Login/Login'
 import { RegisterProvider } from './Contexts/RegisterContext'
 import { LoginProvider } from './Contexts/LoginContext'
 import { ExternalRegisterSuccessful } from './Components/external-register-successful/ExternalRegisterSuccessful'
-import { InfoUserForm } from './Components/info-user-form/InfoUserForm'
+import { WelcomeUserForm } from './Components/info-user-form/WelcomeUserForm'
+import { UserFormAllergens } from './Components/info-user-form/UserFormAllergens'
 import { SignUp } from './Components/SignUp/SignUp'
-import { Error } from './Components/Advices/Error'
+// import { Error } from './Components/Advices/Error'
 import { Dashboard } from './Components/Dashboard/Dashboard'
 
 
@@ -20,12 +21,17 @@ export const App = () => {
         <>
             <Router>
                 <Switch>
+
                     <Route exact path="/">
                         <Welcome />
                     </Route>
                     <Route path="/login">
                         <Login />
                     </Route>
+                    <Route path="/guest">
+                        <Dashboard />
+                    </Route>
+
                     <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
                         <Route path="/Register">
                             <SignUp />
@@ -33,15 +39,20 @@ export const App = () => {
                         <Route path="/external-register-successful">
                             <ExternalRegisterSuccessful />
                         </Route>
-                        <Route path="/info-user-form">
-                            <InfoUserForm />
+                        <Route path="/welcome-user-form">
+                            <WelcomeUserForm />
+                        </Route>
+                        <Route path="/user-form-allergens">
+                            <UserFormAllergens />
                         </Route>
                     </RegisterProvider>
+
                     <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
                         <Route path="/login-successful">
                             <Dashboard />
                         </Route>
                     </LoginProvider>
+
                     <Route path="/error/:id"></Route>
                     
                 </Switch>
