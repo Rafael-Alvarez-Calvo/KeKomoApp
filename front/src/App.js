@@ -32,26 +32,34 @@ export const App = () => {
                         <Dashboard />
                     </Route>
 
-                    <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
-                        <Route path="/Register">
+                    <Route path="/Register">
+                        <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
                             <SignUp />
-                        </Route>
-                        <Route path="/external-register-successful">
-                            <ExternalRegisterSuccessful />
-                        </Route>
-                        <Route path="/welcome-user-form">
-                            <WelcomeUserForm />
-                        </Route>
-                        <Route path="/user-form-allergens">
-                            <UserFormAllergens />
-                        </Route>
-                    </RegisterProvider>
+                        </RegisterProvider>
 
-                    <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                        <Route path="/login-successful">
+                    </Route>
+                    <Route path="/external-register-successful">
+                        <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
+                            <ExternalRegisterSuccessful />
+                        </RegisterProvider>
+                    </Route>
+
+                    <Route path="/welcome-user-form">
+                        <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
+                            <WelcomeUserForm />
+                        </RegisterProvider>
+                    </Route>
+                    <Route path="/user-form-allergens">
+                        <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
+                            <UserFormAllergens />
+                        </RegisterProvider>
+                    </Route>
+
+                    <Route path="/login-successful">
+                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
                             <Dashboard />
-                        </Route>
-                    </LoginProvider>
+                        </LoginProvider>
+                    </Route>
 
                     <Route path="/error/:id"></Route>
                     

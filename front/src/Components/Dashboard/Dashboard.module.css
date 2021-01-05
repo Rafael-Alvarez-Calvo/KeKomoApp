@@ -1,14 +1,59 @@
-.archContainer{
+.arch{
+    margin-top: -80px;
+    width: 100%;
+}
+
+.userContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: -220px 0px 20px 0px;
+}
+
+.queComoTitle{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 32px;
+    color: #FDFFFA;
+}
+
+.notificationsBtn{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    background: #FFB758;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    background-color: #FDFFFA;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
+    transform: translateX(45px);
+}
+
+#bellIcon{
+    color: #FFB758;
+    font-size: 16px;
+}
+
+.searchbarContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* margin-top: -140px; */
+    margin-left: -20px;
+    /* background: #FFB758;
     border-bottom-left-radius : 3000px;
     border-bottom-right-radius : 3000px;
-    height: 250px;
-    width: 500px;
-    margin-top: -100px;
-    margin-left: -37px;
+    height: 280px;
+    width: 600px;
+    margin-top: -120px;
+    margin-left: -90px; */
+    /* background-image: url(/arco.svg); */
     
 }
 
@@ -16,19 +61,18 @@
 
     background: #FDFFFA;
     border-radius: 25px;
-    margin-top: 140px;
-    margin-right: 80px;
+    margin-right: -35px;
     box-shadow: 0px 0px 20px 8px rgba(70, 43, 7, 0.5);
     border: none;
     outline: none;
     height: 10px;
-    padding: 15px 15px 15px 15px;
+    padding: 15px 100px 15px 15px;
 
 }
 
 .searchBtn{
-    margin-top: 145px;
-    transform: translateX(-120px);
+    margin-top: 5px;
+    transform: translateX(-5px);
     background: linear-gradient(316.77deg, rgba(255, 199, 39, 0.9) 13.99%, rgba(248, 126, 13, 0.9) 85.39%), radial-gradient(46.22% 46.22% at 50.27% 50.27%, #DB731E 94.27%, #C46111 100%);
     box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
     height: 30px;
@@ -39,7 +83,23 @@
 }
 
 #searchIcon{
-    /* position: absolute; */
     color: #FDFFFA;
     
+}
+
+.filterBtn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30px;
+    margin-top: 3px;
+    border: none;
+    outline: none;
+    background: none;
+    color: #FDFFFA;
+    transform: translateX(20px);
+}
+#filterIcon{
+    font-size: 20px;
+    color: #FDFFFA;
 }

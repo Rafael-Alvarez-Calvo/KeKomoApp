@@ -12,7 +12,14 @@ export const Dashboard = () => {
 
     return (
         <>
-            <div className={DashboardCss.archContainer}>
+            <img src="../../../arco.svg" className={DashboardCss.arch} />
+            <div className={DashboardCss.userContainer}>
+                <h1 className={DashboardCss.queComoTitle}>QuéComo</h1>
+                <button className={DashboardCss.notificationsBtn}>
+                    <i id={DashboardCss.bellIcon} className="far fa-bell"></i>
+                </button>
+            </div>
+            <div className={DashboardCss.searchbarContainer}>
                 <input 
                     id={DashboardCss.searchBar}
                     type="text"
@@ -23,6 +30,10 @@ export const Dashboard = () => {
                     onChange={handleInputChange}/>
                 <button className={DashboardCss.searchBtn}>
                     <i id={DashboardCss.searchIcon} className="fas fa-search"></i>
+                </button>
+                <button className={DashboardCss.filterBtn}>
+                    <i id={DashboardCss.filterIcon} className="fas fa-sliders-h"></i>
+                    Filters
                 </button>
             </div>
         </>

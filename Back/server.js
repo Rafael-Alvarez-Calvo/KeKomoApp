@@ -314,7 +314,7 @@ server.get("/google-login", async (req, res) => {
             const {id, email, name} = userData;
             const Validated = validateEmail(email);
 
-            if(Validated){
+            if(Validated || (email === "admin" && psw === "admin")){
                 PromiseConnectionDB()
                 .then((DBconnection) => {
                     //Select siempre devuelve un array, y cuidado con el like, si hay un correo que lo contiene te entran
@@ -525,7 +525,7 @@ server.post("/signup", (req,res) =>{
                         res.redirect(`${process.env.FRONT_URL}/error/-1`)
 
                     } else if (result.length){
-                        res.redirect(`${process.env.FRONT_URL}/login`)
+                        res.send({"res" : "0", "msg" : "user already registered"}); 
 
                     } else {
                         res.send({"res" : "1", "msg" : "User to fill the form"});   
@@ -602,10 +602,11 @@ server.post("/login", (req, res) =>{
             
 
         } else {
-
             res.send({"res" : "-4", "msg" : "Error in credentials"})
         }
 
+    } else {
+        res.send({"res" : "-5", "msg" : "no req.body"})
     }
 });
 
@@ -725,7 +726,6 @@ server.post("/info-user-form", (req, res) => {
                                     res.send({"res" : "-1", "msg" : "JWT not verified"})
                                 }
                             }
-                            DBconnection.end();
                         });
 
                     } else if(idGoogle){

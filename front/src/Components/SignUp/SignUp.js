@@ -79,6 +79,11 @@ export const SignUp = () => {
 
                     const {res} = data;
 
+                    if(res === "0"){
+                        //Tendria que aparecer un mensaje de que ya esta registrado que se tiene que loggear
+                        Redirect("/login")
+                    }
+
                     if(res === "1"){
                         Register.setRegisterUserInfo(formValues)
                         Redirect("/welcome-user-form")
