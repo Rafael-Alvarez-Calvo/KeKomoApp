@@ -1,12 +1,12 @@
 import React from 'react'
 import WelcomeCss from './Welcome.module.css'
 import { useRedirect } from '../../Hooks/useRedirect'
-import { useHistory } from 'react-router-dom'
+
 
 export const Welcome = () => {
 
     const Redirect = useRedirect();
-    const history = useHistory();
+    
 
     return (
         <>

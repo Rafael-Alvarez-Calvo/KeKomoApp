@@ -159,7 +159,7 @@ server.get("/get-preferences-list/:option", (req, res) => {
     if(option === "allergens"){
         PromiseConnectionDB()
         .then((DBconnection) => {
-            const sql = "SELECT * FROM Allergens";
+            const sql = "SELECT idAllergen id, nameAllergen name FROM Allergens";
             DBconnection.query(sql, (err, result) => {
                 if(err)
                     throw err
@@ -174,7 +174,7 @@ server.get("/get-preferences-list/:option", (req, res) => {
     else if(option === "intolerances"){
         PromiseConnectionDB()
         .then((DBconnection) => {
-            const sql = "SELECT * FROM Intolerances";
+            const sql = "SELECT idIntolerance id, nameIntolerance name FROM Intolerances";
             DBconnection.query(sql, (err, result) => {
                 if(err)
                     throw err
@@ -188,7 +188,7 @@ server.get("/get-preferences-list/:option", (req, res) => {
     else if(option === "supermarkets"){
         PromiseConnectionDB()
         .then((DBconnection) => {
-            const sql = "SELECT * FROM SuperMarkets";
+            const sql = "SELECT idSMarket id, nameSuperMarket name FROM SuperMarkets";
             DBconnection.query(sql, (err, result) => {
                 if(err)
                     throw err
@@ -199,10 +199,10 @@ server.get("/get-preferences-list/:option", (req, res) => {
 
         })
     }
-    else if(option === "preferences"){
+    else if(option === "foodpreferences"){
         PromiseConnectionDB()
         .then((DBconnection) => {
-            const sql = "SELECT * FROM FoodPreferences";
+            const sql = "SELECT idFoodPref id, nameFoodPref name FROM FoodPreferences";
             DBconnection.query(sql, (err, result) => {
                 if(err)
                     throw err

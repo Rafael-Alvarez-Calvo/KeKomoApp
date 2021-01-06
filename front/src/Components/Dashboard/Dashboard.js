@@ -1,6 +1,8 @@
 import React from 'react';
 import { useForm } from '../../Hooks/useForm';
+import Carousel from 'react-swiping-carousel';
 import DashboardCss from './Dashboard.module.css';
+import { usePreferences } from '../../Hooks/usePreferences';
 
 export const Dashboard = () => {
 
@@ -10,9 +12,11 @@ export const Dashboard = () => {
 
     const {search} = formValues
 
+    const preferences = usePreferences();
+
     return (
         <>
-            <img src="../../../arco.svg" className={DashboardCss.arch} />
+            <img src="../../../arco.svg" className={DashboardCss.arch} alt="arco superior" />
             <div className={DashboardCss.userContainer}>
                 <h1 className={DashboardCss.queComoTitle}>QuéComo</h1>
                 <button className={DashboardCss.notificationsBtn}>
@@ -36,6 +40,18 @@ export const Dashboard = () => {
                     Filters
                 </button>
             </div>
+            
+            {Object.keys(preferences).map(prefColl => {
+                if(preferences[prefColl].length){
+                    return <Carousel align={{first : "left", nth : "center", last : "right"}} margin={20} scrollDistance={20}>
+                        { 
+                            preferences[prefColl].map((pref) => 
+                                <p>{pref.name}</p>)
+                        }
+                            </Carousel>
+                }
+                
+            })}
         </>
     )
 }
