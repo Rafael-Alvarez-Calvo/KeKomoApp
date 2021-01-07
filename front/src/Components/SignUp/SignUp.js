@@ -5,6 +5,7 @@ import { Fetch } from '../../Hooks/useFetch';
 import { useRedirect } from '../../Hooks/useRedirect';
 import { RegisterContext } from '../../Contexts/RegisterContext';
 import SignUpCss from './SignUp.module.css';
+import crypto from 'crypto';
 
 
 export const SignUp = () => {
@@ -13,7 +14,7 @@ export const SignUp = () => {
     const Register = useContext(RegisterContext);
     const {validateCredentials, validateEmail, validatePsw} = useValidator();
 
-    const [formValues, handleInputChange, isValid] = useForm(
+    const [formValues, handleInputChange, isValid, setValues] = useForm(
         {name : "", email : "", psw : "",},
         {email : validateEmail, psw : validatePsw}
     );
@@ -124,6 +125,28 @@ export const SignUp = () => {
         
     }
 
+    const generatePsw = (e) => {
+        let newPsw = crypto.randomBytes(5).toString("hex");
+        e.preventDefault();
+
+        if(validatePsw(newPsw)){
+
+            setStatePsw({
+                ...statePsw,
+                type : type === "password" ? "text" : "text",
+                placeholder : placeholder === "**********" ? "123ytube" : newPsw,
+                // psw : psw === "" ? newPsw : newPsw
+            });
+    
+            setValues({
+                ...formValues,
+                psw : psw === "" ?  newPsw : newPsw,
+                
+            })
+            return true
+        }
+    }
+
     return (
         <>
             <div className={SignUpCss.mainContainer}>
@@ -154,9 +177,12 @@ export const SignUp = () => {
                     onChange={handleInputChange}
                     className={!isValid.email ? SignUpCss.ErrorInput : ""}/>
 
-                <i id={SignUpCss.envelope} className="far fa-envelope"></i>   
+                <i id={SignUpCss.envelope} className="far fa-envelope"></i> 
 
-                <label>Tu contraseña</label>
+                <div className={SignUpCss.generatePswContainer}>
+                    <label className={SignUpCss.labelPsw}>Tu contraseña</label>
+                    <button type="button" className={SignUpCss.generatePswBtn} onClick={!generatePsw ? generatePsw : generatePsw }>Generar Contraseña</button>
+                </div>  
                 <input 
                     id="psw"
                     type={type}

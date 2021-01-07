@@ -30,10 +30,22 @@ export const App = () => {
                         <Welcome />
                     </Route>
                     <Route path="/login">
-                        <Login />
+                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+                            <Login />
+                        </LoginProvider>
                     </Route>
+
                     <Route path="/guest-user-home">
                         <Dashboard />
+                    </Route>
+                    <Route path="/guest-user-history">
+                        
+                    </Route>
+                    <Route path="/guest-user-favourites">
+                        
+                    </Route>
+                    <Route path="/guest-user-shopping-lists">
+                        
                     </Route>
 
                     <Route path="/Register">

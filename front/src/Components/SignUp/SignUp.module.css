@@ -48,6 +48,10 @@ label{
     margin-bottom: 8px;
 }
 
+.labelPsw{
+    margin-top: 5px;
+}
+
 input{
     background: #FDFFFA;
     border: 1px solid #188161;
@@ -129,7 +133,7 @@ input{
 }
 #key{
     position: absolute;
-    margin-top: 292px;
+    margin-top: 298px;
     margin-left: 15px;
     font-size: 20px;
     color: #188161;
@@ -137,7 +141,7 @@ input{
 
 #eye{
     position: absolute;
-    margin-top: 293px;
+    margin-top: 299px;
     margin-left: 300px;
     font-size: 20px;
     color: #188161;
@@ -175,4 +179,27 @@ input{
     line-height: 22px;
     color: #188161;
     margin-top: 15px;  
+}
+
+.generatePswContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.generatePswBtn{
+    background: #FFB758;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 26px;
+    border: none;
+    outline: none;
+    padding: 1px 10px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 22px;
+    color: #188161;
+    margin: 0px 8px 10px 0px;
+    
 }

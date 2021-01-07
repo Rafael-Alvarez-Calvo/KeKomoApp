@@ -505,6 +505,21 @@ server.get("/get-products-from-favourites", (req, res) => {
     }
 });
 
+server.get("/get-info-brands", (req, res) => {
+
+    fetch("https://alimentacion-tb.herokuapp.com/info/brands")
+    .then(res => res.json())
+    .then(brands => {
+        if(brands){
+            const {Marcas} = brands;
+            res.send({"res" : "1", Marcas})
+        } else {
+            res.send({"res" : "0", "msg" : "no data"})
+        }
+    })
+    .catch(err => res.send({"res" : "-1", err }));
+});
+
 //-----------------------------POST------------------------//
 server.post("/signup", (req,res) =>{
 
@@ -565,28 +580,34 @@ server.post("/login", (req, res) =>{
                 //HACER verificacion de psw con la salt db
 
                 //Select siempre devuelve un array, y cuidado con el like, si hay un correo que lo contiene te entran
-                const sql = `SELECT U.* FROM users AS U JOIN PersonalUsers AS PU ON U.usrid = PU.ext_usrid WHERE PU.psw = ? AND U.email = ?`; 
-                DBconnection.query(sql, [psw, email], (err, result) => {
+                const sql = `SELECT U.*, PU.psw, PU.salt FROM users AS U JOIN PersonalUsers AS PU ON U.usrid = PU.ext_usrid WHERE U.email = ?;`; 
+                DBconnection.query(sql, [email], (err, result) => {
                     if (err){
                         res.send({"res" : "-1", "msg" : err})
                     } else if (result.length){
+                        const veryfyPsw = JWT.verifyPassword(psw, {password: result[0].psw, salt: result[0].salt}) //true es la verdadera
 
-                        //Generate JWT
-                        const Payload = {
-                            "usrid" : result[0].usrid,
-                            "email" : result[0].email,
-                            "name" : result[0].name,
-                            "profile" : result[0].user_profile,
-                            "iat" : new Date()
-                        };
+                        if(veryfyPsw){
 
-                        //COMPLETE Payload
+                            //Generate JWT
+                            const Payload = {
+                                "usrid" : result[0].usrid,
+                                "email" : result[0].email,
+                                "name" : result[0].name,
+                                "profile" : result[0].user_profile,
+                                "iat" : new Date()
+                            };
 
-                        const jwt = JWT.generateJWT(Payload);
-                        // const jwtVerified = JWT.verifyJWT(jwt);
-                        res.cookie("JWT", jwt, {"httpOnly" : true})
-                            .send({"res" : "1", "msg" : `${result[0].name} has logged in`, result});
+                            //COMPLETE Payload
 
+                            const jwt = JWT.generateJWT(Payload);
+                            // const jwtVerified = JWT.verifyJWT(jwt);
+                            res.cookie("JWT", jwt, {"httpOnly" : true})
+                                .send({"res" : "1", "msg" : `${result[0].name} has logged in`, result});
+                        } else {
+                            res.send({"res" : "0", "msg" : "la contraseña introducida no es correcta"})
+                        }
+                        
                     } else {
                         res.send({"res" : "-2", "msg" : "User not registered"});
                     }

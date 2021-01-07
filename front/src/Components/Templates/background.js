@@ -1,7 +1,7 @@
 import React from 'react';
 import backgroundCss from './background.module.css';;
 
-export const background = () => {
+export const Background = () => {
     return (
         <div>
             <img src="../../../arco.svg" className={backgroundCss.arch} alt="arco superior" />

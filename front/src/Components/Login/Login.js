@@ -5,13 +5,14 @@ import { useRedirect } from '../../Hooks/useRedirect';
 import { useValidator } from '../../Hooks/useValidator';
 import { LoginContext } from '../../Contexts/LoginContext';
 import LoginCss from './Login.module.css';
-// import crypto from 'crypto';
+
 
 
 export const Login = () => {
 
     const Redirect = useRedirect();
     const Login = useContext(LoginContext);
+    console.log("Login", Login)
     const {validateCredentials, validateEmail, validatePsw} = useValidator();
 
     const [formValues, handleInputChange, isValid] = useForm(
@@ -58,8 +59,11 @@ export const Login = () => {
                     console.log(res);
 
                     switch(res){
+                        case "0" :
+                            setError("0");
+                            break;
                         case "1" :
-                            // Login.setLoginUserInfo(result);
+                            Login.setLoginUserInfo(result);
                             Redirect("/login-successful");
                             break;
                         case "-1" :
@@ -87,6 +91,12 @@ export const Login = () => {
 
     const showCredentialsError = () => {
 
+        if(Error === "0"){
+            return <div className={LoginCss.ErrorInCredentials}>
+                        <p>La contraseña que has introducido no es correcta. Por favor introduce la contraseña correcta para poder entrar</p>
+                  </div>
+        }
+        
         if(Error === "-2"){
             return (
                 <>
@@ -108,7 +118,9 @@ export const Login = () => {
             return <div className={LoginCss.ErrorInCredentials}>
                         <p>Lo sentimos, en estos momentos no podemos contactar con la base de datos, porfavor vuelva a intentarlo de nuevo mas tarde.</p>
                     </div>
-        } else if(Error === "-4" || !isValid.email || !isValid.psw){
+        } 
+        
+        if(Error === "-4" || !isValid.email || !isValid.psw){
             return <div className={LoginCss.ErrorInCredentials}>
                         <p>El email o contraseña que has introducido no son correctos, recuerda que deben ser:</p>
                         <ul className={LoginCss.ErrorInCredentialsList}>
@@ -119,36 +131,15 @@ export const Login = () => {
 
                   </div>
 
-        } else if(Error === "-5"){
+        } 
+        
+        if(Error === "-5"){
             return <div className={LoginCss.ErrorInCredentials}>
                         <p>Los campos de email y contraseña no pueden estar vacíos.</p>
                   </div>
         }
         
     }
-
-
-    // const generatePsw = (e) => {
-    //     let newPsw = crypto.randomBytes(5).toString("hex");
-    //     e.preventDefault();
-
-    //     if(validatePsw(newPsw)){
-
-    //         setStatePsw({
-    //             ...statePsw,
-    //             type : type === "password" ? "text" : "text",
-    //             placeholder : placeholder === "**********" ? "123ytube" : newPsw,
-    //             // psw : psw === "" ? newPsw : newPsw
-    //         });
-    
-    //         setValues({
-    //             ...formValues,
-    //             psw : psw === "" ?  newPsw : newPsw,
-                
-    //         })
-    //         return true
-    //     }
-    // }
 
     return (
         <>
@@ -170,10 +161,7 @@ export const Login = () => {
                     onChange={handleInputChange}
                     className={!isValid.email ? LoginCss.ErrorInput : ""}/>
                 <i id={LoginCss.envelope} className="far fa-envelope"></i>   
-                {/* <div className={LoginCss.generatePswContainer}>
-                    <label className={LoginCss.labelPsw}>Tu contraseña</label>
-                    <button type="button" className={LoginCss.generatePswBtn} onClick={!generatePsw ? generatePsw : generatePsw }>Generar Contraseña</button>
-                </div> */}
+                
                 <label>Tu contraseña</label>
                 <input 
                     id="psw"
