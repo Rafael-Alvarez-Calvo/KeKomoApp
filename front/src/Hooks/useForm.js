@@ -1,7 +1,7 @@
 import { useRef, useState } from "react"
 
 
-export const useForm = (initialState = {}, regex = {}, time = 500) => {
+export const useForm = (initialState = {}, regex = {}, time = 1000) => {
 
     const [values, setValues] = useState(initialState)
 
@@ -56,7 +56,6 @@ export const useForm = (initialState = {}, regex = {}, time = 500) => {
                 
                 if(newValidation){
                     setIsValid(newValidation);
-                    console.log("updated Validation", newValidation)
                 }
     
             }, time);
@@ -69,6 +68,6 @@ export const useForm = (initialState = {}, regex = {}, time = 500) => {
         })
     }
 
-    return [ values, handleInputChange, isValid]
+    return [ values, handleInputChange, isValid, setValues]
         
 }

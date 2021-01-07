@@ -5,6 +5,8 @@ import { useRedirect } from '../../Hooks/useRedirect';
 import { useValidator } from '../../Hooks/useValidator';
 import { LoginContext } from '../../Contexts/LoginContext';
 import LoginCss from './Login.module.css';
+// import crypto from 'crypto';
+
 
 export const Login = () => {
 
@@ -13,22 +15,14 @@ export const Login = () => {
     const {validateCredentials, validateEmail, validatePsw} = useValidator();
 
     const [formValues, handleInputChange, isValid] = useForm(
-        {
-            email : "",
-            psw : "",
-        },
-
-        {
-            email : validateEmail,
-            psw : validatePsw
-        
-        }
+        {email : "", psw : ""},
+        {email : validateEmail, psw : validatePsw}
     );
     
         
     const [statePsw, setStatePsw] = useState({
         type : "password",   
-        placeholder : "**********"
+        placeholder : "**********",
     })
 
 
@@ -51,61 +45,110 @@ export const Login = () => {
     const handleSubmit = (e) =>{
 
         e.preventDefault();
-
-        if(!validateCredentials(email, psw)){
+       
+        console.log(email, psw)
+        if(!validateCredentials(email, psw) || (email && psw)){
+            console.log(!validateCredentials(email, psw))
 
             Fetch(`${process.env.REACT_APP_backUrl}/login`, {method : "post", data : {...formValues}})
             .then(data => {
                 // console.log(data);
                 if(data){
-                    const {res, msg, result} = data;
+                    const {res, result} = data;
                     console.log(res);
 
                     switch(res){
-
                         case "1" :
-                            Login.setLoginUserInfo(result);
+                            // Login.setLoginUserInfo(result);
                             Redirect("/login-successful");
                             break;
                         case "-1" :
-                            
+                            setError("-1")
                             break;
                         case "-2" :
-                            console.log(Error)
-                            return <Error res={res} msg={msg} />;
+                            setError("-2");
+                            break;
                         case "-3" :
-                            
+                            setError("-3");
                             break;
                         case "-4" :
-                            setError("-4")
+                            setError("-4");
                             break;
-
+                        case "-5" :
+                            setError("-5");
+                            break;
                         default :
                             break;
-                    
                     }
                 }
             })
-
         } 
-        
     }
 
     const showCredentialsError = () => {
-        if(Error === "-4" || !isValid.email || !isValid.psw){
+
+        if(Error === "-2"){
+            return (
+                <>
+                    <div className={LoginCss.WarningInCredentials}>
+                        <p>No hemos encontrado ningun usuario con ese email en nuestra base de datos, porfavor regístrate primero en la aplicación para poder entrar.</p>
+                        <button className={LoginCss.RegisterBtn} onClick={(e) => Redirect("/Register", e)}>Registrarme</button>
+                    </div>
+                    {/* <div> */}
+                        {/* {setTimeout(() =>{ */}
+                         {/* },1000) */}
+                        {/* } */}
+
+                    {/* </div> */}
+                </>
+            )
+        }
+
+        if(Error === "-3" || Error === "-1"){
             return <div className={LoginCss.ErrorInCredentials}>
-                        <p>El email o contraseña que has introducido no son correctas, recuerda que la contraseña debe ser:</p>
-                        <ul>
-                            <li>Al menos una letra y un número</li>
-                            <li>No puede contener carácteres alfanuméricos</li>
-                            <li>Contener al menos seis carácteres</li>
+                        <p>Lo sentimos, en estos momentos no podemos contactar con la base de datos, porfavor vuelva a intentarlo de nuevo mas tarde.</p>
+                    </div>
+        } else if(Error === "-4" || !isValid.email || !isValid.psw){
+            return <div className={LoginCss.ErrorInCredentials}>
+                        <p>El email o contraseña que has introducido no son correctos, recuerda que deben ser:</p>
+                        <ul className={LoginCss.ErrorInCredentialsList}>
+                            <li>Ej: example@gmail.com</li>
+                            <li>Ej: 9t7kfCqQt </li>
+                                
                         </ul>
 
                   </div>
 
+        } else if(Error === "-5"){
+            return <div className={LoginCss.ErrorInCredentials}>
+                        <p>Los campos de email y contraseña no pueden estar vacíos.</p>
+                  </div>
         }
         
     }
+
+
+    // const generatePsw = (e) => {
+    //     let newPsw = crypto.randomBytes(5).toString("hex");
+    //     e.preventDefault();
+
+    //     if(validatePsw(newPsw)){
+
+    //         setStatePsw({
+    //             ...statePsw,
+    //             type : type === "password" ? "text" : "text",
+    //             placeholder : placeholder === "**********" ? "123ytube" : newPsw,
+    //             // psw : psw === "" ? newPsw : newPsw
+    //         });
+    
+    //         setValues({
+    //             ...formValues,
+    //             psw : psw === "" ?  newPsw : newPsw,
+                
+    //         })
+    //         return true
+    //     }
+    // }
 
     return (
         <>
@@ -125,9 +168,12 @@ export const Login = () => {
                     autoComplete="off"
                     value={email}
                     onChange={handleInputChange}
-                    className={!isValid.email ? LoginCss.ErrorInCredentials : ""}/>
+                    className={!isValid.email ? LoginCss.ErrorInput : ""}/>
                 <i id={LoginCss.envelope} className="far fa-envelope"></i>   
-
+                {/* <div className={LoginCss.generatePswContainer}>
+                    <label className={LoginCss.labelPsw}>Tu contraseña</label>
+                    <button type="button" className={LoginCss.generatePswBtn} onClick={!generatePsw ? generatePsw : generatePsw }>Generar Contraseña</button>
+                </div> */}
                 <label>Tu contraseña</label>
                 <input 
                     id="psw"
@@ -137,9 +183,10 @@ export const Login = () => {
                     autoComplete="off"
                     value={psw}
                     onChange={handleInputChange}
-                    className={!isValid.psw ? LoginCss.ErrorInCredentials : ""} />
+                    className={!isValid.psw ? LoginCss.ErrorInput : ""} />
+
                 <i id={LoginCss.key} className="fas fa-key"></i>
-                <i id={LoginCss.eye} className={type === "password" ? "fas fa-eye" : "fas fa-eye-slash"} onClick={HandlePswVisibility}></i>
+                <i id={LoginCss.eye} className={type === "password" ? "fas fa-eye-slash" : "fas fa-eye"} onClick={HandlePswVisibility}></i>
                 {showCredentialsError()}
 
                 <button type="submit" className={LoginCss.loginBtn}>Iniciar sesión</button>

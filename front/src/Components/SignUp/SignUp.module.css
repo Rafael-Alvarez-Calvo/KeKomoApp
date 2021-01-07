@@ -6,7 +6,7 @@
 
 .BG{
     position: absolute;
-    width: 100%;
+    width: 100opx;
     height: 100%;
     transform: translate(0px, 240px);
     z-index: -2;
@@ -65,6 +65,54 @@ input{
     color:#f89e29;
 }
 
+.ErrorInput{
+    background: #e2080844;
+    border: 1px solid #8d1818;
+    color: #ff0000;
+    
+}
+
+.ErrorInCredentials{
+    color: #ff0000;
+    background: #e208082f;
+    border: 1px solid #8d1818;
+    box-shadow: 0px 6px 20px rgba(241, 21, 21, 0.25);
+    border-radius: 8px;
+    padding: 5px 20px 5px 20px;
+    font-family: Lato;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 12px;
+    margin: 10px 5px 10px 5px;
+    line-height: 18px;
+    letter-spacing: 1.2px;
+    text-align: center;
+    
+   
+}
+
+.WarningInCredentials{
+    color: #188161;
+    background: #f9fd052f;
+    border: 1px solid #188161;
+    box-shadow: 0px 6px 20px rgba(226, 241, 21, 0.25);
+    border-radius: 8px;
+    padding: 5px 20px 5px 20px;
+    font-family: Lato;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 12px;
+    margin: 0px 5px 10px 5px;
+    line-height: 18px;
+    letter-spacing: 1.2px;
+    text-align: center;
+}
+
+.ErrorInCredentialsList{
+    transform: translateX(-20px);
+    text-align: left;
+}
+
 #userIcon{
     position: absolute;
     margin-top: 106px;
@@ -93,6 +141,23 @@ input{
     margin-left: 300px;
     font-size: 20px;
     color: #188161;
+}
+
+.loginBtn{
+    align-self: center;
+    background: #FFB758;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 26px;
+    border: none;
+    outline: none;
+    padding: 10px 100px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    color: #188161;
+    margin: 0px 0px 10px 0px;  
 }
 
 .SignUpBtn{

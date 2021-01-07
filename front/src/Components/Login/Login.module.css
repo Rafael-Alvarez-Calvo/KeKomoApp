@@ -6,7 +6,7 @@
 
 .BG{
     position: absolute;
-    width: 100%;
+    width: 1000px;
     height: 100%;
     transform: translate(0px, 240px);
     z-index: -2;
@@ -26,7 +26,7 @@
     display: flex;
     flex-direction: column;
     padding: 40px;
-    margin-top: 350px;
+    margin-top: 260px;
 }
 
 .titleLogin{
@@ -36,6 +36,29 @@
     font-size: 24px;
     line-height: 29px;
     color: #188161;
+}
+
+.generatePswContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.generatePswBtn{
+    background: #FFB758;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 26px;
+    border: none;
+    outline: none;
+    padding: 1px 10px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 22px;
+    color: #188161;
+    margin: 0px 8px 10px 0px;
+    
 }
 
 label{
@@ -56,38 +79,74 @@ input{
     border-radius: 30px;
     outline: none;
     font-size: 17px;
+    color:#ff9101;
     
-
 }::placeholder{
     font-size: 17px;
-    transform: translateY(1px);
     letter-spacing: 1px;
-    color:#f89e29;
+    color:#ff9101;
 }
 
 /* Question como accedo al placeholder solo del email o del psw */
 
 .ErrorInput{
-    background: #e2080859;
+    background: #e2080844;
     border: 1px solid #8d1818;
+    color: #ff0000;
     
 }
 
 .ErrorInCredentials{
-    background: #e2080859;
+    color: #ff0000;
+    background: #e208082f;
     border: 1px solid #8d1818;
+    box-shadow: 0px 6px 20px rgba(241, 21, 21, 0.25);
+    border-radius: 8px;
+    padding: 5px 20px 5px 20px;
+    font-family: Lato;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 12px;
+    margin: 10px 5px 10px 5px;
+    line-height: 18px;
+    letter-spacing: 1.2px;
+    text-align: center;
+    
+   
+}
+
+.WarningInCredentials{
+    color: #188161;
+    background: #f9fd052f;
+    border: 1px solid #188161;
+    box-shadow: 0px 6px 20px rgba(226, 241, 21, 0.25);
+    border-radius: 8px;
+    padding: 5px 20px 5px 20px;
+    font-family: Lato;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 12px;
+    margin: 0px 5px 10px 5px;
+    line-height: 18px;
+    letter-spacing: 1.2px;
+    text-align: center;
+}
+
+.ErrorInCredentialsList{
+    transform: translateX(-20px);
+    text-align: left;
 }
  
 #envelope{
     position: absolute;
-    margin-top: 105px;
+    margin-top: 106px;
     margin-left: 15px;
     font-size: 20px;
     color: #188161;
 }
 #key{
     position: absolute;
-    margin-top: 198px;
+    margin-top: 199px;
     margin-left: 15px;
     font-size: 20px;
     color: #188161;
@@ -95,10 +154,27 @@ input{
 
 #eye{
     position: absolute;
-    margin-top: 200px;
+    margin-top: 199px;
     margin-left: 300px;
     font-size: 20px;
     color: #188161;
+}
+
+.RegisterBtn{
+    align-self: center;
+    background: #FFB758;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 26px;
+    border: none;
+    outline: none;
+    padding: 10px 80px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    color: #188161;
+    margin: 0px 0px 10px 0px;  
 }
 
 
@@ -127,7 +203,7 @@ input{
     font-size: 18px;
     letter-spacing: 0.01em;
     line-height: 140%;
-    margin-top: 25px;
+    margin-top: 10px;
     text-decoration: none;
     text-align: center;
     background: none;

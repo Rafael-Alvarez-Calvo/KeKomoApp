@@ -11,7 +11,7 @@ import { SignUp } from './Components/SignUp/SignUp'
 // import { Error } from './Components/Advices/Error'
 import { Dashboard } from './Components/Dashboard/Dashboard'
 import { Error } from './Components/Advices/Error'
-import { usePreferences } from './Hooks/usePreferences'
+// import { usePreferences } from './Hooks/usePreferences'
 
 
 
@@ -19,7 +19,6 @@ export const App = () => {
 
     const [registerUserInfo, setRegisterUserInfo] = useState({});
     const [loginUserInfo, setLoginUserInfo] = useState({});
-    console.log(usePreferences())
     
 
     return (
@@ -33,7 +32,7 @@ export const App = () => {
                     <Route path="/login">
                         <Login />
                     </Route>
-                    <Route path="/guest">
+                    <Route path="/guest-user-home">
                         <Dashboard />
                     </Route>
 

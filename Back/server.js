@@ -508,9 +508,10 @@ server.get("/get-products-from-favourites", (req, res) => {
 //-----------------------------POST------------------------//
 server.post("/signup", (req,res) =>{
 
-    if(req.body){
+    const {name, email, psw} = req.body;
 
-        const {email, psw} = req.body;
+    if(name !== "" || email !== "" || psw !== ""){
+
 
         let validated = validateCredentials(email, psw);
 
@@ -522,7 +523,8 @@ server.post("/signup", (req,res) =>{
                 const sql = "SELECT U.* FROM users U INNER JOIN PersonalUsers PU ON PU.ext_usrid = U.usrid WHERE email = ?";
                 DBconnection.query(sql, [email], (err, result) => {
                     if (err){
-                        res.redirect(`${process.env.FRONT_URL}/error/-1`)
+                        res.send({"res" : "-1", "msg" : err})
+                        // res.redirect(`${process.env.FRONT_URL}/error/-1`)
 
                     } else if (result.length){
                         res.send({"res" : "0", "msg" : "user already registered"}); 
@@ -533,26 +535,30 @@ server.post("/signup", (req,res) =>{
                     DBconnection.end();
                 });
             })
-            .catch(() => {
-                res.redirect(`${process.env.FRONT_URL}/error/-2`)
-            });    
+            .catch(e => res.send({"res" : "-2", "msg" : "Unable to connect to database", "e" : console.error(e) }));
+            // .catch(() => {
+            //     res.redirect(`${process.env.FRONT_URL}/error/-2`)
+            // });
+
         } else {
-            res.redirect(`${process.env.FRONT_URL}/error/-3`)
+            res.send({"res" : "-3", "msg" : "Error in credentials"})
+            // res.redirect(`${process.env.FRONT_URL}/error/-3`)
         }
     } else {
-        res.redirect(`${process.env.FRONT_URL}/error/-4`)
+        // res.redirect(`${process.env.FRONT_URL}/error/-4`)
+        res.send({"res" : "-4", "msg" : "no req.body"})
     }
 })
 
 server.post("/login", (req, res) =>{
+    
+    const {email, psw} = req.body;
+    if(email !== "" || psw !== "" ){
 
-    if(req.body){
-
-        const {email, psw} = req.body;
 
         let Validated = validateCredentials(email, psw);
         
-        if(Validated || (email === "admin" && psw === "admin")){
+        if(Validated){
 
             PromiseConnectionDB()
             .then((DBconnection) => {
@@ -581,16 +587,6 @@ server.post("/login", (req, res) =>{
                         res.cookie("JWT", jwt, {"httpOnly" : true})
                             .send({"res" : "1", "msg" : `${result[0].name} has logged in`, result});
 
-                        // if(jwtVerified){
-
-                        //     //Access as administrator
-                        
-
-                        // } else {
-                        //     res.send({"res" : "-1", "msg" : "JWT not verified"})
-                        // }
-                            
-                        
                     } else {
                         res.send({"res" : "-2", "msg" : "User not registered"});
                     }
