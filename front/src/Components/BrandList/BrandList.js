@@ -4,14 +4,17 @@ import BrandListCss from './BrandList.module.css';
 
 import Carousel from 'react-material-ui-carousel';
 import {Paper} from '@material-ui/core'
+import { useOptionListSettings } from './useOptionListSettings';
 
 export const BrandList = ({url}) => {
 
-    const {data, loading, setDataState} = useOptionsList(url);
+    const [{isLoading,data}] = useOptionsList(url);
+
+    const {settingsBrandList} = useOptionListSettings();
 
     const getData = () => {
 
-        if(data && !loading){
+        if(data && !isLoading){
 
             const {res, Marcas} = data;
 
@@ -23,19 +26,33 @@ export const BrandList = ({url}) => {
                             <i id={BrandListCss.filterIconOptions} className="fas fa-sliders-h"></i>
                         </div>
 
-                        {Marcas.map(data => {
-                            const { Marca } = data;
-                            return <>
-                                        <Carousel key={Marca}>
-                                            <ImageMarket key={Marca} item={Marca}/>
-                                        </Carousel>
-                                    </>
-                            // setDataState({
-                            //     data : Marca,
-                            //     loading : false
-                            // })
-
-                        })}
+                        <Carousel autoPlay={settingsBrandList.autoPlay}
+                                  timer={settingsBrandList.timer}
+                                  animation={settingsBrandList.animation}
+                                  indicators={settingsBrandList.indicators}
+                                  timeout={settingsBrandList.timeout}
+                                  navButtonsAlwaysVisible={settingsBrandList.navButtonsAlwaysVisible}
+                                  navButtonsAlwaysInvisible={settingsBrandList.navButtonsAlwaysInvisible}
+                                  next={(next, active = 1) => next + active }
+                                  prev={(prev, active = 1) => prev - active }
+                                  onChange={(now, prev) => console.log(`OnChange User Callback: Now displaying child${now}. Previously displayed child${prev}`)}>
+                                      
+                                        {Marcas.length && Marcas.map(data => {
+                                            const { Marca, Logo, Id } = data;
+                                            return <div key={Marca}>
+                                                        <ImageMarket onClick={
+                                                            () => {
+                                                                console.log(`clicked on ${Id}`)
+                                                            }
+                                                        } Marca={Marca} Logo={Logo}/>
+                                                    </div>
+                                            // setDataState({
+                                                //     data : Marca,
+                                                //     loading : false
+                                                // })
+                                                
+                                        })}
+                        </Carousel>
                         
                     </>
                 )
@@ -56,19 +73,19 @@ export const BrandList = ({url}) => {
 
     }
 
-    const ImageMarket = ({Marca}) => {
+    const ImageMarket = ({Marca, Logo, onClick}) => {
         return (
             <Paper>
-                {/* <img /> */}
+                <img src={Logo} onClick={onClick} alt={Marca}/>
             </Paper>
         )
     }
 
     return (
         <>
-            {loading && <img src="/loading.svg" className={BrandListCss.loadingSVG} alt="arco superior" />}
+            {isLoading && <img src="/loading.svg" className={BrandListCss.loadingSVG} alt="arco superior" />}
 
-            {!loading && getData()}
+            {!isLoading && getData()}
         </>
     )
 }

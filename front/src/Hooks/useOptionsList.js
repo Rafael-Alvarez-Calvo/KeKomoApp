@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Fetch } from './useFetch';
 
-export const useOptionsList = ({url}) => {
+export const useOptionsList = (url) => {
 
     const [dataState, setDataState] = useState({
         data : [],
@@ -10,19 +10,22 @@ export const useOptionsList = ({url}) => {
     })
 
     useEffect(() => {
-
+        console.log(url);
         Fetch(url)
-            .then(data => {
-                if(data){
-                    setDataState({
-                        data :data,
-                        loading : false
-                    })
-                } 
-    
-            })
+        .then(data => {
+            if(data){
+                console.log(data);
+                setDataState({
+                    data : data,
+                    isLoading : false
+                })
+            } else {
+                setDataState({data: [], isLoading: false});
+            }
+        })
+        .catch(e => {console.log(e)})
 
-    }, [url, dataState]);
+    }, [url]);
 
-    return {dataState, setDataState};
+    return [dataState, setDataState];
 }

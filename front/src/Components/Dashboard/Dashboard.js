@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import { Fetch } from '../../Hooks/useFetch';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -41,10 +42,15 @@ export const Dashboard = () => {
     // console.log(Login)
 
     const [formValues, handleInputChange] = useForm({
-        search : "",
+        search_term : "",
+        category :"",
+        labels:[],
+        brand:"",
+        additives:"",
+        allergens:[]
     });
 
-    const {search} = formValues
+    const {search_term} = formValues
 
 
     const [optionContainer, setOptionContainer] = useState({
@@ -53,6 +59,8 @@ export const Dashboard = () => {
     })
 
     const [url, setUrl] = useState(``);
+
+    const [stateResDB, setStateResDB] = useState(null);
 
     const {brands, products} = optionContainer;
 
@@ -117,15 +125,13 @@ export const Dashboard = () => {
         });
     }
 
-    const showOptionsContainer = () => {
-        if(brands && !products){
+    const showOptionsContainer = () => {;
+        if(brands && !products && url !== `${process.env.REACT_APP_backUrl}/get-info-brands`){
             setUrl(`${process.env.REACT_APP_backUrl}/get-info-brands`)
-            // return <BrandList url={url} />
-            
-              
-                
-
-        } else {
+        }
+        if (brands && !products)
+            return <BrandList url={url} />
+        else {
 
             // return (
             //     <>
@@ -151,9 +157,117 @@ export const Dashboard = () => {
         }
     };
 
+    const hanldeSubmitSearch = (e) => {
+
+        e.preventDefault();
+
+        Fetch(`${process.env.REACT_APP_backUrl}/product-search`, {method : "post", data : {...formValues}})
+        .then(data => {
+            
+            if(data){
+                const {res, Results} = data;
+
+                switch(res){
+                    case "1" :
+                        Login.setLoginUserInfo({...Login, Results});
+                        console.log({...Login});
+                        setStateResDB("1");
+                        Redirect("/home/product-list");
+                        break;
+                    case "-1" :
+                        setStateResDB("-1")
+                        break;
+                    case "-2" :
+                        setStateResDB("-2");
+                        break;
+                    case "-3" :
+                        setStateResDB("-3");
+                        break;
+                    case "-4" :
+                        setStateResDB("-4");
+                        break;
+                    default :
+                        break;
+                }
+            }
+        })
+    }
+
+    const showResponseDBError = () => {
+
+        if(stateResDB === "-1"){
+            return (
+                <div className={DashboardCss.modalWindowContainer}>
+                  <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={DashboardCss.modalWindow}
+                    open={open}
+                    onClose={handleCloseMW}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                      timeout: 500,
+                    }}>
+                    <Fade in={open}>
+                      <div className={classes.paper}>
+                        <h2 id="transition-modal-title">Transition modal</h2>
+                        <p id="transition-modal-description">react-transition-group animates me.</p>
+                      </div>
+                    </Fade>
+                  </Modal>
+                </div>
+            );
+        }
+        
+        // if(Error === "-2"){
+        //     return (
+        //         <>
+        //             <div className={DashboardCss.WarningInCredentials}>
+        //                 <p>No hemos encontrado ningun usuario con ese email en nuestra base de datos, porfavor regístrate primero en la aplicación para poder entrar.</p>
+        //                 <button className={DashboardCss.RegisterBtn} onClick={(e) => Redirect("/Register", e)}>Registrarme</button>
+        //             </div>
+        //             {/* <div> */}
+        //                 {/* {setTimeout(() =>{ */}
+        //                  {/* },1000) */}
+        //                 {/* } */}
+
+        //             {/* </div> */}
+        //         </>
+        //     )
+        // }
+
+        // if(Error === "-3" || Error === "-1"){
+        //     return <div className={DashboardCss.ErrorInCredentials}>
+        //                 <p>Lo sentimos, en estos momentos no podemos contactar con la base de datos, porfavor vuelva a intentarlo de nuevo mas tarde.</p>
+        //             </div>
+        // } 
+        
+        // if(Error === "-4" || !isValid.email || !isValid.psw){
+        //     return <div className={DashboardCss.ErrorInCredentials}>
+        //                 <p>El email o contraseña que has introducido no son correctos, recuerda que deben ser:</p>
+        //                 <ul className={DashboardCss.ErrorInCredentialsList}>
+        //                     <li>Ej: example@gmail.com</li>
+        //                     <li>Ej: 9t7kfCqQt </li>
+                                
+        //                 </ul>
+
+        //           </div>
+
+        // } 
+        
+        // if(Error === "-5"){
+        //     return <div className={DashboardCss.ErrorInCredentials}>
+        //                 <p>Los campos de email y contraseña no pueden estar vacíos.</p>
+        //           </div>
+        // }
+        
+    }
+
     return (
         <>
             {ShowModalWindow()}
+            {showResponseDBError()}
             <Background />
             <div className={DashboardCss.userContainer}>
                 <h1 className={DashboardCss.queComoTitle}>QuéComo</h1>
@@ -165,13 +279,14 @@ export const Dashboard = () => {
                 <input 
                     id={DashboardCss.searchBar}
                     type="text"
-                    name="search"
+                    name="search_term"
                     placeholder="Buscar"
                     autoComplete="off"
-                    value={search}
-                    onChange={handleInputChange}/>
-                <button className={DashboardCss.searchBtn}>
-                    <i id={DashboardCss.searchIcon} className="fas fa-search"></i>
+                    value={search_term}
+                    onChange={handleInputChange}
+                    onSubmit={hanldeSubmitSearch}/>
+                <button className={DashboardCss.searchBtn} onClick={hanldeSubmitSearch}>
+                    <i id={DashboardCss.searchIcon} className="fas fa-search_term"></i>
                 </button>
                 <button className={DashboardCss.filterBtn} onClick={handleOpenMW}>
                     <i id={DashboardCss.filterIcon} className="fas fa-sliders-h"></i>

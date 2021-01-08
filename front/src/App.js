@@ -11,6 +11,7 @@ import { SignUp } from './Components/SignUp/SignUp'
 // import { Error } from './Components/Advices/Error'
 import { Dashboard } from './Components/Dashboard/Dashboard'
 import { Error } from './Components/Advices/Error'
+import { ProductsList } from './Components/ProductsList/ProductsList'
 // import { usePreferences } from './Hooks/usePreferences'
 
 
@@ -36,9 +37,15 @@ export const App = () => {
                         </LoginProvider>
                     </Route>
 
-                    <Route path="/home">
+                    <Route exact path="/home">
                         <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
                             <Dashboard />
+                        </LoginProvider>
+                    </Route>
+
+                    <Route path="/home/product-list">
+                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+                            <ProductsList />
                         </LoginProvider>
                     </Route>
 

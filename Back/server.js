@@ -906,7 +906,7 @@ server.post("/add-product-to-favourites", (req, res) => {
     }
 });
 
-server.post("/product-search" , async (req, res) => {
+server.post("/product-search" , (req, res) => {
 
     const {search_term, category, labels, brand, additives, allergens} = req.body;
 
@@ -914,18 +914,28 @@ server.post("/product-search" , async (req, res) => {
         
 
         fetch(`${process.env.API_URL}/products_by_filters`,{
-            method : "GET",
+            method : "POST",
             headers : {
                 'Content-Type' : 'application/json'
             },
             body : JSON.stringify(req.body)
         })
-        // .then(res => res.json())
-        .then(data => {
-            console.log(data);
+        .then(res => res.json())
+        .then(dataSearch => {
+            if(dataSearch){
+                let {Results} = dataSearch;
+                res.send({"res" : "1", Results})
+
+            } else if(Results === []) {
+                res.send({"res" : "-1", "msg" : "No data about this search"})
+            } else {
+                res.send({"res" : "-2", "msg" : "no response from db"})
+            }
         })
-        .catch(e => console.log(e))
+        .catch(err => res.send({"res" : "-3", "msg" : console.error(err)}))
         
+    } else {
+        res.send({"res" : "-4", "msg" : "no data in req.body"})
     }
 
 });
