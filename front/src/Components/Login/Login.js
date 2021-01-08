@@ -8,11 +8,12 @@ import LoginCss from './Login.module.css';
 
 
 
+
 export const Login = () => {
 
     const Redirect = useRedirect();
     const Login = useContext(LoginContext);
-    console.log("Login", Login)
+    
     const {validateCredentials, validateEmail, validatePsw} = useValidator();
 
     const [formValues, handleInputChange, isValid] = useForm(
@@ -46,17 +47,14 @@ export const Login = () => {
     const handleSubmit = (e) =>{
 
         e.preventDefault();
-       
-        console.log(email, psw)
+
         if(!validateCredentials(email, psw) || (email && psw)){
-            console.log(!validateCredentials(email, psw))
 
             Fetch(`${process.env.REACT_APP_backUrl}/login`, {method : "post", data : {...formValues}})
             .then(data => {
                 // console.log(data);
                 if(data){
                     const {res, result} = data;
-                    console.log(res);
 
                     switch(res){
                         case "0" :
@@ -64,7 +62,7 @@ export const Login = () => {
                             break;
                         case "1" :
                             Login.setLoginUserInfo(result);
-                            Redirect("/login-successful");
+                            Redirect("/home");
                             break;
                         case "-1" :
                             setError("-1")

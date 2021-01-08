@@ -29,15 +29,19 @@ export const App = () => {
                     <Route exact path="/">
                         <Welcome />
                     </Route>
+                    
                     <Route path="/login">
                         <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
                             <Login />
                         </LoginProvider>
                     </Route>
 
-                    <Route path="/guest-user-home">
-                        <Dashboard />
+                    <Route path="/home">
+                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+                            <Dashboard />
+                        </LoginProvider>
                     </Route>
+
                     <Route path="/guest-user-history">
                         
                     </Route>
@@ -69,12 +73,6 @@ export const App = () => {
                         <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
                             <UserFormAllergens />
                         </RegisterProvider>
-                    </Route>
-
-                    <Route path="/login-successful">
-                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                            <Dashboard />
-                        </LoginProvider>
                     </Route>
 
                     <Route path="/error/:id"></Route>

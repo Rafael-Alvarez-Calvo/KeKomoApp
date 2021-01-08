@@ -507,12 +507,28 @@ server.get("/get-products-from-favourites", (req, res) => {
 
 server.get("/get-info-brands", (req, res) => {
 
-    fetch("https://alimentacion-tb.herokuapp.com/info/brands")
+    fetch(`${process.env.API_URL}/info/brands`)
     .then(res => res.json())
     .then(brands => {
         if(brands){
             const {Marcas} = brands;
             res.send({"res" : "1", Marcas})
+        } else {
+            res.send({"res" : "0", "msg" : "no data"})
+        }
+    })
+    .catch(err => res.send({"res" : "-1", err }));
+
+});
+
+server.get("/get-info-categories", (req, res) => {
+
+    fetch(`${process.env.API_URL}/info/categories`)
+    .then(res => res.json())
+    .then(categories => {
+        if(categories){
+            const {Categorias} = categories;
+            res.send({"res" : "1", Categorias})
         } else {
             res.send({"res" : "0", "msg" : "no data"})
         }
@@ -526,7 +542,6 @@ server.post("/signup", (req,res) =>{
     const {name, email, psw} = req.body;
 
     if(name !== "" || email !== "" || psw !== ""){
-
 
         let validated = validateCredentials(email, psw);
 
@@ -585,7 +600,8 @@ server.post("/login", (req, res) =>{
                     if (err){
                         res.send({"res" : "-1", "msg" : err})
                     } else if (result.length){
-                        const veryfyPsw = JWT.verifyPassword(psw, {password: result[0].psw, salt: result[0].salt}) //true es la verdadera
+
+                        const veryfyPsw = JWT.verifyPassword(psw, {password: result[0].psw, salt: result[0].salt});
 
                         if(veryfyPsw){
 
@@ -598,12 +614,16 @@ server.post("/login", (req, res) =>{
                                 "iat" : new Date()
                             };
 
-                            //COMPLETE Payload
-
                             const jwt = JWT.generateJWT(Payload);
-                            // const jwtVerified = JWT.verifyJWT(jwt);
+
+                            // const resultFiltered = result.filter(d => d !== (result.psw && result.salt))
+                            // console.log(resultFiltered);
+
+                            const {usrid, email, name, user_profile} = result[0];
+
                             res.cookie("JWT", jwt, {"httpOnly" : true})
-                                .send({"res" : "1", "msg" : `${result[0].name} has logged in`, result});
+                                .send({"res" : "1", "msg" : `${result[0].name} has logged in`, "result" : {usrid, email, name, user_profile}});
+
                         } else {
                             res.send({"res" : "0", "msg" : "la contraseña introducida no es correcta"})
                         }
@@ -884,6 +904,30 @@ server.post("/add-product-to-favourites", (req, res) => {
     } else {
         res.send({"res" : "-2", "msg" : "No usrid or productId"})
     }
+});
+
+server.post("/product-search" , async (req, res) => {
+
+    const {search_term, category, labels, brand, additives, allergens} = req.body;
+
+    if(search_term || category || labels || brand || additives || allergens){
+        
+
+        fetch(`${process.env.API_URL}/products_by_filters`,{
+            method : "GET",
+            headers : {
+                'Content-Type' : 'application/json'
+            },
+            body : JSON.stringify(req.body)
+        })
+        // .then(res => res.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(e => console.log(e))
+        
+    }
+
 });
 
 //------------------------PUT--------------------------------//

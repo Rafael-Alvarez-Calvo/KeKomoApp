@@ -34,7 +34,7 @@ export const Welcome = () => {
             
             <div className={WelcomeCss.loginContainer}>
                 <button type="button" id="login" className={WelcomeCss.loginBtn} onClick={(e) => Redirect("/login", e)}>Iniciar sesion con email</button>
-                <button className={WelcomeCss.comeInAsGuest} onClick={(e) => Redirect("/guest-user-home", e)}>Entrar sin iniciar sesión</button>
+                <button className={WelcomeCss.comeInAsGuest} onClick={(e) => Redirect("/home", e)}>Entrar sin iniciar sesión</button>
             </div>
         </>
     )

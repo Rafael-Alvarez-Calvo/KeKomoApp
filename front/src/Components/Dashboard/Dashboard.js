@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useForm } from '../../Hooks/useForm';
-import { usePreferences } from '../../Hooks/usePreferences';
+// import { usePreferences } from '../../Hooks/usePreferences';
 import { Background } from '../Templates/Background';
-// import Carousel from 'react-swiping-carousel';
 import DashboardCss from './Dashboard.module.css';
 import { useRedirect } from '../../Hooks/useRedirect';
-import Carousel from 'react-material-ui-carousel'
-import {Paper} from '@material-ui/core'
+// import { Fetch } from '../../Hooks/useFetch';
+import { LoginContext } from '../../Contexts/LoginContext';
+import { BrandList } from '../BrandList/BrandList';
+
+
+
+
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { Fetch } from '../../Hooks/useFetch';
+
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -30,9 +34,11 @@ const useStyles = makeStyles((theme) => ({
 
 export const Dashboard = () => {
 
-    const preferences = usePreferences();
+    // const preferences = usePreferences();
     const location = useLocation();
     const Redirect = useRedirect();
+    const Login = useContext(LoginContext);
+    // console.log(Login)
 
     const [formValues, handleInputChange] = useForm({
         search : "",
@@ -46,10 +52,12 @@ export const Dashboard = () => {
         products : false
     })
 
+    const [url, setUrl] = useState(``);
+
     const {brands, products} = optionContainer;
 
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
   
     const handleOpenMW = () => {
       setOpen(true);
@@ -110,49 +118,12 @@ export const Dashboard = () => {
     }
 
     const showOptionsContainer = () => {
-        console.log("heeeey", brands, products)
         if(brands && !products){
-
-            Fetch(`${process.env.REACT_APP_backUrl}/get-info-brands`)
-            .then((data) => {
-                if(data){
-                    const {res, Marcas} = data;
-
-                    if(res === "1" && Marcas ){
-                        return (
-                            <>
-                                <div className={DashboardCss.superMarketsTitleContainer}>
-                                    <label>Todos los supermercados</label> 
-                                    <i id={DashboardCss.filterIconOptions} className="fas fa-sliders-h"></i>
-                                </div>
-
-                                {Marcas.map(data => {
-                                    
-                                    const {Marca} = data;
-                                    return <Carousel key={Marca}>
-                                                <ImageMarket key={Marca} item={Marca}/>
-                                            </Carousel>
-                                    
-                                    
-                                })}
-                                
-                            </>
-                        )
-                    } else {
-                        return (
-                            <>
-                                <div className={DashboardCss.ErrorMessage}>
-                                    <p>Lo sentimos en estos momentos no podemos mostrarte esta informacion, inténtalo de nuevo mas tarde</p>
-                                </div>
-                            </>
-                        )
-                    }
-                } else {
-                    console.log("hola")
-                }
-            })
-
+            setUrl(`${process.env.REACT_APP_backUrl}/get-info-brands`)
+            // return <BrandList url={url} />
             
+              
+                
 
         } else {
 
@@ -179,18 +150,10 @@ export const Dashboard = () => {
 
         }
     };
- 
-    const ImageMarket = ({Marca}) => {
-        return (
-            <Paper>
-                {/* <img /> */}
-            </Paper>
-        )
-    }
 
     return (
         <>
-            
+            {ShowModalWindow()}
             <Background />
             <div className={DashboardCss.userContainer}>
                 <h1 className={DashboardCss.queComoTitle}>QuéComo</h1>
