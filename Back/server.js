@@ -17,7 +17,7 @@ const {validateCredentials, validateEmail, validatePsw} = require("./lib/validat
 
 
 const server = express();
-const listeningPort = 8888;
+const listeningPort = process.env.PORT || 8888;
 
 //------------------ MIDDLEWARES -------------------//
 //Setup the public (Frontend) folder
