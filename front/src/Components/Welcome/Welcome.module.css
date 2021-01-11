@@ -27,10 +27,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: -50px;
 }
 
 .registerBtn{
-    padding: 10px 110px 10px 110px;
+    padding: 8px 110px 8px 110px;
     margin: 390px 50px 0 50px;
     text-align: center;
     background: #188161;
@@ -100,7 +101,7 @@
 
 .downSeparator{
     background: #188161;
-    border: 1px solid #188161;
+    border: 0.1px solid #188161;
     margin-top: 17px;
     width: 333px;
 }
@@ -125,7 +126,7 @@
     line-height: 22px;
     margin-top: 20px;
     outline: none;
-    padding: 15px 32px;
+    padding: 8px 65px;
     text-align: center;
 }
 

@@ -6,9 +6,6 @@ import { useValidator } from '../../Hooks/useValidator';
 import { LoginContext } from '../../Contexts/LoginContext';
 import LoginCss from './Login.module.css';
 
-
-
-
 export const Login = () => {
 
     const Redirect = useRedirect();

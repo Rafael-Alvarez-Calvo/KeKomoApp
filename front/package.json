@@ -8,8 +8,10 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
+    "bootstrap": "^4.5.3",
     "crypto": "^1.0.1",
     "object-hash": "^2.1.1",
+    "quagga": "^0.12.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-material-ui-carousel": "^2.1.1",
@@ -17,6 +19,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "react-swiping-carousel": "^1.0.5-pre3",
+    "reactstrap": "^8.8.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

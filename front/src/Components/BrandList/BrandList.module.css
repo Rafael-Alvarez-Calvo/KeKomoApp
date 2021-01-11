@@ -1,0 +1,121 @@
+.superMarketsTitleContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 5px;
+    padding: 15px;
+    color: #188161;
+
+}
+
+.labelAllSMarkets{
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+}
+
+#filterIconOptions{
+    margin: 3px 0 0 13px;
+    font-size: 20px;
+}
+
+.SMarketsContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 160px;
+    margin-bottom: 120px;
+    
+}
+
+.brandsContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 130px;
+    background: #FFFFFF;
+    /* border: 2px solid #188161; */
+    border-radius: 8px;
+    margin: 20px 30px 5px 30px;
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.534);
+    padding: 10px 30px;
+    /* height: 150px; */
+}
+
+.imgSMarket{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 130px;
+}
+
+.loadingSVG{
+    
+    margin: 180px 0px 0px 0px;
+    padding: 90px 120px 0px 120px;
+    background: transparent;
+    z-index: 2;
+}
+
+/*-------------X SCROLL -------------*/
+
+.XSMarketsContainerX{
+    
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* white-space: nowrap;  */
+    margin-top: 210px;
+    padding: 0 0 0 20px;
+    transform: translateX(-10px);
+    background-color: white;
+    z-index: 2;
+    outline: none;
+    
+}::-webkit-scrollbar {
+    display: none;
+  }
+
+
+.XSMarketBtnX{
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 25px;
+    background: rgba(234, 64, 95, 0.329);
+    border-radius: 26px;
+    outline: none;
+    border: none;
+    margin: 0 5px;
+    padding: 0 0;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 1.41px;
+    color: #DA3957;
+
+}
+
+.XSMarketBtnX:hover{
+    background: #DA3957;;
+    
+    color: white;
+}
+.XSMarketBtnX:active{
+    background: #DA3957;;
+     
+    color: white;
+}

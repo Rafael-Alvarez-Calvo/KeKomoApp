@@ -153,7 +153,7 @@ export const SignUp = () => {
                 <img src="../../background.jpg" alt="Background" className={SignUpCss.BG} />
                 <div className={SignUpCss.gradientBG}></div>
             </div>
-            <form onSubmit={handleSubmit} className={SignUpCss.SignUpForm}>
+            <form onSubmit={handleSubmit} className={Error !== null ? `${SignUpCss.SignUpFormErrorActive}` : `${SignUpCss.SignUpForm}`}>
                 <h1 className={SignUpCss.titleSignUp}>Registro</h1>
                 <label>Tu Nombre</label>
                 <input 

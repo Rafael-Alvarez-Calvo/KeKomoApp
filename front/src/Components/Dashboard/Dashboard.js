@@ -1,22 +1,26 @@
 import React, { useState, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import {useHistory, useLocation } from 'react-router-dom';
 import { useForm } from '../../Hooks/useForm';
 // import { usePreferences } from '../../Hooks/usePreferences';
 import { Background } from '../Templates/Background';
 import DashboardCss from './Dashboard.module.css';
 import { useRedirect } from '../../Hooks/useRedirect';
-// import { Fetch } from '../../Hooks/useFetch';
+import { Fetch } from '../../Hooks/useFetch';
 import { LoginContext } from '../../Contexts/LoginContext';
+import { DashboardContext } from '../../Contexts/DashboardContext';
 import { BrandList } from '../BrandList/BrandList';
+import { ProductList} from '../ProductList/ProductList';
+
 
 
 
 
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import { Fetch } from '../../Hooks/useFetch';
+
+// import Modal from '@material-ui/core/Modal';
+// import Backdrop from '@material-ui/core/Backdrop';
+// import Fade from '@material-ui/core/Fade';
+// import { Fetch } from '../../Hooks/useFetch';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,16 +42,13 @@ export const Dashboard = () => {
     // const preferences = usePreferences();
     const location = useLocation();
     const Redirect = useRedirect();
+    const history = useHistory();
     const Login = useContext(LoginContext);
+    const DashboardCtxt = useContext(DashboardContext);
     // console.log(Login)
 
     const [formValues, handleInputChange] = useForm({
-        search_term : "",
-        category :"",
-        labels:[],
-        brand:"",
-        additives:"",
-        allergens:[]
+         
     });
 
     const {search_term} = formValues
@@ -57,50 +58,55 @@ export const Dashboard = () => {
         brands : true,
         products : false
     })
+    
+    const {brands, products} = optionContainer;
 
     const [url, setUrl] = useState(``);
 
-    const [stateResDB, setStateResDB] = useState(null);
+    const [statePage, setStatePage] = useState({
+        DashboardPage : true,
+        ProductListPage : false
+    });
 
-    const {brands, products} = optionContainer;
 
     const classes = useStyles();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(null);
   
     const handleOpenMW = () => {
       setOpen(true);
     };
   
     const handleCloseMW = () => {
-      setOpen(false);
+      setOpen(null);
     };
 
-    const ShowModalWindow = () => {
-        if(open){
-            return (
-                <div className={DashboardCss.modalWindowContainer}>
-                  <Modal
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
-                    className={DashboardCss.modalWindow}
-                    open={open}
-                    onClose={handleCloseMW}
-                    closeAfterTransition
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                      timeout: 500,
-                    }}>
-                    <Fade in={open}>
-                      <div className={classes.paper}>
-                        <h2 id="transition-modal-title">Transition modal</h2>
-                        <p id="transition-modal-description">react-transition-group animates me.</p>
-                      </div>
-                    </Fade>
-                  </Modal>
-                </div>
-            );
-        }
-    };
+    
+
+    // const ShowModalWindow = () => {
+        
+    //     return (
+    //         <div className={DashboardCss.modalWindowContainer}>
+    //             <Modal
+    //             aria-labelledby="transition-modal-title"
+    //             aria-describedby="transition-modal-description"
+    //             className={DashboardCss.modalWindow}
+    //             open={open}
+    //             onClose={handleCloseMW}
+    //             closeAfterTransition
+    //             BackdropComponent={Backdrop}
+    //             BackdropProps={{
+    //                 timeout: 500,
+    //             }}>
+    //                 {/* <Fade in={open}>
+    //                     <div className={classes.paper}>
+    //                     <h2 id="transition-modal-title">Transition modal</h2>
+    //                     <p id="transition-modal-description">react-transition-group animates me.</p>
+    //                     </div>
+    //                 </Fade> */}
+    //             </Modal>
+    //         </div>
+    //     ); 
+    // };
 
     const handleBrandsContainer = (e) => {
 
@@ -112,8 +118,8 @@ export const Dashboard = () => {
             products: false
 
         });
-
     }
+
     const handleProductsContainer = (e) => {
 
         e.preventDefault();
@@ -123,102 +129,87 @@ export const Dashboard = () => {
             products : products ? !products : !products,
             brands : false
         });
+
+        
     }
 
-    const showOptionsContainer = () => {;
+    const showProductsOptionsContainer = () => {
+
+        if(products && !brands && url !== `${process.env.REACT_APP_backUrl}/product-search`){
+            setUrl(`${process.env.REACT_APP_backUrl}/product-search`)
+            console.log(url);
+        }
+
+        if(products && !brands){
+            return <ProductList url={url} opt={{method: "POST", data : {...formValues}}} /> 
+
+        } 
+        
+        // else {
+        //     return <>
+        //             {showBrandsOptionsContainer()}
+        //            </>
+        // }
+    }
+
+    const showBrandsOptionsContainer = () => {;
         if(brands && !products && url !== `${process.env.REACT_APP_backUrl}/get-info-brands`){
             setUrl(`${process.env.REACT_APP_backUrl}/get-info-brands`)
+            console.log(url);
         }
         if (brands && !products)
-            return <BrandList url={url} />
-        else {
-
-            // return (
-            //     <>
-            //         <div className={DashboardCss.superMarketsTitleContainer}>
-            //             <label>Todos los supers</label> 
-            //             <i id={DashboardCss.filterIconOptions} className="fas fa-sliders-h"></i>
-            //         </div>
-            //         {Object.keys(preferences).map(prefColl => {
-            //             if(preferences[prefColl].length){
-            //                 return <Carousel align={{first : "left", nth : "center", last : "right"}} 
-            //                 margin={20} scrollDistance={20}>
-
-            //                         { preferences[prefColl].map((pref) => 
-            //                                 <p>{pref.name}</p>)}
-
-            //                         </Carousel>
-            //             }
-                
-            //         })}
-            //     </>
-            // )
-
-        }
+            return <BrandList url={url} pageState={statePage}/>
+                   
+        
     };
 
-    const hanldeSubmitSearch = (e) => {
-
+    const handleSubmitSearch = (e) => {
+        
         e.preventDefault();
+        // console.log(url)
+        // if(url === `${process.env.REACT_APP_backUrl}/get-info-brands`){
 
-        Fetch(`${process.env.REACT_APP_backUrl}/product-search`, {method : "post", data : {...formValues}})
-        .then(data => {
+        //     setUrl(`${process.env.REACT_APP_backUrl}/product-search`)
+        //     console.log(url)
             
-            if(data){
-                const {res, Results} = data;
+        // }
+        // if(url){
+        //     return <GetSeacrhRes url={`${process.env.REACT_APP_backUrl}/product-search`} method={"POST"} postData={{...formValues}} />
 
-                switch(res){
-                    case "1" :
-                        Login.setLoginUserInfo({...Login, Results});
-                        console.log({...Login});
-                        setStateResDB("1");
-                        Redirect("/home/product-list");
-                        break;
-                    case "-1" :
-                        setStateResDB("-1")
-                        break;
-                    case "-2" :
-                        setStateResDB("-2");
-                        break;
-                    case "-3" :
-                        setStateResDB("-3");
-                        break;
-                    case "-4" :
-                        setStateResDB("-4");
-                        break;
-                    default :
-                        break;
-                }
-            }
-        })
+        // }
     }
 
-    const showResponseDBError = () => {
-
-        if(stateResDB === "-1"){
-            return (
-                <div className={DashboardCss.modalWindowContainer}>
-                  <Modal
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
-                    className={DashboardCss.modalWindow}
-                    open={open}
-                    onClose={handleCloseMW}
-                    closeAfterTransition
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                      timeout: 500,
-                    }}>
-                    <Fade in={open}>
-                      <div className={classes.paper}>
-                        <h2 id="transition-modal-title">Transition modal</h2>
-                        <p id="transition-modal-description">react-transition-group animates me.</p>
-                      </div>
-                    </Fade>
-                  </Modal>
-                </div>
-            );
-        }
+    // const showResponseDBError = () => {
+    //     console.log(stateResDB)
+    //     if(stateResDB === "-1"){
+            // handleOpenMW();
+            // ShowModalWindow();
+            // return (
+            //     <>
+            //         <div className={DashboardCss.modalWindowContainer}>
+            //             Heyyyy
+            //         <Modal
+            //             aria-labelledby="transition-modal-title"
+            //             aria-describedby="transition-modal-description"
+            //             className={DashboardCss.modalWindow}
+            //             open={open}
+            //             onClose={handleCloseMW}
+            //             closeAfterTransition
+            //             BackdropComponent={Backdrop}
+            //             BackdropProps={{
+            //             timeout: 500,
+            //             }}>
+            //             <Fade in={open}>
+            //             <div className={classes.paper}>
+            //                 <h2 id="transition-modal-title">Transition modal</h2>
+            //                 <p id="transition-modal-description">react-transition-group animates me.</p>
+            //             </div>
+            //             </Fade>
+            //         </Modal>
+            //         </div>
+            //     </>
+            // );
+        // }
         
         // if(Error === "-2"){
         //     return (
@@ -262,19 +253,36 @@ export const Dashboard = () => {
         //           </div>
         // }
         
+    // }
+
+    const logOut = (e) => {
+        e.preventDefault();
+        Fetch(`${process.env.REACT_APP_backUrl}/logout`)
+        .then(({res}) => {
+            if(res === "1" || res === "-1")
+                Redirect("/", e);
+        })
     }
 
     return (
         <>
-            {ShowModalWindow()}
-            {showResponseDBError()}
-            <Background />
+            
+            <Background className={DashboardCss.BGcontainer} />
             <div className={DashboardCss.userContainer}>
+                <button className={DashboardCss.backBtn} onClick={logOut}>
+                    <i id={DashboardCss.iconBackBtn} className="fas fa-chevron-left"></i>
+                </button>
                 <h1 className={DashboardCss.queComoTitle}>QuéComo</h1>
                 <button className={DashboardCss.notificationsBtn}>
                     <i id={DashboardCss.bellIcon} className="far fa-bell"></i>
                 </button>
+                <button className={DashboardCss.userProfileBtn}>
+                    {/* <i id={DashboardCss.userProfileIcon} className="fas fa-user-cog"></i> */}
+                    <img src="../../../userProfile.svg" className={DashboardCss.userProfileSVG} alt="arco superior" />
+                </button>
             </div>
+            {/* {ShowModalWindow()} */}
+            {/* {showResponseDBError()} */}
             <div className={DashboardCss.searchbarContainer}>
                 <input 
                     id={DashboardCss.searchBar}
@@ -284,34 +292,40 @@ export const Dashboard = () => {
                     autoComplete="off"
                     value={search_term}
                     onChange={handleInputChange}
-                    onSubmit={hanldeSubmitSearch}/>
-                <button className={DashboardCss.searchBtn} onClick={hanldeSubmitSearch}>
-                    <i id={DashboardCss.searchIcon} className="fas fa-search_term"></i>
+                    onSubmit={handleSubmitSearch}/>
+                <button className={DashboardCss.searchBtn} onClick={handleSubmitSearch}>
+                    <i id={DashboardCss.searchIcon} className="fas fa-search"></i>
                 </button>
                 <button className={DashboardCss.filterBtn} onClick={handleOpenMW}>
                     <i id={DashboardCss.filterIcon} className="fas fa-sliders-h"></i>
                     
                 </button>
             </div>
-
-            <div className={DashboardCss.optionsSection}>
-                <button className={brands ? `${DashboardCss.brandsBtnActive}` : `${DashboardCss.brandsBtn}`} onClick={handleBrandsContainer}>Marcas</button>
-                <button className={products ? `${DashboardCss.productsBtnActive}` : `${DashboardCss.productsBtn}` } onClick={handleProductsContainer} >Productos</button>
-            </div>
+            <section className={DashboardCss.optionsBtnSection}>
+                <div className={DashboardCss.optionsBtnContainer}>
+                    <button className={brands ? `${DashboardCss.brandsBtnActive}` : `${DashboardCss.brandsBtn}`} onClick={handleBrandsContainer}>Marcas</button>
+                    <button className={products ? `${DashboardCss.productsBtnActive}` : `${DashboardCss.productsBtn}` } onClick={handleProductsContainer} >Productos</button>
+                </div>
+            </section>
+            
             <section className={DashboardCss.OptionsSection}>
-                {showOptionsContainer()}
-
+                    {showBrandsOptionsContainer()}
+                    {showProductsOptionsContainer()}
             </section>
     
             <section className={DashboardCss.navSection}>
-            <img src="/navRectangle.svg" className={DashboardCss.navRectangle} alt="arco superior" />
                 <nav className={DashboardCss.navContainer}>
-                    <button className={`${DashboardCss.navBtn} ${location.pathname === "/guest-user-home" ? DashboardCss.isActive: ""}`} onClick={(e) => Redirect("/guest-user-home", e)}>
+                    {/* <img src="/navRectangle.svg" className={DashboardCss.navRectangle} alt="arco superior" /> */}
+                    <button className={`${DashboardCss.navBtn} ${location.pathname === "/home" ? DashboardCss.isActive: DashboardCss.navBtn}`} onClick={(e) => Redirect("/home", e)}>
                         <i id={DashboardCss.homeIcon} className="fas fa-home"></i>
                         {/* Inicio */}
                     </button>
                     <button className={DashboardCss.navBtn} onClick={(e) => Redirect("/guest-user-history", e)}>
                         <i id={DashboardCss.historyIcon} className="fas fa-history"></i>
+                        {/* Historial */}
+                    </button>
+                    <button className={DashboardCss.barCodeBtn} onClick={(e) => Redirect("/barcode-reader", e)}>
+                        <i id={DashboardCss.barCodeIcon} className="fas fa-barcode"></i>
                         {/* Historial */}
                     </button>
                     <button className={DashboardCss.navBtn} onClick={(e) => Redirect("/guest-user-favourites", e)}>

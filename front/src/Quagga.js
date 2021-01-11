@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import Quagga from "quagga"
 import './App.css';
 import React, { Component } from 'react';

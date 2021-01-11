@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import { Welcome } from './Components/Welcome/Welcome'
 import {Login} from './Components/Login/Login'
 import { RegisterProvider } from './Contexts/RegisterContext'
+import { DashboardProvider } from './Contexts/DashboardContext'
 import { LoginProvider } from './Contexts/LoginContext'
 import { ExternalRegisterSuccessful } from './Components/external-register-successful/ExternalRegisterSuccessful'
 import { WelcomeUserForm } from './Components/info-user-form/WelcomeUserForm'
@@ -12,14 +13,17 @@ import { SignUp } from './Components/SignUp/SignUp'
 import { Dashboard } from './Components/Dashboard/Dashboard'
 import { Error } from './Components/Advices/Error'
 import { ProductsList } from './Components/ProductsList/ProductsList'
+import {BarcodeReader}  from './Components/BarcodeReader/BarcodeReader'
+import { BrandCategories } from './Components/BrandCategories/BrandCategories'
+import { ProductListCategories } from './Components/ProductListCategories/ProductListCategories'
 // import { usePreferences } from './Hooks/usePreferences'
-
 
 
 export const App = () => {
 
     const [registerUserInfo, setRegisterUserInfo] = useState({});
     const [loginUserInfo, setLoginUserInfo] = useState({});
+    const [dashBoardInfo, setDashBoardInfo] = useState({});
     
 
     return (
@@ -39,13 +43,33 @@ export const App = () => {
 
                     <Route exact path="/home">
                         <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                            <Dashboard />
+                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+                                <Dashboard />
+                            </DashboardProvider>
                         </LoginProvider>
                     </Route>
 
                     <Route path="/home/product-list">
                         <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                            <ProductsList />
+                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+                                <ProductsList />
+                            </DashboardProvider>
+                        </LoginProvider>
+                    </Route>
+
+                    <Route exact path="/home/brand-categories">
+                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+                                <BrandCategories />
+                            </DashboardProvider>
+                        </LoginProvider>
+                    </Route>
+                    
+                    <Route path="/home/brand-categories/product-list">
+                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+                                <ProductListCategories />
+                            </DashboardProvider>
                         </LoginProvider>
                     </Route>
 
@@ -82,6 +106,11 @@ export const App = () => {
                         </RegisterProvider>
                     </Route>
 
+
+
+                    <Route path="/barcode-reader">
+                        <BarcodeReader />
+                    </Route>
                     <Route path="/error/:id"></Route>
                     <Route path="/example"><Error /></Route>
                     

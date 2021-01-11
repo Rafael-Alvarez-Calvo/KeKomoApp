@@ -80,8 +80,14 @@ function PromiseConnectionDB(){
 
 //-------------------------GET---------------------//
 server.get("/logout", (req, res) =>{
-    res.clearCookie(JWT);
-    res.redirect("http://localhost:3000");
+
+    if(req.cookies.JWT){
+        res.clearCookie("JWT");
+        res.send({"res" : "1"})
+    } else {
+        res.send({"res" : "-1"})
+    }
+    // res.redirect(`${process.env.FRONT_URL}`);
 });
 
 server.get("/get-allergies-user", (req, res) => {
@@ -909,34 +915,33 @@ server.post("/add-product-to-favourites", (req, res) => {
 server.post("/product-search" , (req, res) => {
 
     const {search_term, category, labels, brand, additives, allergens} = req.body;
-
+    console.log(req.body)
     if(search_term || category || labels || brand || additives || allergens){
         
-
         fetch(`${process.env.API_URL}/products_by_filters`,{
             method : "POST",
-            headers : {
-                'Content-Type' : 'application/json'
-            },
+            headers : req.headers,
+            rejectUnauthorized: false,
+            strictSSL: false,
+            secureProtocol: 'TLSv1_method',
             body : JSON.stringify(req.body)
         })
         .then(res => res.json())
         .then(dataSearch => {
-            if(dataSearch){
-                let {Results} = dataSearch;
+            let {Results} = dataSearch;
+
+            if(Results.length){
                 res.send({"res" : "1", Results})
 
-            } else if(Results === []) {
-                res.send({"res" : "-1", "msg" : "No data about this search"})
             } else {
-                res.send({"res" : "-2", "msg" : "no response from db"})
+                res.send({"res" : "-1", "msg" : "No data about this search", Results})
             }
         })
-        .catch(err => res.send({"res" : "-3", "msg" : console.error(err)}))
-        
-    } else {
-        res.send({"res" : "-4", "msg" : "no data in req.body"})
-    }
+        .catch(err => res.send({"res" : "-2", "msg" : console.error(err), "error" : "Lo sentimos, estamos teniendo problemas con el servidor, por favor vuelva a intentarlo en otro momento."}))
+    } 
+    // else {
+    //     res.send({"res" : "-3", "msg" : "no data in req.body"})
+    // }
 
 });
 

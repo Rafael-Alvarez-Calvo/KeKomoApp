@@ -1,0 +1,13 @@
+.loadingSVGContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center; 
+}
+.loadingSVG{
+    margin: 300px 0px 0px 0px;
+    /* padding: 90px 300px 0px 300px; */
+    width: 150px;
+    background: transparent;
+    z-index: 2;
+}

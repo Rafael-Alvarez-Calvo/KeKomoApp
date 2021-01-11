@@ -5,19 +5,21 @@
 }
 
 .BG{
-    position: absolute;
+    position: fixed;
     width: 1000px;
     height: 100%;
-    transform: translate(0px, 240px);
+    top: 0px;
+    left: 0px;
     z-index: -2;
 }
 
 .gradientBG{
-    position: absolute;
-    width: 100%;
+    position: fixed;
+    width: 1000px;
     height: 100%;
-    left: 0px;
     top: 0px;
+    left: 0px;
+    right: 0;
     background: linear-gradient(179.58deg, rgba(255, 255, 255, 0) 21.14%, #FFFFFF 75.62%), linear-gradient(180deg, rgba(227, 249, 166, 0) 36.22%, #E3F9A6 66.93%);
     z-index: -1;
 }
@@ -26,7 +28,7 @@
     display: flex;
     flex-direction: column;
     padding: 40px;
-    margin-top: 260px;
+    margin-top: 250px;
 }
 
 .titleLogin{
@@ -51,7 +53,7 @@ label{
 input{
     background: #FDFFFA;
     border: 1px solid #188161;
-    padding: 15px 15px 15px 47px;
+    padding: 15px 12px 12px 47px;
     margin-bottom: 20px;
     border-radius: 30px;
     outline: none;
@@ -79,11 +81,11 @@ input{
     border: 1px solid #8d1818;
     box-shadow: 0px 6px 20px rgba(241, 21, 21, 0.25);
     border-radius: 8px;
-    padding: 5px 20px 5px 20px;
+    padding: 5px 5px 5px 5px;
     font-family: Lato;
     font-style: italic;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 11px;
     margin: 10px 5px 10px 5px;
     line-height: 18px;
     letter-spacing: 1.2px;
@@ -116,23 +118,23 @@ input{
  
 #envelope{
     position: absolute;
-    margin-top: 106px;
+    margin-top: 102px;
     margin-left: 15px;
-    font-size: 20px;
+    font-size: 19px;
     color: #188161;
 }
 #key{
     position: absolute;
-    margin-top: 199px;
+    margin-top: 190px;
     margin-left: 15px;
-    font-size: 20px;
+    font-size: 19px;
     color: #188161;
 }
 
 #eye{
     position: absolute;
-    margin-top: 199px;
-    margin-left: 300px;
+    margin-top: 190px;
+    margin-left: 250px;
     font-size: 20px;
     color: #188161;
 }
@@ -162,7 +164,7 @@ input{
     border-radius: 26px;
     border: none;
     outline: none;
-    padding: 10px 117px;
+    padding: 10px 90px;
     font-family: Lato;
     font-style: normal;
     font-weight: bold;
