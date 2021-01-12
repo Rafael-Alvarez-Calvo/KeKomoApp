@@ -1,0 +1,26 @@
+.CategoriesListContainer{
+    margin-top: 300px;
+    margin-bottom: 120px;
+    z-index: 2;
+}
+
+.loadingSVGContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    z-index: 2;
+}
+.loadingSVG{
+    margin: 300px 0px 0px 0px;
+    /* padding: 90px 300px 0px 300px; */
+    width: 150px;
+    background: transparent;
+    z-index: 2;
+}
+
+.Separator{
+    margin: 0 0 0 0px;
+    background: rgba(33, 33, 33, 0.08);
+    border: 0.1px solid rgba(33, 33, 33, 0.08);
+}

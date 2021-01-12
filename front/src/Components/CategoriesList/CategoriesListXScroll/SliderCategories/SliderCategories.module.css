@@ -1,0 +1,36 @@
+.XCategoriesBtnX{
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 25px;
+    background: rgba(24, 129, 97, 0.2);
+    border-radius: 26px;
+
+    border-radius: 26px;
+    outline: none;
+    border: none;
+    margin: 0 5px;
+    padding: 0 0;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 17px;
+    letter-spacing: 1.41px;
+    color: #188161;
+
+}
+
+.XCategoriesBtnX:hover{
+    background: #DA3957;;
+    
+    color: white;
+}
+.XCategoriesBtnX:active{
+    background: #DA3957;;
+     
+    color: white;
+}

@@ -2,14 +2,16 @@ import React, { useState, useContext } from 'react';
 import {useHistory, useLocation } from 'react-router-dom';
 import { useForm } from '../../Hooks/useForm';
 // import { usePreferences } from '../../Hooks/usePreferences';
-import { Background } from '../Templates/Background';
-import DashboardCss from './Dashboard.module.css';
+import { Background } from '../Templates/Backgrounds/Background';
+import { NavBar } from '../Templates/NavBar/NavBar';
+import { HeaderLogo } from '../Templates/Headers/HeaderLogo';
 import { useRedirect } from '../../Hooks/useRedirect';
 import { Fetch } from '../../Hooks/useFetch';
 import { LoginContext } from '../../Contexts/LoginContext';
 import { DashboardContext } from '../../Contexts/DashboardContext';
 import { BrandList } from '../BrandList/BrandList';
 import { ProductList} from '../ProductList/ProductList';
+import DashboardCss from './Dashboard.module.css';
 
 
 
@@ -255,32 +257,12 @@ export const Dashboard = () => {
         
     // }
 
-    const logOut = (e) => {
-        e.preventDefault();
-        Fetch(`${process.env.REACT_APP_backUrl}/logout`)
-        .then(({res}) => {
-            if(res === "1" || res === "-1")
-                Redirect("/", e);
-        })
-    }
+    
 
     return (
         <>
-            
-            <Background className={DashboardCss.BGcontainer} />
-            <div className={DashboardCss.userContainer}>
-                <button className={DashboardCss.backBtn} onClick={logOut}>
-                    <i id={DashboardCss.iconBackBtn} className="fas fa-chevron-left"></i>
-                </button>
-                <h1 className={DashboardCss.queComoTitle}>QuéComo</h1>
-                <button className={DashboardCss.notificationsBtn}>
-                    <i id={DashboardCss.bellIcon} className="far fa-bell"></i>
-                </button>
-                <button className={DashboardCss.userProfileBtn}>
-                    {/* <i id={DashboardCss.userProfileIcon} className="fas fa-user-cog"></i> */}
-                    <img src="../../../userProfile.svg" className={DashboardCss.userProfileSVG} alt="arco superior" />
-                </button>
-            </div>
+            <Background />
+            <HeaderLogo />
             {/* {ShowModalWindow()} */}
             {/* {showResponseDBError()} */}
             <div className={DashboardCss.searchbarContainer}>
@@ -292,7 +274,8 @@ export const Dashboard = () => {
                     autoComplete="off"
                     value={search_term}
                     onChange={handleInputChange}
-                    onSubmit={handleSubmitSearch}/>
+                    onSubmit={handleSubmitSearch}
+                    onClick={!products && handleProductsContainer}/>
                 <button className={DashboardCss.searchBtn} onClick={handleSubmitSearch}>
                     <i id={DashboardCss.searchIcon} className="fas fa-search"></i>
                 </button>
@@ -312,33 +295,7 @@ export const Dashboard = () => {
                     {showBrandsOptionsContainer()}
                     {showProductsOptionsContainer()}
             </section>
-    
-            <section className={DashboardCss.navSection}>
-                <nav className={DashboardCss.navContainer}>
-                    {/* <img src="/navRectangle.svg" className={DashboardCss.navRectangle} alt="arco superior" /> */}
-                    <button className={`${DashboardCss.navBtn} ${location.pathname === "/home" ? DashboardCss.isActive: DashboardCss.navBtn}`} onClick={(e) => Redirect("/home", e)}>
-                        <i id={DashboardCss.homeIcon} className="fas fa-home"></i>
-                        {/* Inicio */}
-                    </button>
-                    <button className={DashboardCss.navBtn} onClick={(e) => Redirect("/guest-user-history", e)}>
-                        <i id={DashboardCss.historyIcon} className="fas fa-history"></i>
-                        {/* Historial */}
-                    </button>
-                    <button className={DashboardCss.barCodeBtn} onClick={(e) => Redirect("/barcode-reader", e)}>
-                        <i id={DashboardCss.barCodeIcon} className="fas fa-barcode"></i>
-                        {/* Historial */}
-                    </button>
-                    <button className={DashboardCss.navBtn} onClick={(e) => Redirect("/guest-user-favourites", e)}>
-                        <i id={DashboardCss.heartIcon} className="fas fa-heart"></i>
-                        {/* Favoritos */}
-                    </button>
-                    <button className={DashboardCss.navBtn} onClick={(e) => Redirect("/guest-user-shopping-lists", e)}>
-                        <i id={DashboardCss.shoppingListIcon} className="fas fa-tasks"></i>
-                        {/* Listas de la compra */}
-                    </button>
-
-                </nav>
-            </section>
+            <NavBar pathHomeBtn={location.pathname}/>
             
             
             

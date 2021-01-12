@@ -21,7 +21,7 @@ export const ProductList = ({url, opt}) => {
 
         if(data && !isLoading){
             console.log(data)
-            const [{res, Results}] = data;
+            const {res, Results} = data;
             // if((res === "1" && Results) || (res === "-1" && Results)){
 
             //     if(location.pathname !== "/home/product-list"){

@@ -15,8 +15,11 @@ export const Welcome = () => {
                 <img src="../../background.jpg" alt="Background" className={WelcomeCss.BG} />
                 <div className={WelcomeCss.gradientBG}></div>
             </div>
-
-            <div className={WelcomeCss.btnRegisterContainer}><button type="button" className={WelcomeCss.registerBtn} onClick={(e) => Redirect("/Register", e)} >Registrarme</button></div>
+            
+            <div className={WelcomeCss.btnRegisterContainer}>
+                <img src="/Logo.svg" alt="Logo de QuéComo" className={WelcomeCss.LogoImg} />
+                <button type="button" className={WelcomeCss.registerBtn} onClick={(e) => Redirect("/Register", e)} >Registrarme</button>
+            </div>
 
             <div className={WelcomeCss.comingInSeparator}>
                 <hr className={WelcomeCss.Separator} />

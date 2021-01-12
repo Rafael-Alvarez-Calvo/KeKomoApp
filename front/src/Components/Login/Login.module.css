@@ -19,16 +19,21 @@
     height: 100%;
     top: 0px;
     left: 0px;
-    right: 0;
     background: linear-gradient(179.58deg, rgba(255, 255, 255, 0) 21.14%, #FFFFFF 75.62%), linear-gradient(180deg, rgba(227, 249, 166, 0) 36.22%, #E3F9A6 66.93%);
     z-index: -1;
+}
+
+.LogoImg{
+    /* width: 340px; */
+    margin-top: 210px;
+    padding: 0 25px;
 }
 
 .loginForm{
     display: flex;
     flex-direction: column;
-    padding: 40px;
-    margin-top: 250px;
+    padding: 40px 40px 0 40px;
+    margin-top: -70px;
 }
 
 .titleLogin{
@@ -53,7 +58,7 @@ label{
 input{
     background: #FDFFFA;
     border: 1px solid #188161;
-    padding: 15px 12px 12px 47px;
+    padding: 12px 12px 12px 47px;
     margin-bottom: 20px;
     border-radius: 30px;
     outline: none;
@@ -118,14 +123,14 @@ input{
  
 #envelope{
     position: absolute;
-    margin-top: 102px;
+    margin-top: 104px;
     margin-left: 15px;
     font-size: 19px;
     color: #188161;
 }
 #key{
     position: absolute;
-    margin-top: 190px;
+    margin-top: 198px;
     margin-left: 15px;
     font-size: 19px;
     color: #188161;
@@ -133,7 +138,7 @@ input{
 
 #eye{
     position: absolute;
-    margin-top: 190px;
+    margin-top: 198px;
     margin-left: 250px;
     font-size: 20px;
     color: #188161;

@@ -4,7 +4,8 @@ import { DashboardContext } from '../../Contexts/DashboardContext';
 import { LoginContext } from '../../Contexts/LoginContext';
 import { BrandCategories } from '../BrandCategories/BrandCategories';
 import { BrandList } from '../BrandList/BrandList';
-import { BackgroundShort } from '../Templates/BackgroundShort';
+import { CategoriesListXScroll } from '../CategoriesList/CategoriesListXScroll/CategoriesListXScroll';
+import { BackgroundShort } from '../Templates/Backgrounds/BackgroundShort';
 import ProductListCategoriesCss from './ProductListCategories.module.css';
 
 
@@ -49,7 +50,7 @@ export const ProductListCategories = () => {
             ...optionContainer,
             ThisMarket : ThisMarket ? !ThisMarket : !ThisMarket,
             OtherMarkets : false
-        });  
+        });
     }
 
     const showOtherMarketsOptions = () => {
@@ -72,7 +73,7 @@ export const ProductListCategories = () => {
         }
         if (!OtherMarkets && ThisMarket){
 
-            return <BrandCategories pageProductListState={statePage} />
+            return <CategoriesListXScroll url={url}/>
         }
     } 
 

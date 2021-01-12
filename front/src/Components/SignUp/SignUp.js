@@ -149,10 +149,14 @@ export const SignUp = () => {
 
     return (
         <>
+            
             <div className={SignUpCss.mainContainer}>
                 <img src="../../background.jpg" alt="Background" className={SignUpCss.BG} />
                 <div className={SignUpCss.gradientBG}></div>
+                <img src="/Logo.svg" alt="Logo de QuéComo" className={SignUpCss.LogoImg} />
             </div>
+            
+            
             <form onSubmit={handleSubmit} className={Error !== null ? `${SignUpCss.SignUpFormErrorActive}` : `${SignUpCss.SignUpForm}`}>
                 <h1 className={SignUpCss.titleSignUp}>Registro</h1>
                 <label>Tu Nombre</label>

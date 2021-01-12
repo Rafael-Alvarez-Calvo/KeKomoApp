@@ -159,33 +159,9 @@ export const BrandList = ({url, pageState}) => {
         }
     }
 
-    const handleClickOptionSMarket = (e, Marca, Categoria) => {
-        e.preventDefault();
-
-        if(Marca && Categoria){
-
-            setFilterValues({
-                ...filterValues,
-                category : category === `` ? category === Categoria : category === Categoria,
-                brand : brand === `` ? brand === Marca : brand === Marca
-            })
-
-        }
-
-        if(category === Categoria && brand === Marca){
-
-            Fetch(`${process.env.REACT_APP_backUrl}/product-search`, {method : "post", data : {...filterValues}})
-            .then(data => {
-                console.log(data)
-            })
-        }
-
-
-    }
-
     return (
         <>
-            {(isLoading && DashboardPage) && <img src="/loading.svg" className={BrandListCss.loadingSVG} alt="arco superior" />}
+            {(isLoading && DashboardPage) && <div className={BrandListCss.loadingSVGContainer}><img src="/loading.svg" className={BrandListCss.loadingSVG} alt="loading icon" /></div>}
             {!isLoading && paintBrandListContainer()}
         </>
     )

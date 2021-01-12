@@ -1,0 +1,88 @@
+.userContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-around;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 3px 0 0 0;
+    z-index: 2;
+}
+
+.backBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: center;
+    background: #188161;
+    outline: none;
+    border: none;
+    border-radius: 50px;
+    padding: 11px 14px;
+    color: white;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 15px;
+    margin-left: 10px;
+    width: 38px;
+    height: 38px;
+}
+
+#iconBackBtn{
+    transform: translate(-0.5px, 1px);
+}
+
+.LogoContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.LogoHeaderSVG{
+    margin-left: 0px;
+    transform: translateY(27px);
+    z-index: 2;
+}
+
+.notificationsBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    background-color: #FDFFFA;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
+    transform: translate(-16px, 2px);
+}
+
+#bellIcon{
+    color: #FFB758;
+    font-size: 19px;
+}
+
+
+.userProfileBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    background: transparent;
+    border: 1px solid #188161;
+    border-radius: 50px;
+    /* width: 38px;
+    height: 38px; */
+    padding: 3px 4px;
+    transform: translate(-8px, 15px);
+}
+
+.userProfileSVG{
+    border-radius: 50px;
+}

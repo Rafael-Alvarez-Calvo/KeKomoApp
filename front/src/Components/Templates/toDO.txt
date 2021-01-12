@@ -1,0 +1,1 @@
+hacer en la navbar las condiciones del location para que aparezcan presionados en todas las rutas que lleven a home y las demas

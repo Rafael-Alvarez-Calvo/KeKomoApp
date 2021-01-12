@@ -1,0 +1,74 @@
+.CategorieContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    align-items: baseline;
+    padding: 2px 30px;
+
+}
+
+.CategorieContainerActive{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    align-items: baseline;
+    padding: 0px 30px;
+    background: rgba(207, 237, 122, 0.5);
+
+}
+
+.CategoryTitle{
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    color: #188161;
+    text-align: left;
+    transform: translateY(0px); 
+}
+.CategoryTitleActive{
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 13px;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    color: #188161;
+    text-align: left;
+    transform: translateY(3px); 
+}
+
+.scoreBtn{
+    
+    background: #DA3957;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    color: white;
+    padding: 2px 12px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    text-align: center;
+    margin-right: 10px;
+    
+}
+
+#iconChevron{
+    transform: translateY(2px);
+    color: #188161;
+}
+#iconChevronActive{
+    transform: translateY(2px);
+    color: #188161;
+    /* color: rgba(207, 237, 122, 0.5); */
+}

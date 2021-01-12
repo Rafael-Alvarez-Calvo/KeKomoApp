@@ -1,0 +1,80 @@
+.navSection{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateX(10px);
+}
+
+/* .navRectangle{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+     right: 0; 
+    width: 100%;
+    box-shadow: 0px 0px 20px 8px rgba(70, 43, 7, 0.5);
+    z-index: -2;
+    transform: translateX(-13px);
+} */
+
+nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    box-shadow: 0px 0px 20px 8px rgba(70, 43, 7, 0.5);
+    z-index: 2;
+    background-color: white;
+    /* transform: translateX(0px); */
+    
+    
+}
+
+.navBtn{ 
+    background: none;
+    outline: none;
+    border: none;
+    color: #188161;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    /* line-height: 24px; */
+    text-align: center;
+    padding: 15px 22px 15px 22px;
+    bottom: 0;
+}
+.navBtn:hover{
+    border-top: 2px solid #F87E0D;
+    background: rgba(254, 220, 169, 0.5);
+}
+.navBtn:active {
+    border-top: 2px solid #F87E0D;
+    background: rgba(254, 220, 169, 0.5);
+}
+
+.isActive{
+    border-top: 2px solid #F87E0D;
+    background: rgba(254, 220, 169, 0.5);
+}
+
+.barCodeBtn{
+    background: #188161;
+    outline: none;
+    border: none;
+    color: white;
+    border-radius: 50px;
+    padding: 15px;
+    transform: translateY(-30px);
+}
+.barCodeBtn:hover{
+    border: 2px solid #F87E0D;
+    
+}
+.barCodeBtn:active {
+    border: 2px solid #F87E0D;
+}
+
+#barCodeIcon{
+    text-align: center;
+    font-size: 45px;
+}

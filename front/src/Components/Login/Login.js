@@ -141,6 +141,7 @@ export const Login = () => {
             <div className={LoginCss.mainContainer}>
                 <img src="../../background.jpg" alt="Background" className={LoginCss.BG} />
                 <div className={LoginCss.gradientBG}></div>
+                <img src="/Logo.svg" alt="Logo de QuéComo" className={LoginCss.LogoImg} />
             </div>
             <form onSubmit={handleSubmit} className={LoginCss.loginForm}>
                 <h1 className={LoginCss.titleLogin}>Iniciar sesión</h1>
