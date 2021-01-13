@@ -10,20 +10,24 @@ export const useOptionsList = (url, opt) => {
     })
 
     useEffect(() => {
-        console.log(url);
-        Fetch(url, opt)
-        .then(data => {
-            if(data){
-                setDataState({
-                    data : data,
-                    isLoading : false
-                })
-            } else {
-                setDataState({data: [], isLoading: false});
-            }
-        })
         
-        
+        const timeOut = setTimeout(() => {
+            Fetch(url, opt)
+            .then(data => {
+                console.log(data)
+                if(data){
+                    setDataState({
+                        data : data,
+                        isLoading : false
+                    })
+                } else {
+                    setDataState({data: [], isLoading: false});
+                }
+            })
+
+        },1000)
+
+        return () => clearTimeout(timeOut)
 
     }, [url,opt]);
 

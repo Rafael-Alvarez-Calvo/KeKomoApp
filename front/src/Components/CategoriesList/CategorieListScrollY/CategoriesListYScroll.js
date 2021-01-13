@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { useOptionsList } from '../../../Hooks/useOptionsList';
 import { CategoriesList } from '../CategorieList';
 import CategoriesListYScrollCss from './CategoriesListYScroll.module.css';
@@ -17,12 +17,12 @@ export const CategoriesListYScroll = ({url}) => {
                         <div className={CategoriesListYScrollCss.CategoriesListContainer}>
                             {Categorias.length && Categorias.map(dataCat => {
                                     const { Categoria, Id } = dataCat;
-                                    return <>
-                                                <div key={Id}>
+                                    return <Fragment key={Id}>
+                                                <div>
                                                     <CategoriesList key={Categoria} Categoria={Categoria} dataCat={dataCat}/>
                                                 </div>
                                                 <hr className={CategoriesListYScrollCss.Separator}/>
-                                            </>                
+                                            </Fragment>                
                             })}
 
                         </div>

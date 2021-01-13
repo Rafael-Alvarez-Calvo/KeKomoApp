@@ -1,0 +1,14 @@
+.BarcodeWindow video{
+    position: fixed;
+    min-width: 100vw;
+    min-height : 100vh;
+    z-index: 1;
+}
+
+.BarcodeWindow canvas{
+    position: fixed;
+    min-width: 100vw;
+    min-height : 100vh;
+    top: 0;
+    z-index: 2;
+}

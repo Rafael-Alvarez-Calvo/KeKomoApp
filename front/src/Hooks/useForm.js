@@ -20,8 +20,6 @@ export const useForm = (initialState = {}, regex = {}, time = 1000) => {
         }, {})
     );
 
-
-
     let timeOut = useRef()
 
     function handleInputChange({target}){

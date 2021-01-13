@@ -12,18 +12,7 @@ export const BrandList = ({url, pageState}) => {
 
     const Redirect = useRedirect();
     const DashboardCtxt = useContext(DashboardContext);
-
-    const [filterValues, setFilterValues] = useState({
-        search_term : ``,
-        category :``,
-        labels:[``],
-        brand: ``,
-        additives: ``,
-        allergens:[``]
-    })
-    const { category, brand } = filterValues;
-
-
+    
     const [pageStatus, setPageState] = useState({
         BrandListPage : true,
         ProductListPage : false
@@ -78,11 +67,6 @@ export const BrandList = ({url, pageState}) => {
             if(res === "1" && Marcas ){
                 return (
                     <>
-                        <div className={BrandListCss.superMarketsTitleContainer}>
-                            <label className={BrandListCss.labelAllSMarkets}>Todos los supermercados</label> 
-                            <i id={BrandListCss.filterIconOptions} className="fas fa-sliders-h"></i>
-                        </div>
-
                         <div className={BrandListCss.SMarketsContainer}>
                             {Marcas.length && Marcas.map(dataSMarket => {
                                 const { Marca, Logo } = dataSMarket;

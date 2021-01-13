@@ -468,8 +468,13 @@ server.get("/get-products-from-personal-shopping-list", (req, res) => {
 server.get("/search-barcode-from-code-reader", (req, res) => {
     
     const {barcode} = req.query;
+    console.log(barcode)
+    console.log(req.query)
+
     if(barcode){
-        fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`)
+        fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`, {
+            headers : {"Content-Type" : "application/json"}
+        })
         .then(res => res.json())
         .then(product => {
             if(product){
@@ -914,17 +919,15 @@ server.post("/add-product-to-favourites", (req, res) => {
 
 server.post("/product-search" , (req, res) => {
 
-    const {search_term, category, labels, brand, additives, allergens} = req.body;
-    console.log(req.body)
+    const {n, ...body} = req.body
+    const {search_term, category, labels, brand, additives, allergens} = body;
+
     if(search_term || category || labels || brand || additives || allergens){
-        
-        fetch(`${process.env.API_URL}/products_by_filters`,{
+    
+        fetch(`${process.env.API_URL}/products_by_filters?n=${n}`,{
             method : "POST",
-            headers : req.headers,
-            rejectUnauthorized: false,
-            strictSSL: false,
-            secureProtocol: 'TLSv1_method',
-            body : JSON.stringify(req.body)
+            headers : {"Content-Type" : "application/json"} ,
+            body : JSON.stringify(body)
         })
         .then(res => res.json())
         .then(dataSearch => {

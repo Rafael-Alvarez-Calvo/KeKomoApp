@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useState} from 'react'
 import { DashboardContext } from '../../Contexts/DashboardContext';
 import { LoginContext } from '../../Contexts/LoginContext';
 import { useRedirect } from '../../Hooks/useRedirect';
@@ -11,9 +11,6 @@ export const CategoriesList = ({Categoria, dataCat}) => {
     const Redirect = useRedirect();
     const [categorySelected, setCategorySelected] = useState(false)
 
-    // useEffect(() => {
-    //     console.log(Categoria)
-    // }, [])
     return (
             <div onClick={e => {
                 LoginCtxt.setLoginUserInfo({...LoginCtxt});

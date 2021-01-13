@@ -10,7 +10,7 @@ import { Fetch } from '../../Hooks/useFetch';
 import { LoginContext } from '../../Contexts/LoginContext';
 import { DashboardContext } from '../../Contexts/DashboardContext';
 import { BrandList } from '../BrandList/BrandList';
-import { ProductList} from '../ProductList/ProductList';
+import { ProductList } from '../ProductList/ProductList';
 import DashboardCss from './Dashboard.module.css';
 
 
@@ -50,8 +50,16 @@ export const Dashboard = () => {
     // console.log(Login)
 
     const [formValues, handleInputChange] = useForm({
-         
+        search_term:"",
+        category: "",
+        labels:[],
+        intolerances :"",
+        brand:"",
+        additives :"",
+        allergens:[],
+        n : 50
     });
+    
 
     const {search_term} = formValues
 
@@ -139,19 +147,11 @@ export const Dashboard = () => {
 
         if(products && !brands && url !== `${process.env.REACT_APP_backUrl}/product-search`){
             setUrl(`${process.env.REACT_APP_backUrl}/product-search`)
-            console.log(url);
+           
         }
 
-        if(products && !brands){
-            return <ProductList url={url} opt={{method: "POST", data : {...formValues}}} /> 
+        return <ProductList url={url} opt={{method: "POST", data : {...formValues}}} /> 
 
-        } 
-        
-        // else {
-        //     return <>
-        //             {showBrandsOptionsContainer()}
-        //            </>
-        // }
     }
 
     const showBrandsOptionsContainer = () => {;
@@ -168,15 +168,17 @@ export const Dashboard = () => {
     const handleSubmitSearch = (e) => {
         
         e.preventDefault();
+        showProductsOptionsContainer();
+
         // console.log(url)
         // if(url === `${process.env.REACT_APP_backUrl}/get-info-brands`){
 
         //     setUrl(`${process.env.REACT_APP_backUrl}/product-search`)
-        //     console.log(url)
+            
             
         // }
         // if(url){
-        //     return <GetSeacrhRes url={`${process.env.REACT_APP_backUrl}/product-search`} method={"POST"} postData={{...formValues}} />
+        //     return <ProductList url={`${process.env.REACT_APP_backUrl}/product-search`} opt={{method: "POST", data : {...formValues}}} />
 
         // }
     }
@@ -275,13 +277,12 @@ export const Dashboard = () => {
                     value={search_term}
                     onChange={handleInputChange}
                     onSubmit={handleSubmitSearch}
-                    onClick={!products && handleProductsContainer}/>
+                    onClick={(e) => !products && handleProductsContainer(e)}/>
                 <button className={DashboardCss.searchBtn} onClick={handleSubmitSearch}>
                     <i id={DashboardCss.searchIcon} className="fas fa-search"></i>
                 </button>
                 <button className={DashboardCss.filterBtn} onClick={handleOpenMW}>
                     <i id={DashboardCss.filterIcon} className="fas fa-sliders-h"></i>
-                    
                 </button>
             </div>
             <section className={DashboardCss.optionsBtnSection}>
@@ -290,11 +291,15 @@ export const Dashboard = () => {
                     <button className={products ? `${DashboardCss.productsBtnActive}` : `${DashboardCss.productsBtn}` } onClick={handleProductsContainer} >Productos</button>
                 </div>
             </section>
-            
-            <section className={DashboardCss.OptionsSection}>
-                    {showBrandsOptionsContainer()}
-                    {showProductsOptionsContainer()}
-            </section>
+            {brands && <section className={DashboardCss.OptionsBrandSection}>
+                                    {showBrandsOptionsContainer()}
+                        </section>
+            }
+
+            {products && <section className={DashboardCss.OptionsProductsSection}>
+                                    {showProductsOptionsContainer()}
+                        </section>
+            }
             <NavBar pathHomeBtn={location.pathname}/>
             
             

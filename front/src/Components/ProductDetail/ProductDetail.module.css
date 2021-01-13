@@ -1,0 +1,130 @@
+.ProductCard{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    position: fixed;
+    top: 30px;
+    left: 0;
+    right: 0;
+    background-color: white;
+    filter: drop-shadow(0px 3px 7px rgba(11, 65, 48, 0.35));
+    z-index: 2;
+    margin-top: 50px;
+    margin: 0 10px;
+    border-radius: 16px;
+    padding: 10px 0;
+}
+
+.infoProductContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.imgProduct{
+    width: 180px;
+    height: 130px;
+    margin-bottom: 10px;
+}
+
+.nameProduct{
+    margin: 0 0;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 18px;
+    letter-spacing: 1px;
+    color: #444444;
+    margin-bottom: 2px;
+}
+
+.nameBrand{
+    margin: 0 0;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.4px;
+    color: #767676;
+    margin-bottom: 10px;
+}
+
+.ScoresContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.imgNutriscore{
+
+}
+
+.NoNutriscore{
+
+}
+
+.imgNovascore{
+    margin-left: 10px;
+}
+
+.favShareAddContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-around;
+    
+}
+
+.FavBtn{
+    background: white;
+    border: none;
+    border-radius: 100px;
+    outline: none;
+    color: #DA3957;
+    padding: 0 0;
+    margin: 5px 10px 10px;
+    
+}
+
+.iconHeart{
+    width: 40px;
+    height: 40px;
+}
+
+.ShareBtn{
+    background: none;
+    border: none;
+    border-radius: 50px;
+    outline: none;
+    color: #DA3957;
+}
+
+.iconShare{
+    width: 40px;
+    height: 40px;
+}
+
+.AddToListBtn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100px;
+    width: 70px;
+    background: #DA3957;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 12px 5px 8px 5px;
+    margin-top: 20px;
+}
+
+.shopListIcon{
+    width: 80px;
+    height: 60px;
+    margin-left: 7.5px;
+}

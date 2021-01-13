@@ -16,6 +16,7 @@ import { ProductsList } from './Components/ProductsList/ProductsList'
 import {BarcodeReader}  from './Components/BarcodeReader/BarcodeReader'
 import { BrandCategories } from './Components/BrandCategories/BrandCategories'
 import { ProductListCategories } from './Components/ProductListCategories/ProductListCategories'
+import { ProductDetail } from './Components/ProductDetail/ProductDetail'
 // import { usePreferences } from './Hooks/usePreferences'
 
 
@@ -40,7 +41,7 @@ export const App = () => {
                             <Login />
                         </LoginProvider>
                     </Route>
-
+                    
                     <Route exact path="/home">
                         <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
                             <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
@@ -49,13 +50,23 @@ export const App = () => {
                         </LoginProvider>
                     </Route>
 
-                    <Route path="/home/product-list">
+                    <Route exact path="/home/product-list">
                         <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
                             <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
                                 <ProductsList />
                             </DashboardProvider>
                         </LoginProvider>
                     </Route>
+
+                    <Route path="/home/product-list/product-detail">
+                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+                                <ProductDetail />
+                            </DashboardProvider>
+                        </LoginProvider>
+                    </Route>
+
+
 
                     <Route exact path="/home/brand-categories">
                         <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
