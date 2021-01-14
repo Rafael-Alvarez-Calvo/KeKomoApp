@@ -57,8 +57,6 @@ export const BrandCategories = () => {
             <section>
                 {paintCategoriesListYScrollContainer()}
             </section>
-            <NavBar />
-            
         </>
     )
 }

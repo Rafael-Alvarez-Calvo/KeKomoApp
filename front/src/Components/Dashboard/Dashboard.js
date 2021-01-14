@@ -300,10 +300,6 @@ export const Dashboard = () => {
                                     {showProductsOptionsContainer()}
                         </section>
             }
-            <NavBar pathHomeBtn={location.pathname}/>
-            
-            
-            
         </>
     )
 }
