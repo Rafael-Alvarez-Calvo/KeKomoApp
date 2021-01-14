@@ -76,7 +76,13 @@ export const App = () => {
                         </LoginProvider>
                     </Route>
 
-
+                    <Route path="/barcode-reader">
+                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+                                <BarcodeReader />
+                            </DashboardProvider>
+                        </LoginProvider>
+                    </Route>
 
                     <Route exact path="/home/brand-categories">
                         <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
@@ -135,11 +141,6 @@ export const App = () => {
                         </RegisterProvider>
                     </Route>
 
-
-
-                    <Route path="/barcode-reader">
-                        <BarcodeReader />
-                    </Route>
                     <Route path="/error/:id"></Route>
                     <Route path="/example"><Error /></Route>
                     

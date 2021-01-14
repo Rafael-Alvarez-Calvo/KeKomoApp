@@ -43,25 +43,27 @@ export const BarcodeReader = () => {
   const ShowProduct = (product) =>{
     
     const {Foto, Producto, Marca, NovaScore, Nutriscore} = product
-    return <div className={BarcodeReaderCss.ProductContainer}>
-              <div className={BarcodeReaderCss.imgContainer}>
-                <img src={Foto} alt="Imagen de producto" className={BarcodeReaderCss.imgProduct} />
-              </div>
-              <div className={BarcodeReaderCss.infoProductContainer}>
-                <h1 className={BarcodeReaderCss.nameProduct}>{Producto}</h1>
-                <h2 className={BarcodeReaderCss.nameBrand}>{Marca}</h2>
-                <div className={BarcodeReaderCss.ScoresContainer}>
-                  <ScoresPainter NovaScore={NovaScore} Nutriscore={Nutriscore}/>
-                  <button className={BarcodeReaderCss.viewDetail} onClick={e => {
-                      LoginCtxt.setLoginUserInfo({...LoginCtxt});
-                      DashboardCtxt.setDashBoardInfo({...DashboardCtxt, product});
-                      Redirect("/home/product-list/product-detail", e) 
-                  }}>
-                    Ver detalle
-                  </button>
+    return <section className={BarcodeReaderCss.ProductSection}>
+              <div className={BarcodeReaderCss.ProductContainer}>
+                <div className={BarcodeReaderCss.imgContainer}>
+                  <img src={Foto} alt="Imagen de producto" className={BarcodeReaderCss.imgProduct} />
+                </div>
+                <div className={BarcodeReaderCss.infoProductContainer}>
+                  <h1 className={BarcodeReaderCss.nameProduct}>{Producto}</h1>
+                  <h2 className={BarcodeReaderCss.nameBrand}>{Marca}</h2>
+                  <div className={BarcodeReaderCss.ScoresContainer}>
+                    <ScoresPainter NovaScore={NovaScore} Nutriscore={Nutriscore}/>
+                    <button className={BarcodeReaderCss.viewDetail} onClick={e => {
+                        LoginCtxt.setLoginUserInfo({...LoginCtxt});
+                        DashboardCtxt.setDashBoardInfo({...DashboardCtxt, product});
+                        Redirect("/home/product-list/product-detail", e) 
+                    }}>
+                      Ver detalle
+                    </button>
+                  </div>
                 </div>
               </div>
-          </div>
+          </section>
   }
   
   useEffect(() => {
