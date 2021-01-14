@@ -5,7 +5,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
+	right: 0;
+	background-color: white;
     /* align-content: flex-start; */
     /* width: 100%; */
     
