@@ -17,6 +17,8 @@ import {BarcodeReader}  from './Components/BarcodeReader/BarcodeReader'
 import { BrandCategories } from './Components/BrandCategories/BrandCategories'
 import { ProductListCategories } from './Components/ProductListCategories/ProductListCategories'
 import { ProductDetail } from './Components/ProductDetail/ProductDetail'
+import { Suppliers } from './Components/Suppliers/Suppliers'
+import { ScoreCategory } from './Components/BrandCategories/ScoreCategory/ScoreCategory'
 // import { usePreferences } from './Hooks/usePreferences'
 
 
@@ -58,10 +60,18 @@ export const App = () => {
                         </LoginProvider>
                     </Route>
 
-                    <Route path="/home/product-list/product-detail">
+                    <Route exact path="/home/product-list/product-detail">
                         <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
                             <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
                                 <ProductDetail />
+                            </DashboardProvider>
+                        </LoginProvider>
+                    </Route>
+
+                    <Route path="/home/product-list/product-detail/info-supplier">
+                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+                                <Suppliers />
                             </DashboardProvider>
                         </LoginProvider>
                     </Route>
@@ -72,6 +82,14 @@ export const App = () => {
                         <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
                             <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
                                 <BrandCategories />
+                            </DashboardProvider>
+                        </LoginProvider>
+                    </Route>
+
+                    <Route exact path="/home/brand-categories/scores-by-category">
+                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+                                <ScoreCategory />
                             </DashboardProvider>
                         </LoginProvider>
                     </Route>

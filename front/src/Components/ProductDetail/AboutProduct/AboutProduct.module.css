@@ -1,0 +1,98 @@
+.allergensContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: white;
+    filter: drop-shadow(0px 3px 7px rgba(11, 65, 48, 0.35));
+    margin: 0 10px 20px 10px;
+    border-radius: 8px;
+    padding: 20px 20px 20px 20px;
+}
+
+.allergensTitle{
+    margin: 0 0;
+}
+
+.NutritionContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: white;
+    filter: drop-shadow(0px 3px 7px rgba(11, 65, 48, 0.35));
+    margin: 0 10px;
+    border-radius: 8px;
+    padding: 20px 20px 0px 20px;
+}
+
+.nutritionTitle{
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 1px;
+    color: #444444;
+    margin: 0 0;
+}
+
+.gramsTitle{
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #767676;
+    margin: 20px 0 10px 0;
+}
+
+.nutritionImgContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-35px);
+}
+
+.nutritionImgContainer div{
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.nutritionImgContainer div p{
+    position: relative;
+    /* left: 50%;*/
+    transform: translate(-50%);
+    z-index: 4;
+}
+
+.imgNutrition{
+    width: 120px;
+    height: 120px;
+    margin-right: -65px;
+    z-index: 2;
+}
+
+
+
+.valueNutrition{
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    /* color: #FFFFFF; */
+    /* margin-right: 50px; */
+    margin-top: 0;
+    margin-bottom: 0;
+    z-index: 4;
+}
+/* .valueNutrition:nth-child(1){
+    transform: translateX(-10px);
+} */
+

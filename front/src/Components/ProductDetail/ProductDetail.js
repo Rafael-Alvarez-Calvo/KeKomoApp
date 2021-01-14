@@ -1,16 +1,22 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { DashboardContext } from '../../Contexts/DashboardContext';
 import { LoginContext } from '../../Contexts/LoginContext';
+import { OptionsSuppliers } from './OptionsSuppliers/OptionsSuppliers';
 import { Background } from '../Templates/Backgrounds/Background';
 import ProductDetailCss from './ProductDetail.module.css';
+import { AboutProduct } from './AboutProduct/AboutProduct';
+import { BackgroundLarge } from '../Templates/Backgrounds/BackgroundLarge';
 
 export const ProductDetail = () => {
 
+    const LoginCtxt = useContext(LoginContext);
     const DashboardCtxt = useContext(DashboardContext);
     const { product } = DashboardCtxt;
-    const { Foto, Producto, Marca, NovaScore, Nutriscore } = product;
+    const { Foto, Producto, Marca, NovaScore, Nutriscore, Aditivos, Alergenos_Trazas, Certificaciones, Emb, Informacion_Nutricional } = product;
 
-    const LoginCtxt = useContext(LoginContext);
+    const history = useHistory();
+
 
     const ScoresPainter = ({NovaScore, Nutriscore}) => {
         return <div className={ProductDetailCss.ScoresContainer}>
@@ -34,6 +40,9 @@ export const ProductDetail = () => {
         <>
            
            <section className={ProductDetailCss.ProductCard}>
+                <button className={ProductDetailCss.backBtn} onClick={() => {history.go(-1)}}>
+                    <i id={ProductDetailCss.iconBackBtn} className="fas fa-chevron-left"></i>
+                </button>
                <div className={ProductDetailCss.infoProductContainer}>
                     <img src={Foto} alt="Imagen de producto" className={ProductDetailCss.imgProduct} />
                     <h1 className={ProductDetailCss.nameProduct}>{Producto}</h1>
@@ -54,7 +63,16 @@ export const ProductDetail = () => {
                </div>
 
            </section>
-           <Background />
+           <section className={ProductDetailCss.aboutSuppliersContainer}>
+                <label className={ProductDetailCss.labelAboutSuppliers}>Acerca del productor ó fabricante</label>
+                <OptionsSuppliers />
+                <label className={ProductDetailCss.labelAboutProduct}>Acerca del producto</label>
+           </section>
+
+           <section className={ProductDetailCss.aboutProductContainer}>
+               <AboutProduct url={`${process.env.REACT_APP_backUrl}/get-additives-of-product`} opt={{method: "POST", data : JSON.stringify(Aditivos)}} Aditivos={Aditivos} Alergenos_Trazas={Alergenos_Trazas} Informacion_Nutricional={Informacion_Nutricional} />
+           </section>
+           <BackgroundLarge />
         </>
     )
 }

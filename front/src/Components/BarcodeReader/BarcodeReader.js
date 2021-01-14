@@ -1,13 +1,68 @@
 import Quagga from "quagga"
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Fetch } from "../../Hooks/useFetch";
+import { DashboardContext } from '../../Contexts/DashboardContext';
+import { LoginContext } from '../../Contexts/LoginContext';
 import BarcodeReaderCss from './BarcodeReader.module.css';
+import { useRedirect } from "../../Hooks/useRedirect";
 
 export const BarcodeReader = () => {
 
   const VideoRef = useRef();
 
   const [barcode, setBarcode] = useState(null)
+
+  const [ResDB, setResDB] = useState(null)
+
+  const [ProductoRes, setProductoRes] = useState(null)
+
+  const LoginCtxt = useContext(LoginContext);
+  const DashboardCtxt = useContext(DashboardContext);
+  const Redirect = useRedirect();
+
+
+  const ScoresPainter = ({NovaScore, Nutriscore}) => {
+    if(ResDB === "1"){
+    return <div className={BarcodeReaderCss.ScoresContainer}>
+                {Nutriscore ?
+                        <img src={`/Scores/NutriScore-${Nutriscore}.svg`} alt={`Nutriscore ${Nutriscore}`} className={BarcodeReaderCss.imgNutriscore} />
+                            :
+                        <p className={BarcodeReaderCss.NoNutriscore}>Nutriscore</p>
+                }
+
+                {NovaScore ?
+                        <img src={`/Scores/Nova-${NovaScore}.svg`} alt={`NovaScore ${NovaScore}`} className={BarcodeReaderCss.imgNovascore} />
+                           :
+                        <p className={BarcodeReaderCss.NoNovascore}>Novascore</p>
+                }
+
+           </div>
+    }
+  }
+
+  const ShowProduct = (product) =>{
+    
+    const {Foto, Producto, Marca, NovaScore, Nutriscore} = product
+    return <div className={BarcodeReaderCss.ProductContainer}>
+              <div className={BarcodeReaderCss.imgContainer}>
+                <img src={Foto} alt="Imagen de producto" className={BarcodeReaderCss.imgProduct} />
+              </div>
+              <div className={BarcodeReaderCss.infoProductContainer}>
+                <h1 className={BarcodeReaderCss.nameProduct}>{Producto}</h1>
+                <h2 className={BarcodeReaderCss.nameBrand}>{Marca}</h2>
+                <div className={BarcodeReaderCss.ScoresContainer}>
+                  <ScoresPainter NovaScore={NovaScore} Nutriscore={Nutriscore}/>
+                  <button className={BarcodeReaderCss.viewDetail} onClick={e => {
+                      LoginCtxt.setLoginUserInfo({...LoginCtxt});
+                      DashboardCtxt.setDashBoardInfo({...DashboardCtxt, product});
+                      Redirect("/home/product-list/product-detail", e) 
+                  }}>
+                    Ver detalle
+                  </button>
+                </div>
+              </div>
+          </div>
+  }
   
   useEffect(() => {
     Quagga.init({
@@ -58,7 +113,25 @@ export const BarcodeReader = () => {
             console.log(barcode)
             Fetch(`${process.env.REACT_APP_backUrl}/search-barcode-from-code-reader`, {data : {barcode}})
             .then(data => {
-              console.log(data)
+              if(data){
+                const { res, Product} = data;
+                console.log(data, Product)
+                switch(res){
+                  case "0" :
+                    setResDB("0");
+                    break;
+                  case "1" :
+                    setResDB("1")
+                    setProductoRes(Product)
+                    break;
+                  case "-1" :
+                    setResDB("-1")
+                    break;
+                  case "-2" :
+                    setResDB("-2");
+                    break;
+                }
+              }
             })
             // setBarcode(result.codeResult.code)
 
@@ -68,12 +141,15 @@ export const BarcodeReader = () => {
       });
     });
 
-  }, []) 
+  }, [])
 
-  
-    return (
-      <div ref={VideoRef} className={`${BarcodeReaderCss.BarcodeWindow} BarcodeWindow`} >
-      </div>
+    return (<>
+              {ProductoRes && ShowProduct(ProductoRes)}
+              <div ref={VideoRef} className={`${BarcodeReaderCss.BarcodeWindow} BarcodeWindow`} >
+              </div>
+            </>
+      
+
     );
  
 

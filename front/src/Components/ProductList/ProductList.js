@@ -5,7 +5,7 @@ import { ProductContainer } from './ProductContainer/ProductContainer';
 
 export const ProductList = ({url, opt}) => {
     
-    const [{data, isLoading}] = useOptionsList(url, opt);
+    const [{data, isLoading}] = useOptionsList(url, JSON.stringify(opt));
     
     const getDataSearch = () => {
         
@@ -15,7 +15,7 @@ export const ProductList = ({url, opt}) => {
                 console.log(Results)
                 return Results.map(product => {
                     if(product){
-                        return <Fragment key={product.Producto}>
+                        return <Fragment key={product.Product_id}>
                                     <ProductContainer product={product}/>
                                 </Fragment>
                         

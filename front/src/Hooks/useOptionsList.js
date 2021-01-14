@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Fetch } from './useFetch';
 
-export const useOptionsList = (url, opt) => {
+export const useOptionsList = (url, opt = "{}") => {
 
     const [dataState, setDataState] = useState({
         data : [],
@@ -12,7 +12,7 @@ export const useOptionsList = (url, opt) => {
     useEffect(() => {
         
         const timeOut = setTimeout(() => {
-            Fetch(url, opt)
+            Fetch(url, JSON.parse(opt))
             .then(data => {
                 console.log(data)
                 if(data){

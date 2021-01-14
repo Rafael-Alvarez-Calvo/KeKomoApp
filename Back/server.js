@@ -468,17 +468,16 @@ server.get("/get-products-from-personal-shopping-list", (req, res) => {
 server.get("/search-barcode-from-code-reader", (req, res) => {
     
     const {barcode} = req.query;
-    console.log(barcode)
-    console.log(req.query)
 
     if(barcode){
-        fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`, {
+        fetch(`${process.env.API_URL}/barcode/${barcode}`, {
             headers : {"Content-Type" : "application/json"}
         })
         .then(res => res.json())
         .then(product => {
-            if(product){
-                res.send({"res" : "1", product})
+            const {Product} = product
+            if(Product.Producto){
+                res.send({"res" : "1", Product})
             } else {
                 res.send({"res" : "0", "msg" : "No data of this product"})
             }
@@ -547,7 +546,55 @@ server.get("/get-info-categories", (req, res) => {
     .catch(err => res.send({"res" : "-1", err }));
 });
 
+server.get("/get-supplier-info", (req, res) => {
+
+    const {Emb} = req.query;
+
+    if(Emb){
+        fetch(`${process.env.API_URL}/supplier?emb=${Emb}`)
+        .then(res => res.json())
+        .then(data => {
+            const {Resultado} = data;
+            if(Resultado.length){
+                res.send({"res" : "1", Resultado})
+            } else {
+                res.send({"res" : "-1", "msg" : "No data about this search", Resultado})
+            }
+        })
+        .catch(err => res.send({"res" : "-2", "msg" : console.error(err), "error" : "Lo sentimos, estamos teniendo problemas con el servidor, por favor vuelva a intentarlo en otro momento."}))
+    } else {
+        res.send({"res" : "-3", "msg" : "No emb"})
+    }
+})
+
+
+
 //-----------------------------POST------------------------//
+
+server.post("/get-scores-by-category", (req, res) => {
+
+    const {dataCat, dataSMarket} = req.body;
+
+    const {Categoria} = dataCat;
+    const cat = Categoria
+    const {Marca} = dataSMarket;
+
+    if(cat && Marca){
+        fetch(`${process.env.API_URL}/scores/${Marca}?cat=${cat}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data){
+                res.send({"res" : "1", data})
+            } else {
+                res.send({"res" : "-1", "msg" : "No data about this search", data})
+            }
+        })
+        .catch(err => res.send({"res" : "-2", "msg" : console.error(err), "error" : "Lo sentimos, estamos teniendo problemas con el servidor, por favor vuelva a intentarlo en otro momento."}))
+    } else {
+        res.send({"res" : "-3", "msg" : "No categoria o marca"})
+    }
+})
+
 server.post("/signup", (req,res) =>{
 
     const {name, email, psw} = req.body;
@@ -947,6 +994,30 @@ server.post("/product-search" , (req, res) => {
     // }
 
 });
+
+server.post("/get-additives-of-product", (req, res) => {
+    
+    const [additives] = req.body.Aditivos;
+    console.log(additives)
+    if(additives){
+        fetch(`${process.env.API_URL}/additives`,{
+            method : "POST",
+            headers : {"Content-Type" : "application/json"} ,
+            body : JSON.stringify(additives)
+        })
+        .then(res => res.json())
+        .then(data => {
+            const { additives } = data;
+            if(additives.length){
+                res.send({"res" : "1", additives})
+
+            } else {
+                res.send({"res" : "-1", "msg" : "No data about this search", additives})
+            }
+        })
+        .catch(err => res.send({"res" : "-2", "msg" : console.error(err), "error" : "Lo sentimos, estamos teniendo problemas con el servidor, por favor vuelva a intentarlo en otro momento."}))
+    }
+})
 
 //------------------------PUT--------------------------------//
 server.put("/edit-personal-shopping-list", (req, res) => {
