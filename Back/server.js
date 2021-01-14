@@ -550,7 +550,7 @@ server.get("/get-info-categories", (req, res) => {
 server.get("/get-supplier-info", (req, res) => {
 
     const {Emb} = req.query;
-
+	console.log(req.query);
     if(Emb){
         fetch(`${process.env.API_URL}/supplier?emb=${Emb}`)
         .then(res => res.json())
@@ -998,8 +998,8 @@ server.post("/product-search" , (req, res) => {
 
 server.post("/get-additives-of-product", (req, res) => {
     
-    const [additives] = req.body.Aditivos;
-    console.log(additives)
+    const additives = req.body;
+    console.log("additives", additives, req.body)
     if(additives){
         fetch(`${process.env.API_URL}/additives`,{
             method : "POST",

@@ -34,11 +34,10 @@ export const ProductDetail = () => {
 
                </div>
     }
-    
 
     return (
         <>
-           
+
            <section className={ProductDetailCss.ProductCard}>
                 <button className={ProductDetailCss.backBtn} onClick={() => {history.go(-1)}}>
                     <i id={ProductDetailCss.iconBackBtn} className="fas fa-chevron-left"></i>
@@ -70,7 +69,7 @@ export const ProductDetail = () => {
            </section>
 
            <section className={ProductDetailCss.aboutProductContainer}>
-               <AboutProduct url={`${process.env.REACT_APP_backUrl}/get-additives-of-product`} opt={{method: "POST", data : JSON.stringify(Aditivos)}} Aditivos={Aditivos} Alergenos_Trazas={Alergenos_Trazas} Informacion_Nutricional={Informacion_Nutricional} />
+               <AboutProduct url={`${process.env.REACT_APP_backUrl}/get-additives-of-product`} opt={{method: "POST", data : {additives: Aditivos}}} Alergenos_Trazas={Alergenos_Trazas} Informacion_Nutricional={Informacion_Nutricional}/>
            </section>
            <BackgroundLarge />
         </>

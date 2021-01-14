@@ -2,19 +2,23 @@ import React, { Fragment } from 'react'
 import { useOptionsList } from '../../../Hooks/useOptionsList';
 import AboutProductCss from './AboutProduct.module.css';
 
-export const AboutProduct = ({url, opt, Aditivos, Alergenos_Trazas, Informacion_Nutricional}) => {
+export const AboutProduct = ({url, opt, Alergenos_Trazas, Informacion_Nutricional}) => {
 
     const validAllergens = [];
     const {energy_kcal_value, fat_100g, salt_100g, saturated_fat_100g, sugars_100g} = Informacion_Nutricional;
 
-    const [{data, isLoading}] = useOptionsList(url, JSON.stringify(opt))
+	const [{data, isLoading}] = useOptionsList(url, JSON.stringify(opt))
+
+	console.log(data);
 
     const allergensPainter = () => {
+		console.log("Alergenos trazas", Alergenos_Trazas)
         if(Alergenos_Trazas){
-            let validatedAllergens = Alergenos_Trazas.filter("en:nuts", "en:peanuts", "en:eggs", "en:gluten-free");
-            if(validatedAllergens){
+			const validAllergens = ["en:nuts", "en:peanuts", "en:eggs", "en:gluten-free"];
+            let validatedAllergens = Alergenos_Trazas.filter(allergen => validAllergens.includes(allergen));
+            if(validatedAllergens.length){
                 return <div className={AboutProductCss.allergensImgContainer}>
-                            {Alergenos_Trazas.length && [validatedAllergens].map(allergens => {
+                            {validatedAllergens.map(allergens => {
                                 const RealAllergen = allergens.substring(3);
                                 return <Fragment key={allergens}>
                                             <img src={`/alergenosIconos/${RealAllergen}.svg`} alt={`Alérgeno ${RealAllergen}`} className={AboutProductCss.imgAllergen} />
@@ -26,25 +30,35 @@ export const AboutProduct = ({url, opt, Aditivos, Alergenos_Trazas, Informacion_
         } else {
             //HACER
         }
-       
+
     }
 
     const AdditivesPainter = () => {
         if(data && !isLoading){
             const {res, additives} = data;
             if(res === "1" && additives){
-                return <>
-                        </>
+                return (
+					<div className={AboutProductCss.allergensImgContainer}>
+                            {additives.map(({full_name, more_info, risk_level}) => {
+                                return <Fragment key={additives}>
+											<ul>
+												<li>{full_name}</li>
+												<li><a href={more_info} target="_blank" rel="noreferrer">more info</a></li>
+												<li>{risk_level}</li>
+											</ul>
+                                       </Fragment>
+                            })}
+                        </div>
+				)
             }
         }
     }
 
-    
 
     return <>
                 <div className={AboutProductCss.allergensContainer}>
                     <p className={AboutProductCss.allergensTitle}>Alérgenos</p>
-                    {/* {allergensPainter()} */}
+                    {allergensPainter()}
                 </div>
                 <div className={AboutProductCss.NutritionContainer}>
                     <p className={AboutProductCss.nutritionTitle}>Información nutricional</p>
@@ -77,10 +91,8 @@ export const AboutProduct = ({url, opt, Aditivos, Alergenos_Trazas, Informacion_
                 </div>
 
                 <div className={AboutProductCss.allergensContainer}>
-                    <p className={AboutProductCss.allergensTitle}>Alérgenos</p>
-                    {/* {allergensPainter()} */}
+                    <p className={AboutProductCss.allergensTitle}>Aditivos</p>
+                    {AdditivesPainter()}
                 </div>
-                
            </>
-    
 }
