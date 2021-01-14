@@ -22,9 +22,8 @@ export const ScoreCategory = () => {
 
     const NutriscoreValuesContainer = () => {
         if(data && data.data){
-            
             return <>
-                        data.data.map()
+                        {/* {data.data.map(())} */}
                    </>
         }
     }
