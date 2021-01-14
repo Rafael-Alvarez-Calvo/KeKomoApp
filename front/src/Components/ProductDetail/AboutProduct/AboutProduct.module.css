@@ -47,52 +47,57 @@
 
 .nutritionImgContainer{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    transform: translateX(-35px);
+    margin-left: -15px;
 }
 
 .nutritionImgContainer div{
-    position: relative;
+	position: relative;
+	display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-right: 10px;
-    display: flex;
-    flex-direction: row;
-    
+    margin-right: -20px;
 }
 
-.nutritionImgContainer div p{
-    position: relative;
-    /* left: 50%;*/
-    transform: translate(-50%);
-    z-index: 4;
+.valueNutrition{
+    position: absolute;
+    top: calc(50% - 13px);
+    left: 50%;
+	transform: translate(-50%, -50%);
+
+	font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 20px;
 }
 
-.imgNutrition{
+/* .imgNutrition{
     width: 120px;
     height: 120px;
     margin-right: -65px;
     z-index: 2;
 }
+*/
 
 
-
+/*
 .valueNutrition{
     font-family: Lato;
     font-style: normal;
     font-weight: bold;
+    color: #FFFFFF;
     font-size: 14px;
     line-height: 20px;
     text-align: center;
-    /* color: #FFFFFF; */
-    /* margin-right: 50px; */
+    margin-right: 50px;
     margin-top: 0;
     margin-bottom: 0;
     z-index: 4;
-}
-/* .valueNutrition:nth-child(1){
-    transform: translateX(-10px);
 } */
+
+.valueNutrition:nth-child(1){
+    transform: translateX(-10px);
+}
 
