@@ -15,6 +15,7 @@ const getPreferences = require("./lib/getAnyPreference.js")
 
 const {validateCredentials, validateEmail, validatePsw} = require("./lib/validator.js");
 
+console.log(process.env.FRONT_URL);
 
 const server = express();
 const listeningPort = process.env.PORT || 8888;
