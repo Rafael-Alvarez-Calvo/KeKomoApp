@@ -12,13 +12,11 @@ export const OptionsSuppliers = ({Certificaciones, Emb}) => {
 
     const [infoSelected, setInfoSelected] = useState(false);
 
-
-
     return <>
                 <div className={OptionsSuppliersCss.suppliersInfoContainer}>
                     <div onClick={e => {
-                        LoginCtxt.setLoginUserInfo({...LoginCtxt});
-                        DashboardCtxt.setDashBoardInfo({...DashboardCtxt});
+                        // LoginCtxt.setLoginUserInfo({...LoginCtxt});
+                        // DashboardCtxt.setDashBoardInfo({...DashboardCtxt});
                             // setProductSelected(true);
                             setTimeout(() => {
                                 Redirect("/home/product-list/product-detail/info-supplier", e)
@@ -28,11 +26,10 @@ export const OptionsSuppliers = ({Certificaciones, Emb}) => {
                         <img src="/IconosBotones/aboutSupplier.svg" alt="icon"/>
                         <p className={OptionsSuppliersCss.aboutSuppliersTitle}>Sobre el productor</p>
 
-                    </div> 
-                   
+                    </div>
                     <div onClick={e => {
-                        LoginCtxt.setLoginUserInfo({...LoginCtxt});
-                        DashboardCtxt.setDashBoardInfo({...DashboardCtxt});
+                        // LoginCtxt.setLoginUserInfo({...LoginCtxt});
+                        // DashboardCtxt.setDashBoardInfo({...DashboardCtxt});
                             // setProductSelected(true);
                             setTimeout(() => {
                                 Redirect("/home/product-list/product-detail/info-supplier", e)

@@ -3,6 +3,7 @@ import { Fetch } from './useFetch';
 
 export const useOptionsList = (url, opt = "{}") => {
 
+	console.log(JSON.parse(opt));
     const [dataState, setDataState] = useState({
         data : [],
         isLoading : true

@@ -10,7 +10,7 @@ export const Suppliers = () => {
 
     const history = useHistory();
     const LoginCtxt = useContext(LoginContext);
-    const DashboardCtxt = useContext(DashboardContext);
+	const DashboardCtxt = useContext(DashboardContext);
 
     const { product } = DashboardCtxt;
     const { Foto, Producto, Marca, NovaScore, Nutriscore, Certificaciones, Emb } = product;
@@ -33,7 +33,7 @@ export const Suppliers = () => {
 
                </div>
     }
-    
+
     return (
         <>
           <BackgroundLarge />
@@ -62,7 +62,7 @@ export const Suppliers = () => {
                 <ScoresPainter Nutriscore={Nutriscore} NovaScore={NovaScore} />
           </div>
           <section>
-            <InfoSuppliers url={`${process.env.REACT_APP_backUrl}/get-info-brands`, {data : Emb}} Certificaciones={Certificaciones} />    
+            <InfoSuppliers url={`${process.env.REACT_APP_backUrl}/get-supplier-info`} opt={{data : {Emb}}} Certificaciones={Certificaciones} />
           </section>  
         </>
     )

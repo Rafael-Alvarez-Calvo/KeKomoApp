@@ -19,6 +19,7 @@ import { ProductListCategories } from './Components/ProductListCategories/Produc
 import { ProductDetail } from './Components/ProductDetail/ProductDetail'
 import { Suppliers } from './Components/Suppliers/Suppliers'
 import { ScoreCategory } from './Components/BrandCategories/ScoreCategory/ScoreCategory'
+import { NavBar } from './Components/Templates/NavBar/NavBar'
 // import { usePreferences } from './Hooks/usePreferences'
 
 
@@ -44,106 +45,109 @@ export const App = () => {
                         </LoginProvider>
                     </Route>
                     
-                    <Route exact path="/home">
-                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
-                                <Dashboard />
-                            </DashboardProvider>
-                        </LoginProvider>
-                    </Route>
+					<Route>
+						<Route exact path="/home">
+							<LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+								<DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+									<Dashboard />
+								</DashboardProvider>
+							</LoginProvider>
+						</Route>
 
-                    <Route exact path="/home/product-list">
-                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
-                                <ProductsList />
-                            </DashboardProvider>
-                        </LoginProvider>
-                    </Route>
+						<Route exact path="/home/product-list">
+							<LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+								<DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+									<ProductsList />
+								</DashboardProvider>
+							</LoginProvider>
+						</Route>
 
-                    <Route exact path="/home/product-list/product-detail">
-                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
-                                <ProductDetail />
-                            </DashboardProvider>
-                        </LoginProvider>
-                    </Route>
+						<Route exact path="/home/product-list/product-detail">
+							<LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+								<DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+									<ProductDetail />
+								</DashboardProvider>
+							</LoginProvider>
+						</Route>
 
-                    <Route path="/home/product-list/product-detail/info-supplier">
-                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
-                                <Suppliers />
-                            </DashboardProvider>
-                        </LoginProvider>
-                    </Route>
+						<Route path="/home/product-list/product-detail/info-supplier">
+							<LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+								<DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+									<Suppliers />
+								</DashboardProvider>
+							</LoginProvider>
+						</Route>
 
-                    <Route path="/barcode-reader">
-                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
-                                <BarcodeReader />
-                            </DashboardProvider>
-                        </LoginProvider>
-                    </Route>
+						<Route path="/barcode-reader">
+							<LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+								<DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+									<BarcodeReader />
+								</DashboardProvider>
+							</LoginProvider>
+						</Route>
 
-                    <Route exact path="/home/brand-categories">
-                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
-                                <BrandCategories />
-                            </DashboardProvider>
-                        </LoginProvider>
-                    </Route>
+						<Route exact path="/home/brand-categories">
+							<LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+								<DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+									<BrandCategories />
+								</DashboardProvider>
+							</LoginProvider>
+						</Route>
 
-                    <Route exact path="/home/brand-categories/scores-by-category">
-                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
-                                <ScoreCategory />
-                            </DashboardProvider>
-                        </LoginProvider>
-                    </Route>
-                    
-                    <Route path="/home/brand-categories/product-list">
-                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
-                                <ProductListCategories />
-                            </DashboardProvider>
-                        </LoginProvider>
-                    </Route>
+						<Route exact path="/home/brand-categories/scores-by-category">
+							<LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+								<DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+									<ScoreCategory />
+								</DashboardProvider>
+							</LoginProvider>
+						</Route>
 
-                    <Route path="/guest-user-history">
-                        
-                    </Route>
-                    <Route path="/guest-user-favourites">
-                        
-                    </Route>
-                    <Route path="/guest-user-shopping-lists">
-                        
-                    </Route>
+						<Route path="/home/brand-categories/product-list">
+							<LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+								<DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+									<ProductListCategories />
+								</DashboardProvider>
+							</LoginProvider>
+						</Route>
 
-                    <Route path="/Register">
-                        <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
-                            <SignUp />
-                        </RegisterProvider>
+						<Route path="/guest-user-history">
 
-                    </Route>
-                    <Route path="/external-register-successful">
-                        <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
-                            <ExternalRegisterSuccessful />
-                        </RegisterProvider>
-                    </Route>
+						</Route>
+						<Route path="/guest-user-favourites">
 
-                    <Route path="/welcome-user-form">
-                        <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
-                            <WelcomeUserForm />
-                        </RegisterProvider>
-                    </Route>
-                    <Route path="/user-form-allergens">
-                        <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
-                            <UserFormAllergens />
-                        </RegisterProvider>
-                    </Route>
+						</Route>
+						<Route path="/guest-user-shopping-lists">
 
-                    <Route path="/error/:id"></Route>
-                    <Route path="/example"><Error /></Route>
-                    
+						</Route>
+
+						<Route path="/Register">
+							<RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
+								<SignUp />
+							</RegisterProvider>
+
+						</Route>
+						<Route path="/external-register-successful">
+							<RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
+								<ExternalRegisterSuccessful />
+							</RegisterProvider>
+						</Route>
+
+						<Route path="/welcome-user-form">
+							<RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
+								<WelcomeUserForm />
+							</RegisterProvider>
+						</Route>
+						<Route path="/user-form-allergens">
+							<RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
+								<UserFormAllergens />
+							</RegisterProvider>
+						</Route>
+
+						<Route path="/error/:id"></Route>
+						<Route path="/example"><Error /></Route>
+
+						<NavBar />
+					</Route>
                 </Switch>
             </Router>
         </>
