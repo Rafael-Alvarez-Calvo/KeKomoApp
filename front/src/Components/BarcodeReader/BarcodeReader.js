@@ -10,10 +10,7 @@ export const BarcodeReader = () => {
 
   const VideoRef = useRef();
 
-  const [barcode, setBarcode] = useState(null)
-
   const [ResDB, setResDB] = useState(null)
-
   const [ProductoRes, setProductoRes] = useState(null)
 
   const LoginCtxt = useContext(LoginContext);
@@ -27,13 +24,13 @@ export const BarcodeReader = () => {
                 {Nutriscore ?
                         <img src={`/Scores/NutriScore-${Nutriscore}.svg`} alt={`Nutriscore ${Nutriscore}`} className={BarcodeReaderCss.imgNutriscore} />
                             :
-                        <p className={BarcodeReaderCss.NoNutriscore}>Nutriscore</p>
+                        <img src={`/Scores/NoNutriScore.svg`} alt="No nutri-score" className={BarcodeReaderCss.imgNutriscore} />
                 }
 
                 {NovaScore ?
                         <img src={`/Scores/Nova-${NovaScore}.svg`} alt={`NovaScore ${NovaScore}`} className={BarcodeReaderCss.imgNovascore} />
                            :
-                        <p className={BarcodeReaderCss.NoNovascore}>Novascore</p>
+                        <img src={`/Scores/NoNova.svg`} alt="No nova score" className={BarcodeReaderCss.imgNovascore} />
                 }
 
            </div>
@@ -78,7 +75,7 @@ export const BarcodeReader = () => {
       }
     }, function (err) {
       if (err) {
-        console.log(err);
+        // console.log(err);
         return
       }
       console.log("Initialization finished. Ready to start");
@@ -117,7 +114,7 @@ export const BarcodeReader = () => {
             .then(data => {
               if(data){
                 const { res, Product} = data;
-                console.log(data, Product)
+                // console.log(data, Product)
                 switch(res){
                   case "0" :
                     setResDB("0");
@@ -131,6 +128,8 @@ export const BarcodeReader = () => {
                     break;
                   case "-2" :
                     setResDB("-2");
+                    break;
+                  default:
                     break;
                 }
               }

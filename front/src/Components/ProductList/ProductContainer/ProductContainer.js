@@ -19,13 +19,13 @@ export const ProductContainer = ({product}) => {
                     {Nutriscore ?
                             <img src={`/Scores/NutriScore-${Nutriscore}.svg`} alt={`Nutriscore ${Nutriscore}`} className={ProductContainerCss.imgNutriscore} />
                                 :
-                            <p className={ProductContainerCss.NoNutriscore}>Nutriscore</p>
+                                <img src={`/Scores/NoNutriScore.svg`} alt="No nutri-score" className={ProductContainerCss.imgNutriscore} />
                     }
 
                     {NovaScore ?
                             <img src={`/Scores/Nova-${NovaScore}.svg`} alt={`NovaScore ${NovaScore}`} className={ProductContainerCss.imgNovascore} />
                                :
-                            <p className={ProductContainerCss.NoNovascore}>Novascore</p>
+                            <img src={`/Scores/NoNova.svg`} alt="No nova score" className={ProductContainerCss.imgNovascore} />
                     }
 
                </div>

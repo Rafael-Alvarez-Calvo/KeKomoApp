@@ -11,7 +11,6 @@ import { UserFormAllergens } from './Components/info-user-form/UserFormAllergens
 import { SignUp } from './Components/SignUp/SignUp'
 // import { Error } from './Components/Advices/Error'
 import { Dashboard } from './Components/Dashboard/Dashboard'
-import { Error } from './Components/Advices/Error'
 import { ProductsList } from './Components/ProductsList/ProductsList'
 import {BarcodeReader}  from './Components/BarcodeReader/BarcodeReader'
 import { BrandCategories } from './Components/BrandCategories/BrandCategories'
@@ -44,6 +43,37 @@ export const App = () => {
                             <Login />
                         </LoginProvider>
                     </Route>
+
+                    <Route path="/Register">
+							<RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
+								<SignUp />
+							</RegisterProvider>
+                    </Route>
+
+                    <Route path="/external-register-successful">
+                        <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
+                            <ExternalRegisterSuccessful />
+                        </RegisterProvider>
+                    </Route>
+
+                    <Route path="/welcome-user-form">
+                        <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
+                            <WelcomeUserForm />
+                        </RegisterProvider>
+                    </Route>
+                    <Route path="/user-form-allergens">
+                        <RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
+                            <UserFormAllergens />
+                        </RegisterProvider>
+                    </Route>
+
+                    <Route path="/barcode-reader">
+                        <LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
+                            <DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
+                                <BarcodeReader />
+                            </DashboardProvider>
+                        </LoginProvider>
+					</Route>
                     
 					<Route>
 						<Route exact path="/home">
@@ -78,14 +108,6 @@ export const App = () => {
 							</LoginProvider>
 						</Route>
 
-						<Route path="/barcode-reader">
-							<LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
-								<DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
-									<BarcodeReader />
-								</DashboardProvider>
-							</LoginProvider>
-						</Route>
-
 						<Route exact path="/home/brand-categories">
 							<LoginProvider value={{...loginUserInfo, setLoginUserInfo}}>
 								<DashboardProvider value={{...dashBoardInfo, setDashBoardInfo}}>
@@ -110,41 +132,18 @@ export const App = () => {
 							</LoginProvider>
 						</Route>
 
-						<Route path="/guest-user-history">
+						<Route path="/history">
 
 						</Route>
-						<Route path="/guest-user-favourites">
+						<Route path="/favourites">
 
 						</Route>
-						<Route path="/guest-user-shopping-lists">
+						<Route path="/shopping-lists">
 
 						</Route>
 
-						<Route path="/Register">
-							<RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
-								<SignUp />
-							</RegisterProvider>
-
-						</Route>
-						<Route path="/external-register-successful">
-							<RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
-								<ExternalRegisterSuccessful />
-							</RegisterProvider>
-						</Route>
-
-						<Route path="/welcome-user-form">
-							<RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
-								<WelcomeUserForm />
-							</RegisterProvider>
-						</Route>
-						<Route path="/user-form-allergens">
-							<RegisterProvider value={{...registerUserInfo, setRegisterUserInfo}}>
-								<UserFormAllergens />
-							</RegisterProvider>
-						</Route>
-
-						<Route path="/error/:id"></Route>
-						<Route path="/example"><Error /></Route>
+						{/* <Route path="/error/:id"></Route>
+						<Route path="/example"><Error /></Route> */}
 
 						<NavBar />
 					</Route>

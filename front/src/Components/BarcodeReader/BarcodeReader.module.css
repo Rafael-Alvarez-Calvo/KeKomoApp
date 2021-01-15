@@ -36,26 +36,33 @@
     height: 150px;
     width: 350px;
     z-index: 99;
-    background: #FFFFFF;
+    /* background: #FFFFFF; */
     box-shadow: 0px 1px 17px -8px rgba(11, 61, 45, 0.486);
     filter: drop-shadow(0px 3px 7px rgba(11, 65, 48, 0.35));
-    margin: 0 0;
+    margin: 0 0 15px 0;
+    border-radius: 10px;
+    
 
 }
 
 .imgContainer{
-    width: 100px;
-    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 130px;
+    height: 140px;
     background: #FFFFFF;
     box-shadow: 0px 1px 17px -8px rgba(11, 61, 45, 0.486);
     filter: drop-shadow(0px 3px 7px rgba(11, 65, 48, 0.35));
-    margin-left: -40px;
+    margin-right: 2px;
+    border-radius: 10px;
 
 }
 
 .imgProduct{
-    width: 95px;
-    height: 145px;
+    width: 85px;
+    height: 130px;
 }
 
 .infoProductContainer{
@@ -63,8 +70,56 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    height: 150px;
+    height: 140px;
     background: #FFFFFF;
     box-shadow: 0px 1px 17px -8px rgba(11, 61, 45, 0.486);
     filter: drop-shadow(0px 3px 7px rgba(11, 65, 48, 0.35));
+    border-radius: 10px;
+    padding: 0 10px;
+    
+    
+}
+
+.nameProduct{
+    margin: 0 0;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 100%;
+    letter-spacing: 1.40625px;
+    color: #4B513E;
+    margin-bottom: 5px;
+}
+
+.nameBrand{
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 16px;
+    letter-spacing: 0.4625px;
+    color: #AAAAAA;
+    margin: 0 0 15px 0;
+}
+
+.ScoresContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    margin-right: -5px;
+    
+}
+
+.viewDetail{
+    background: #DA3957;
+    border-radius: 8px; 
+    border: none;
+    outline: none;
+    color: white;
+    height: 50px;
+    width: 80px;
+    transform: translateX(-8px);
+    padding: 0 10px;
 }

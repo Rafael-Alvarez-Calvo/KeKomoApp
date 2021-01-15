@@ -2,11 +2,16 @@
     display: flex;
     flex-direction: column;
     align-content: center;
-    
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
     margin-top: 93px;
+    margin-bottom: 100px;
     overflow-y: scroll;
     z-index: 2;
-    background-color: rgba(255, 255, 255, 0.568);
+    background-color: rgb(255, 255, 255);
     box-shadow: 0px 15px 20px 8px rgba(255, 255, 255, 0.555);
 }
 
@@ -17,7 +22,7 @@
     align-content: center;
     margin-top: -5px;
     margin-left: 35px;
-    
+    background-color: white;
     overflow-y: scroll;
    
 }
@@ -53,8 +58,8 @@
     /* line-height: 29px; */
     text-align: center;
     color: #188161;
-    margin-bottom: -10px;
-    margin-top: 0px;
+    margin-bottom: -7px;
+    margin-top: 220px;
     z-index: 10;
 }
 
@@ -66,8 +71,9 @@
     font-family: Lato;
     font-style: normal;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 12px;
     color: #444444;
+    margin-bottom: 120px;
 
 }
 
@@ -82,3 +88,102 @@
     margin-bottom: -5px;
     margin-top: 10px;
 }
+
+.ScoresContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+
+}
+
+.NutriscoreContainer{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.infoValuesNutrisCoreContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: baseline;
+    margin-top: 10px;
+}
+.infoValuesNovascoreContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: baseline;
+    margin-top: 7px;
+}
+
+
+.NutriscoreimgsContainer{
+    display: flex;
+    flex-direction: column;
+}
+.NovascoreimgsContainer{
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+
+.NutriscoreValuesContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.valueNutriscore{
+    transform: translateY(-7px);
+    margin: 0 0 19px;
+
+}
+.valueNovascore{
+    transform: translateY(-7px);
+    margin: 0 0 30px;
+
+}
+
+.imgNutriscore{
+    margin-bottom: 10px;
+}
+.imgNovascore{
+    margin-bottom: 21.2px;
+}
+
+.alsoFoundText{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 0 20px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    color: #AAAAAA;
+    margin-top: -10px;
+}
+
+.NotScoredProductsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.NotScoredinfoContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.valueNoNutriscore{
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    color: #AAAAAA;
+    transform: translate(-8px, 6px);
+}
+

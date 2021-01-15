@@ -1,19 +1,15 @@
 import React, { useContext, useState } from 'react'
-import { LoginContext } from '../../Contexts/LoginContext';
 import { DashboardContext } from '../../Contexts/DashboardContext';
 import { BackgroundShort } from '../Templates/Backgrounds/BackgroundShort';
-import { useRedirect } from '../../Hooks/useRedirect';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { CategoriesListYScroll } from '../CategoriesList/CategorieListScrollY/CategoriesListYScroll';
 import { HeaderLogo } from '../Templates/Headers/HeaderLogo';
-import { NavBar } from '../Templates/NavBar/NavBar';
 import BrandCategoriesCss from './BrandCategories.module.css';
 
 
 
 export const BrandCategories = () => {
 
-    const LoginCtxt = useContext(LoginContext);
     const DashboardCtxt = useContext(DashboardContext);
     // console.log(DashboardCtxt);
     const history = useHistory();

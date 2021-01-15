@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    height: 70px;
     background-color: white;
     filter: drop-shadow(0px 3px 7px rgba(11, 65, 48, 0.35));
     margin: 0 10px 20px 10px;
@@ -10,7 +11,24 @@
 }
 
 .allergensTitle{
-    margin: 0 0;
+    margin: -5px 0 5px 0;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+
+    letter-spacing: 1px;
+    color: #4B513E;
+}
+
+.allergensImgContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    transform: translateX(-12px);
+
 }
 
 .NutritionContainer{
@@ -19,7 +37,7 @@
     align-items: flex-start;
     background-color: white;
     filter: drop-shadow(0px 3px 7px rgba(11, 65, 48, 0.35));
-    margin: 0 10px;
+    margin: 0 10px 20px 10px;
     border-radius: 8px;
     padding: 20px 20px 0px 20px;
 }
@@ -72,6 +90,74 @@
     font-size: 14px;
     line-height: 20px;
 }
+
+.additivesContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    background-color: white;
+    filter: drop-shadow(0px 3px 7px rgba(11, 65, 48, 0.35));
+    margin: 0 10px 20px 10px;
+    border-radius: 8px;
+    padding: 20px 20px 0px 20px;
+}
+
+.additivesTitle{
+    margin: -5px 0 5px 0;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+
+    letter-spacing: 1px;
+    color: #4B513E;
+}
+
+.additivesInfoTable{
+    
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
+    text-align: left;
+    padding: 8px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 1px;
+    color: #4B513E;
+}
+
+td{
+    text-align: left;
+    padding: 8px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 22px;
+    letter-spacing: 0px;
+    color: #4B513E;
+}
+
+tr{
+    border-bottom: 1px solid rgba(221, 221, 221, 0.589);
+}
+
+a{
+    color: #188161;
+    text-decoration:none;
+    font-size: 20px;
+    margin-left: 11px;
+}
+
+
 
 /* .imgNutrition{
     width: 120px;

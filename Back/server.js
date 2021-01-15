@@ -15,8 +15,6 @@ const getPreferences = require("./lib/getAnyPreference.js")
 
 const {validateCredentials, validateEmail, validatePsw} = require("./lib/validator.js");
 
-console.log(process.env.FRONT_URL);
-
 const server = express();
 const listeningPort = process.env.PORT || 8888;
 
@@ -237,8 +235,6 @@ server.get("/facebook-login", async (req, res) => {
     const data = await facebook.getUserInfo(Token, ["name", "email"])
     
     const {id, name, email} = data;
-
-    console.log(data);
 
     if(id && name && email){
 
@@ -550,7 +546,6 @@ server.get("/get-info-categories", (req, res) => {
 server.get("/get-supplier-info", (req, res) => {
 
     const {Emb} = req.query;
-	console.log(req.query);
     if(Emb){
         fetch(`${process.env.API_URL}/supplier?emb=${Emb}`)
         .then(res => res.json())
@@ -999,7 +994,7 @@ server.post("/product-search" , (req, res) => {
 server.post("/get-additives-of-product", (req, res) => {
     
     const additives = req.body;
-    console.log("additives", additives, req.body)
+    // console.log("additives", additives, req.body)
     if(additives){
         fetch(`${process.env.API_URL}/additives`,{
             method : "POST",

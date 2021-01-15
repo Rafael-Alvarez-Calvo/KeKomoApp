@@ -67,7 +67,7 @@
     background-color: white;
     filter: drop-shadow(0px 3px 7px rgba(11, 65, 48, 0.35));
     border-radius: 8px;
-    padding: 5px 25px;
+    padding: 5px 23px;
     margin-right: 0px;
     height: 45px;
 }
@@ -93,4 +93,8 @@
     letter-spacing: .8px;
     color: #444444;
     margin: 0 0 0 10px;
+}
+
+.additivesContainer{
+    margin-bottom: 100px;
 }

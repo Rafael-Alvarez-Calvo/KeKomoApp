@@ -23,13 +23,13 @@ export const ProductDetail = () => {
                     {Nutriscore ?
                             <img src={`/Scores/NutriScore-${Nutriscore}.svg`} alt={`Nutriscore ${Nutriscore}`} className={ProductDetailCss.imgNutriscore} />
                                 :
-                            <p className={ProductDetailCss.NoNutriscore}>Nutriscore</p>
+                            <img src={`/Scores/NoNutriScore.svg`} alt="No nutri-score" className={ProductDetailCss.imgNutriscore} />
                     }
 
                     {NovaScore ?
                             <img src={`/Scores/Nova-${NovaScore}.svg`} alt={`NovaScore ${NovaScore}`} className={ProductDetailCss.imgNovascore} />
                                :
-                            <p className={ProductDetailCss.NoNovascore}>Novascore</p>
+                            <img src={`/Scores/NoNova.svg`} alt="No nova score" className={ProductDetailCss.imgNovascore} />
                     }
 
                </div>
@@ -63,7 +63,7 @@ export const ProductDetail = () => {
 
            </section>
            <section className={ProductDetailCss.aboutSuppliersContainer}>
-                <label className={ProductDetailCss.labelAboutSuppliers}>Acerca del productor ó fabricante</label>
+                <label className={ProductDetailCss.labelAboutSuppliers}>Acerca del productor o fabricante</label>
                 <OptionsSuppliers />
                 <label className={ProductDetailCss.labelAboutProduct}>Acerca del producto</label>
            </section>

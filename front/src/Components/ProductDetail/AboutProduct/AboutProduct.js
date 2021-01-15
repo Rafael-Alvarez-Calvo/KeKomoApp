@@ -4,15 +4,11 @@ import AboutProductCss from './AboutProduct.module.css';
 
 export const AboutProduct = ({url, opt, Alergenos_Trazas, Informacion_Nutricional}) => {
 
-    const validAllergens = [];
     const {energy_kcal_value, fat_100g, salt_100g, saturated_fat_100g, sugars_100g} = Informacion_Nutricional;
 
 	const [{data, isLoading}] = useOptionsList(url, JSON.stringify(opt))
 
-	console.log(data);
-
     const allergensPainter = () => {
-		console.log("Alergenos trazas", Alergenos_Trazas)
         if(Alergenos_Trazas){
 			const validAllergens = ["en:nuts", "en:peanuts", "en:eggs", "en:gluten-free"];
             let validatedAllergens = Alergenos_Trazas.filter(allergen => validAllergens.includes(allergen));
@@ -38,17 +34,24 @@ export const AboutProduct = ({url, opt, Alergenos_Trazas, Informacion_Nutriciona
             const {res, additives} = data;
             if(res === "1" && additives){
                 return (
-					<div className={AboutProductCss.allergensImgContainer}>
+					<table className={AboutProductCss.additivesInfoTable}>
+                        <tr>
+                            <th>Name</th>
+                            <th>Riesgo</th>
+                            <th>+info</th>
+                        </tr>
+                        
                             {additives.map(({full_name, more_info, risk_level}) => {
-                                return <Fragment key={additives}>
-											<ul>
-												<li>{full_name}</li>
-												<li><a href={more_info} target="_blank" rel="noreferrer">more info</a></li>
-												<li>{risk_level}</li>
-											</ul>
+                                return <Fragment key={full_name}>
+											<tr>
+												<td>{full_name}</td>
+												<td>{risk_level}</td>
+												<td><a href={more_info} target="_blank" rel="noreferrer"><i className="fas fa-plus-circle"></i></a></td>
+											</tr>
                                        </Fragment>
                             })}
-                        </div>
+                        
+                    </table>
 				)
             }
         }
@@ -90,8 +93,8 @@ export const AboutProduct = ({url, opt, Alergenos_Trazas, Informacion_Nutriciona
                     </div>
                 </div>
 
-                <div className={AboutProductCss.allergensContainer}>
-                    <p className={AboutProductCss.allergensTitle}>Aditivos</p>
+                <div className={AboutProductCss.additivesContainer}>
+                    <p className={AboutProductCss.additivesTitle}>Aditivos</p>
                     {AdditivesPainter()}
                 </div>
            </>

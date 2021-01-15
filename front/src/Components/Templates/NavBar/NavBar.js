@@ -16,7 +16,7 @@ export const NavBar = ({PathHomeBtn}) => {
                         <i id={NavBarCss.homeIcon} className="fas fa-home"></i>
                         {/* Inicio */}
                     </button>
-                    <button className={`${NavBarCss.navBtn} ${location.pathname.startsWith("/guest-user-history") ? NavBarCss.isActive: NavBarCss.navBtn}`} onClick={(e) => Redirect("/guest-user-history", e)}>
+                    <button className={`${NavBarCss.navBtn} ${location.pathname.startsWith("/history") ? NavBarCss.isActive: NavBarCss.navBtn}`} onClick={(e) => Redirect("/history", e)}>
                         <i id={NavBarCss.historyIcon} className="fas fa-history"></i>
                         {/* Historial */}
                     </button>
@@ -24,11 +24,11 @@ export const NavBar = ({PathHomeBtn}) => {
                         <i id={NavBarCss.barCodeIcon} className="fas fa-barcode"></i>
                         {/* Historial */}
                     </button>
-                    <button className={`${NavBarCss.navBtn} ${location.pathname.startsWith("/guest-user-favourites") ? NavBarCss.isActive: NavBarCss.navBtn}`} onClick={(e) => Redirect("/guest-user-favourites", e)}>
+                    <button className={`${NavBarCss.navBtn} ${location.pathname.startsWith("/favourites") ? NavBarCss.isActive: NavBarCss.navBtn}`} onClick={(e) => Redirect("/favourites", e)}>
                         <i id={NavBarCss.heartIcon} className="fas fa-heart"></i>
                         {/* Favoritos */}
                     </button>
-                    <button className={`${NavBarCss.navBtn} ${location.pathname.startsWith("/guest-user-shopping-lists") ? NavBarCss.isActive: NavBarCss.navBtn}`} onClick={(e) => Redirect("/guest-user-shopping-lists", e)}>
+                    <button className={`${NavBarCss.navBtn} ${location.pathname.startsWith("/shopping-lists") ? NavBarCss.isActive: NavBarCss.navBtn}`} onClick={(e) => Redirect("/shopping-lists", e)}>
                         <i id={NavBarCss.shoppingListIcon} className="fas fa-tasks"></i>
                         {/* Listas de la compra */}
                     </button>

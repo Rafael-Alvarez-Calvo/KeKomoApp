@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { useRedirect } from '../../../Hooks/useRedirect';
 import OptionsSuppliersCss from './OptionsSuppliers.module.css';
 import { DashboardContext } from '../../../Contexts/DashboardContext';
@@ -10,14 +10,11 @@ export const OptionsSuppliers = ({Certificaciones, Emb}) => {
     const DashboardCtxt = useContext(DashboardContext);
     const Redirect = useRedirect();
 
-    const [infoSelected, setInfoSelected] = useState(false);
+    // const [infoSelected, setInfoSelected] = useState(false);
 
     return <>
                 <div className={OptionsSuppliersCss.suppliersInfoContainer}>
                     <div onClick={e => {
-                        // LoginCtxt.setLoginUserInfo({...LoginCtxt});
-                        // DashboardCtxt.setDashBoardInfo({...DashboardCtxt});
-                            // setProductSelected(true);
                             setTimeout(() => {
                                 Redirect("/home/product-list/product-detail/info-supplier", e)
                             }, 650)
@@ -28,9 +25,6 @@ export const OptionsSuppliers = ({Certificaciones, Emb}) => {
 
                     </div>
                     <div onClick={e => {
-                        // LoginCtxt.setLoginUserInfo({...LoginCtxt});
-                        // DashboardCtxt.setDashBoardInfo({...DashboardCtxt});
-                            // setProductSelected(true);
                             setTimeout(() => {
                                 Redirect("/home/product-list/product-detail/info-supplier", e)
                             }, 650)

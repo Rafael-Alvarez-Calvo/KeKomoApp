@@ -61,7 +61,7 @@ export const Suppliers = () => {
                 </div>
                 <ScoresPainter Nutriscore={Nutriscore} NovaScore={NovaScore} />
           </div>
-          <section>
+          <section className={SuppliersCss.InfoSuppliersSection}>
             <InfoSuppliers url={`${process.env.REACT_APP_backUrl}/get-supplier-info`} opt={{data : {Emb}}} Certificaciones={Certificaciones} />
           </section>  
         </>
