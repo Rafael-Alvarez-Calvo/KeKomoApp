@@ -5,7 +5,7 @@ import InfoSuppliersCss from './InfoSuppliers.module.css'
 export const InfoSuppliers = ({url, opt}) => {
     
 	const [{isLoading, data}] = useOptionsList(url, JSON.stringify(opt));
-	console.log(data);
+	// console.log(data);
 
 	const getDataSupplier = () => {
 		

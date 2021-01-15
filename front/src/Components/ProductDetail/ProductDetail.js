@@ -1,19 +1,18 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DashboardContext } from '../../Contexts/DashboardContext';
-import { LoginContext } from '../../Contexts/LoginContext';
+// import { LoginContext } from '../../Contexts/LoginContext';
 import { OptionsSuppliers } from './OptionsSuppliers/OptionsSuppliers';
-import { Background } from '../Templates/Backgrounds/Background';
 import ProductDetailCss from './ProductDetail.module.css';
 import { AboutProduct } from './AboutProduct/AboutProduct';
 import { BackgroundLarge } from '../Templates/Backgrounds/BackgroundLarge';
 
 export const ProductDetail = () => {
 
-    const LoginCtxt = useContext(LoginContext);
+    // const LoginCtxt = useContext(LoginContext);
     const DashboardCtxt = useContext(DashboardContext);
     const { product } = DashboardCtxt;
-    const { Foto, Producto, Marca, NovaScore, Nutriscore, Aditivos, Alergenos_Trazas, Certificaciones, Emb, Informacion_Nutricional } = product;
+    const { Foto, Producto, Marca, NovaScore, Nutriscore, Aditivos, Alergenos_Trazas, Informacion_Nutricional } = product;
 
     const history = useHistory();
 
@@ -57,7 +56,7 @@ export const ProductDetail = () => {
                     </button>
                     <button className={ProductDetailCss.AddToListBtn}>
                            Añadir a la lista
-                           <img src="/IconosBotones/addToList.svg" className={ProductDetailCss.shopListIcon}/>
+                           <img src="/IconosBotones/addToList.svg" className={ProductDetailCss.shopListIcon} alt="añadir a la lista"/>
                     </button>
                </div>
 

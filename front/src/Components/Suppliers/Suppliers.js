@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { DashboardContext } from '../../Contexts/DashboardContext';
-import { LoginContext } from '../../Contexts/LoginContext';
+// import { LoginContext } from '../../Contexts/LoginContext';
 import { BackgroundLarge } from '../Templates/Backgrounds/BackgroundLarge';
 import { InfoSuppliers } from './InfoSuppliers/InfoSuppliers';
 import SuppliersCss from './Suppliers.module.css'
@@ -9,13 +9,13 @@ import SuppliersCss from './Suppliers.module.css'
 export const Suppliers = () => {
 
     const history = useHistory();
-    const LoginCtxt = useContext(LoginContext);
+    // const LoginCtxt = useContext(LoginContext);
 	const DashboardCtxt = useContext(DashboardContext);
 
     const { product } = DashboardCtxt;
     const { Foto, Producto, Marca, NovaScore, Nutriscore, Certificaciones, Emb } = product;
 
-    console.log(DashboardCtxt);
+    // console.log(DashboardCtxt);
 
     const ScoresPainter = ({NovaScore, Nutriscore}) => {
         return <div className={SuppliersCss.ScoresContainer}>

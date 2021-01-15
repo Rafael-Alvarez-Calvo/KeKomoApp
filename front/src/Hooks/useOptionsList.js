@@ -3,7 +3,7 @@ import { Fetch } from './useFetch';
 
 export const useOptionsList = (url, opt = "{}") => {
 
-	console.log(JSON.parse(opt));
+	// console.log(JSON.parse(opt));
     const [dataState, setDataState] = useState({
         data : [],
         isLoading : true
@@ -15,7 +15,7 @@ export const useOptionsList = (url, opt = "{}") => {
         const timeOut = setTimeout(() => {
             Fetch(url, JSON.parse(opt))
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 if(data){
                     setDataState({
                         data : data,

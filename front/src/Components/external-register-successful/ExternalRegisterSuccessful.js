@@ -14,7 +14,7 @@ export const ExternalRegisterSuccessful = () => {
         .then((userData) => {
             
             if(!userData.error){
-                console.log(userData);
+                // console.log(userData);
                 Register.setRegisterUserInfo(userData)
                 Redirect("/welcome-user-form")
                 

@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import { useHistory } from 'react-router-dom';
 import { DashboardContext } from '../../Contexts/DashboardContext';
 import { LoginContext } from '../../Contexts/LoginContext';
-import { BrandCategories } from '../BrandCategories/BrandCategories';
+// import { BrandCategories } from '../BrandCategories/BrandCategories';
 import { BrandList } from '../BrandList/BrandList';
 import { CategoriesListXScroll } from '../CategoriesList/CategoriesListXScroll/CategoriesListXScroll';
 import { BackgroundShort } from '../Templates/Backgrounds/BackgroundShort';
@@ -12,10 +12,10 @@ import ProductListCategoriesCss from './ProductListCategories.module.css';
 export const ProductListCategories = () => {
 
     const history = useHistory();
-    const LoginCtxt = useContext(LoginContext);
+    // const LoginCtxt = useContext(LoginContext);
     const DashboardCtxt = useContext(DashboardContext);
-    console.log(DashboardCtxt);
-    console.log(LoginCtxt);
+    // console.log(DashboardCtxt);
+    // console.log(LoginCtxt);
 
     const [url, setUrl] = useState(``);
     

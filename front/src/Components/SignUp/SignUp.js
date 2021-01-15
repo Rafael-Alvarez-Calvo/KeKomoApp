@@ -51,7 +51,7 @@ export const SignUp = () => {
                 if(data){
 
                     const {res, result} = data;
-                    console.log(res);
+                    // console.log(res);
 
                     switch(res){
                         case "0" :

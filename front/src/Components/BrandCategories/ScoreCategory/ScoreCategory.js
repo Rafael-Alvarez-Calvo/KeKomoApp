@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { BackgroundShort } from '../../Templates/Backgrounds/BackgroundShort'
 import { HeaderLogo } from '../../Templates/Headers/HeaderLogo'
 import { DashboardContext } from '../../../Contexts/DashboardContext';
-import { LoginContext } from '../../../Contexts/LoginContext';
+// import { LoginContext } from '../../../Contexts/LoginContext';
 import ScoreCategoryCss from './ScoreCategory.module.css';
 import { useOptionsList } from '../../../Hooks/useOptionsList';
 
@@ -12,13 +12,13 @@ export const ScoreCategory = () => {
 
     const history = useHistory();
 
-    const LoginCtxt = useContext(LoginContext);
+    // const LoginCtxt = useContext(LoginContext);
     const DashboardCtxt = useContext(DashboardContext);
     const { dataCat, dataSMarket } = DashboardCtxt;
-    console.log(DashboardCtxt)
+    // console.log(DashboardCtxt)
 
     const [{data, isLoading}] = useOptionsList(`${process.env.REACT_APP_backUrl}/get-scores-by-category`, JSON.stringify({method: "POST", data : {dataCat, dataSMarket}}))
-    console.log(data)
+    // console.log(data)
 
     const NutriscoreValuesContainer = () => {
         if(data && data.data){
@@ -105,7 +105,7 @@ export const ScoreCategory = () => {
 
                         </div>
                         <div className={ScoreCategoryCss.NovascoreContainer}>
-                            <img src="/infoScores/NovascoreTitle.svg"/>
+                            <img src="/infoScores/NovascoreTitle.svg" alt="NovaTitle"/>
                             <div className={ScoreCategoryCss.infoValuesNovascoreContainer}>
                                 <div className={ScoreCategoryCss.NovascoreimgsContainer}>
                                     <img src="/infoScores/NovaScore-1.svg" alt="1" className={ScoreCategoryCss.imgNovascore}/>

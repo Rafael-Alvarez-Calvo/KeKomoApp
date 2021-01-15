@@ -1,14 +1,11 @@
-import React, { useState, useContext } from 'react';
-import {useHistory, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useForm } from '../../Hooks/useForm';
 // import { usePreferences } from '../../Hooks/usePreferences';
 import { Background } from '../Templates/Backgrounds/Background';
-import { NavBar } from '../Templates/NavBar/NavBar';
 import { HeaderLogo } from '../Templates/Headers/HeaderLogo';
-import { useRedirect } from '../../Hooks/useRedirect';
-import { Fetch } from '../../Hooks/useFetch';
-import { LoginContext } from '../../Contexts/LoginContext';
-import { DashboardContext } from '../../Contexts/DashboardContext';
+// import { useRedirect } from '../../Hooks/useRedirect';
+// import { LoginContext } from '../../Contexts/LoginContext';
+// import { DashboardContext } from '../../Contexts/DashboardContext';
 import { BrandList } from '../BrandList/BrandList';
 import { ProductList } from '../ProductList/ProductList';
 import DashboardCss from './Dashboard.module.css';
@@ -17,7 +14,7 @@ import DashboardCss from './Dashboard.module.css';
 
 
 
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 
 // import Modal from '@material-ui/core/Modal';
 // import Backdrop from '@material-ui/core/Backdrop';
@@ -25,28 +22,28 @@ import { makeStyles } from '@material-ui/core/styles';
 // import { Fetch } from '../../Hooks/useFetch';
 
 
-const useStyles = makeStyles((theme) => ({
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-}));
+// const useStyles = makeStyles((theme) => ({
+//     modal: {
+//       display: 'flex',
+//       alignItems: 'center',
+//       justifyContent: 'center',
+//     },
+//     paper: {
+//       backgroundColor: theme.palette.background.paper,
+//       border: '2px solid #000',
+//       boxShadow: theme.shadows[5],
+//       padding: theme.spacing(2, 4, 3),
+//     },
+// }));
 
 export const Dashboard = () => {
 
     // const preferences = usePreferences();
-    const location = useLocation();
-    const Redirect = useRedirect();
-    const history = useHistory();
-    const Login = useContext(LoginContext);
-    const DashboardCtxt = useContext(DashboardContext);
+    // const location = useLocation();
+    // const Redirect = useRedirect();
+    // const history = useHistory();
+    // const Login = useContext(LoginContext);
+    // const DashboardCtxt = useContext(DashboardContext);
     // console.log(Login)
 
     const [formValues, handleInputChange] = useForm({
@@ -79,16 +76,16 @@ export const Dashboard = () => {
     });
 
 
-    const classes = useStyles();
-    const [open, setOpen] = useState(null);
+    // const classes = useStyles();
+    // const [open, setOpen] = useState(null);
   
-    const handleOpenMW = () => {
-      setOpen(true);
-    };
+    // const handleOpenMW = () => {
+    //   setOpen(true);
+    // };
   
-    const handleCloseMW = () => {
-      setOpen(null);
-    };
+    // const handleCloseMW = () => {
+    //   setOpen(null);
+    // };
 
     
 
@@ -281,7 +278,7 @@ export const Dashboard = () => {
                 <button className={DashboardCss.searchBtn} onClick={handleSubmitSearch}>
                     <i id={DashboardCss.searchIcon} className="fas fa-search"></i>
                 </button>
-                <button className={DashboardCss.filterBtn} onClick={handleOpenMW}>
+                <button className={DashboardCss.filterBtn}>
                     <i id={DashboardCss.filterIcon} className="fas fa-sliders-h"></i>
                 </button>
             </div>

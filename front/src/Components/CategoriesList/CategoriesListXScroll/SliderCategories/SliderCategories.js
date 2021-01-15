@@ -18,7 +18,7 @@ export const SliderCategories = ({Categoria, dataCat}) => {
                 LoginCtxt.setLoginUserInfo({...LoginCtxt});
                 DashboardCtxt.setDashBoardInfo({...DashboardCtxt, dataCat});
                 setCategorySelected(true);
-                console.log(categorySelected)
+                // console.log(categorySelected)
                 setTimeout(() => {
 
                     Redirect("/home/brand-categories/product-list", e)

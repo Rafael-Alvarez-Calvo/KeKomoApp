@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useRedirect } from '../../../Hooks/useRedirect';
 import OptionsSuppliersCss from './OptionsSuppliers.module.css';
-import { DashboardContext } from '../../../Contexts/DashboardContext';
-import { LoginContext } from '../../../Contexts/LoginContext';
+// import { DashboardContext } from '../../../Contexts/;DashboardContext';
+// import { LoginContext } from '../../../Contexts/LoginContext';
 
 export const OptionsSuppliers = ({Certificaciones, Emb}) => {
 
-    const LoginCtxt = useContext(LoginContext);
-    const DashboardCtxt = useContext(DashboardContext);
+    // const LoginCtxt = useContext(LoginContext);
+    // const DashboardCtxt = useContext(DashboardContext);
     const Redirect = useRedirect();
 
     // const [infoSelected, setInfoSelected] = useState(false);

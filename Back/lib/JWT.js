@@ -55,7 +55,7 @@ function verifyJWT(jwt) {
         if (expectedSignature === signature)
             return true;
     }
-    console.log("No")
+    // console.log("No")
     return false;
 }
 

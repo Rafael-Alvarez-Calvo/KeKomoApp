@@ -29,7 +29,7 @@ class App extends Component {
       }
     }, function (err) {
       if (err) {
-        console.log(err);
+        // console.log(err);
         return
       }
       console.log("Initialization finished. Ready to start");
@@ -54,10 +54,10 @@ class App extends Component {
           }
 
           if (result.codeResult && result.codeResult.code) {
-            console.log(result.codeResult);
+            // console.log(result.codeResult);
             let img = document.querySelector(".App video");
             let canvas = document.querySelector(".App canvas");
-            console.log(img, canvas);
+            // console.log(img, canvas);
             canvas.getContext("2d").drawImage(img, 0, 0);
             Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: "#00F", lineWidth: 2 });
             Quagga.offProcessed(qP);

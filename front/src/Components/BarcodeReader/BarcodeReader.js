@@ -100,11 +100,11 @@ export const BarcodeReader = () => {
           }
 
           if (result.codeResult && result.codeResult.code) {
-            console.log(result.codeResult.code)
+            // console.log(result.codeResult.code)
             let barcode = result.codeResult.code;
             let img = document.querySelector(`.BarcodeWindow video`);
             let canvas = document.querySelector(`.BarcodeWindow canvas`);
-            console.log(img, canvas);
+            // console.log(img, canvas);
             canvas.getContext("2d").drawImage(img, 0, 0);
             Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: "#00F", lineWidth: 2 });
             Quagga.offProcessed(qP);
